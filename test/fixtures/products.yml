@@ -6,7 +6,6 @@ one:
   price: 9.99
   SKU: MyString
   product_category: one
-  product_inventory: one
 
 two:
   name: MyString
@@ -14,4 +13,3 @@ two:
   price: 9.99
   SKU: MyString
   product_category: two
-  product_inventory: two

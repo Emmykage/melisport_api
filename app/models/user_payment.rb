@@ -1,0 +1,2 @@
+class UserPayment < ApplicationRecord
+end
