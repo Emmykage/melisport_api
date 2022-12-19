@@ -1,7 +1,13 @@
 class User < ApplicationRecord
-    has_many :payments
-    belongs_to :shopping_cart
+
+    has_many :shopping_carts
     has_many :user_payments
     has_many :addresses
-    belongs_to :order_detail
+    has_one  :order_detail
+
+    # validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {maximum: 50}
+    # validates :email, presence: true, uniqueness: { case_sensitive: false }, length: {maximum: 50}, format: { with: ConstantData::VALID_EMAIL_REGEX }, if: :method_name?
+    # validates :phone_no, presence: true
+
+    
 end

@@ -5,6 +5,7 @@ class CreateUserPayments < ActiveRecord::Migration[7.0]
       t.string :provider
       t.integer :account_no
       t.date :expiry
+      t.references :user, null: false, foreign_key: true
 
       t.timestamps
     end

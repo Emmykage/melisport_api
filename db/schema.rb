@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_19_051414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,8 +19,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
     t.string "region"
     t.integer "postal_code"
     t.integer "mobile"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -61,13 +63,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "product_categories", force: :cascade do |t|
+  create_table "probucts", force: :cascade do |t|
     t.string "name"
-    t.string "description"
+    t.text "description"
+    t.decimal "price"
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_category_id"], name: "index_product_categories_on_product_category_id"
+    t.index ["product_category_id"], name: "index_probucts_on_product_category_id"
+  end
+
+  create_table "product_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "product_images", force: :cascade do |t|
@@ -93,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
     t.text "description"
     t.decimal "price"
     t.string "SKU"
+    t.string "image"
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
   end
 
   create_table "shopping_carts", force: :cascade do |t|
+    t.integer "total"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -111,8 +123,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
     t.string "provider"
     t.integer "account_no"
     t.date "expiry"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_payments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -123,15 +137,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "addresses", "users"
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
   add_foreign_key "order_details", "payment_details"
   add_foreign_key "order_details", "users"
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"
-  add_foreign_key "product_categories", "product_categories"
+  add_foreign_key "probucts", "product_categories"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_inventories", "products"
   add_foreign_key "products", "product_categories"
   add_foreign_key "shopping_carts", "users"
+  add_foreign_key "user_payments", "users"
 end
