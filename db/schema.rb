@@ -90,7 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_051414) do
 
   create_table "product_inventories", force: :cascade do |t|
     t.integer "quantity"
-    t.string "SKU"
+    t.string "sku"
     t.decimal "price"
     t.bigint "product_id", null: false
     t.datetime "created_at", null: false
@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_051414) do
     t.string "name"
     t.text "description"
     t.decimal "price"
-    t.string "SKU"
+    t.string "sku"
     t.string "image"
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false

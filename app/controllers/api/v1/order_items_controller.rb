@@ -1,7 +1,7 @@
 class Api::V1::OrderItemsController < ApplicationController
-    before_action :set_probuct, only: %i[ show update destroy ]
+    before_action :set_order_item, only: %i[ show update destroy ]
 
-  # GET /probucts
+  # GET /order_items
   def index
     @order_items = OrderItem.all
 
@@ -13,7 +13,7 @@ class Api::V1::OrderItemsController < ApplicationController
     render json: @order_item
   end
 
-  # POST /probucts
+  # POST /order_items
   def create
     @order_item = OrderItem.new(order_item_params)
 
@@ -33,7 +33,7 @@ class Api::V1::OrderItemsController < ApplicationController
     end
   end
 
-  # DELETE /probucts/1
+  # DELETE /order_items/1
   def destroy
     @order_item.destroy
   end

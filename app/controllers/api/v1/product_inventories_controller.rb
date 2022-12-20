@@ -1,9 +1,9 @@
 class ProductInventoriesController < ApplicationController
-    before_action :set_probuct, only: %i[ show update destroy ]
+    before_action :set_product_inventory, only: %i[ show update destroy ]
 
-  # GET /probucts
+  # GET /product_inventory
   def index
-    @product_inventories = ProbuctInventory.all
+    @product_inventories = ProductInventory.all
 
     render json: @product_inventory
   end
@@ -24,7 +24,7 @@ class ProductInventoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /probucts/1
+  # PATCH/PUT /product_inventories/1
   def update
     if @product_inventory.update(product_inventory_params)
       render json: @product_inventory
@@ -40,8 +40,8 @@ class ProductInventoriesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_probuct
-      @product_inventory = Probuct.find(params[:id])
+    def set_product_inventory
+      @product_inventory = ProductInventory.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

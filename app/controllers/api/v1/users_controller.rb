@@ -8,7 +8,7 @@ class API::V1::UsersController < ApplicationController
       render json: @users
     end
   
-    # GET /probucts/1
+    # GET /user/1
     def show
       render json: @user
     end
@@ -24,7 +24,7 @@ class API::V1::UsersController < ApplicationController
       end
     end
   
-    # PATCH/PUT /probucts/1
+    # PATCH/PUT /user/1
     def update
       if @user.update(user_params)
         render json: @user
@@ -41,7 +41,7 @@ class API::V1::UsersController < ApplicationController
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_user
-        @user = Probuct.find(params[:id])
+        @user = Product.find(params[:id])
       end
   
       # Only allow a list of trusted parameters through.

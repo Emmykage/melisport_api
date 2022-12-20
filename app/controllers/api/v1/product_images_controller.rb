@@ -1,5 +1,5 @@
 class Api::V1::ProductImagesController < ApplicationController
-    before_action :set_probuct, only: %i[ show update destroy ]
+    before_action :set_product_image, only: %i[ show update destroy ]
 
   # GET /product_imagess
   def index

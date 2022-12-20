@@ -1,52 +1,52 @@
 class Api::V1::UserPaymentsController < ApplicationController
-    before_action :set_probuct, only: %i[ show update destroy ]
+    before_action :set_user_payment, only: %i[ show update destroy ]
       
-        # GET /probucts
+        # GET /user_payments
         def index
-          @probucts = Probuct.all
+          @user_payments = UserPayment.all
       
-          render json: @probucts
+          render json: @user_payments
         end
       
-        # GET /probucts/1
+        # GET /user_payments/1
         def show
-          render json: @probuct
+          render json: @user_payment
         end
       
-        # POST /probucts
+        # POST /user_payments
         def create
-          @probuct = Probuct.new(probuct_params)
+          @user_payment = UserPayment.new(user_payment_params)
       
-          if @probuct.save
-            render json: @probuct, status: :created, location: @probuct
+          if @user_payment.save
+            render json: @user_payment, status: :created, location: @user_payment
           else
-            render json: @probuct.errors, status: :unprocessable_entity
+            render json: @user_payment.errors, status: :unprocessable_entity
           end
         end
       
-        # PATCH/PUT /probucts/1
+        # PATCH/PUT /user_payments/1
         def update
-          if @probuct.update(probuct_params)
-            render json: @probuct
+          if @user_payment.update(user_payment_params)
+            render json: @user_payment
           else
-            render json: @probuct.errors, status: :unprocessable_entity
+            render json: @user_payment.errors, status: :unprocessable_entity
           end
         end
       
-        # DELETE /probucts/1
+        # DELETE /user_payments/1
         def destroy
-          @probuct.destroy
+          @user_payment.destroy
         end
       
         private
           # Use callbacks to share common setup or constraints between actions.
-          def set_probuct
-            @probuct = Probuct.find(params[:id])
+          def set_user_payment
+            @user_payment = UserPayment.find(params[:id])
           end
       
           # Only allow a list of trusted parameters through.
-          def probuct_params
-            params.require(:probuct).permit(:name, :description, :price, :product_category_id)
+          def user_payment_params
+            params.require(:user_payment).permit(:payment_type, :provider, :account_no, :expiry)
           end
 
        

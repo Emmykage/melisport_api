@@ -1,7 +1,7 @@
-class Api::v1::ProductCategoriesController < ApplicationController
-    before_action :set_probuct, only: %i[ show update destroy ]
+class Api::V1::ProductCategoriesController < ApplicationController
+    before_action :set_product_category, only: %i[ show update destroy ]
 
-  # GET /probucts
+  # GET /product_category
   def index
     @product_categories = ProductCategory.all
 
@@ -24,16 +24,16 @@ class Api::v1::ProductCategoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /probucts/1
+  # PATCH/PUT /product_categories/1
   def update
     if @product_category.update(product_category_params)
       render json: @product_category
     else
-      render json: @probuct.errors, status: :unprocessable_entity
+      render json: @product_category.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /probucts/1
+  # DELETE /product_categories/1
   def destroy
     @product_category.destroy
   end

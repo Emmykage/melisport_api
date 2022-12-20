@@ -16,7 +16,7 @@ class Api::V1::ProductsController < ApplicationController
     # POST /products
     def create
       @product = Product.new(product_params)
-  
+    p @product
       if @product.save
         render json: @product, status: :created, location: @product
       else
@@ -46,7 +46,7 @@ class Api::V1::ProductsController < ApplicationController
   
       # Only allow a list of trusted parameters through.
       def product_params
-        params.require(:product).permit(:name, :description, :price, :image, :product_category_id)
+        params.require(:product).permit(:name, :description, :price, :sku, :image, :product_category_id)
       end
   
   
