@@ -1,5 +1,5 @@
 class PaymentShowsController < ApplicationController
-  before_action :set_payment_show, only: %i[ show update destroy ]
+  before_action :set_payment_show, only: %i[show update destroy]
 
   # GET /payment_shows
   def index
@@ -39,13 +39,14 @@ class PaymentShowsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payment_show
-      @payment_show = PaymentShow.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def payment_show_params
-      params.require(:payment_show).permit(:amount, :provider, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_payment_show
+    @payment_show = PaymentShow.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def payment_show_params
+    params.require(:payment_show).permit(:amount, :provider, :status)
+  end
 end
