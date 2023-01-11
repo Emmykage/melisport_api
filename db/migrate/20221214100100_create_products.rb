@@ -2,6 +2,14 @@ class CreateProducts < ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
+      t.integer :grip_size
+      t.integer :head_size
+      t.decimal :rating
+      t.string :length
+      t.string :weight
+      t.string :swing_weight
+      t.string :stiffness
+      t.string :composition
       t.text :description
       t.decimal :price
       t.string :sku

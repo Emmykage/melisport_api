@@ -65,7 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
 
   create_table "product_categories", force: :cascade do |t|
     t.string "name"
-    t.string "description"
+    t.string "gender"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -90,6 +91,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_103040) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
+    t.integer "grip_size"
+    t.integer "head_size"
+    t.decimal "rating"
+    t.string "length"
+    t.string "weight"
+    t.string "swing_weight"
+    t.string "stiffness"
+    t.string "composition"
     t.text "description"
     t.decimal "price"
     t.string "sku"
