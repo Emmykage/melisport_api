@@ -24,7 +24,7 @@ class Api::V1::ProductCategoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /product_categories/1   
+  # PATCH/PUT /product_categories/1
   def update
     if @product_category.update(product_category_params)
       render json: @product_category

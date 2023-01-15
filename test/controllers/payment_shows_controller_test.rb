@@ -13,7 +13,8 @@ class PaymentShowsControllerTest < ActionDispatch::IntegrationTest
   test 'should create payment_show' do
     assert_difference('PaymentShow.count') do
       post payment_shows_url,
-           params: { payment_show: { amount: @payment_show.amount, provider: @payment_show.provider, status: @payment_show.status } }, as: :json
+           params: { payment_show: { amount: @payment_show.amount,
+                                     provider: @payment_show.provider, status: @payment_show.status } }, as: :json
     end
 
     assert_response :created
@@ -26,7 +27,8 @@ class PaymentShowsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update payment_show' do
     patch payment_show_url(@payment_show),
-          params: { payment_show: { amount: @payment_show.amount, provider: @payment_show.provider, status: @payment_show.status } }, as: :json
+          params: { payment_show: { amount: @payment_show.amount,
+                                    provider: @payment_show.provider, status: @payment_show.status } }, as: :json
     assert_response :success
   end
 

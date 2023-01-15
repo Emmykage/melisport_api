@@ -1,5 +1,5 @@
 class Api::V1::OrderItemsController < ApplicationController
-    before_action :set_order_item, only: %i[ show update destroy ]
+  before_action :set_order_item, only: %i[show update destroy]
 
   # GET /order_items
   def index
@@ -39,13 +39,14 @@ class Api::V1::OrderItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order_item
-      @order_item = OrderItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def order_item_params
-      params.require(:order_item).permit(:quantity, :product_id. :order_detail_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order_item
+    @order_item = OrderItem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def order_item_params
+    params.require(:order_item).permit(:quantity, :product_id, :order_detail_id)
+  end
 end
