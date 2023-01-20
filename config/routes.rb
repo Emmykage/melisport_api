@@ -6,9 +6,11 @@ Rails.application.routes.draw do
       resources :users
       resources :products
       resources :addresses
-      resources :cart_items 
-      resources :product_categories 
+      resources :cart_items
+      resources :product_categories
       resources :user_payments
+
+      # post "add_cart", to: "cart_items#create"
       
 
       end

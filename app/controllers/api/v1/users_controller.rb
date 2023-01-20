@@ -4,7 +4,6 @@ class Api::V1::UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
     render json: @users
   end
 
@@ -15,13 +14,25 @@ class Api::V1::UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
 
-    if @user.save
-      render json: @user, status: :created, location: @user
+    # @user = User.new(user_params)
+
+    # if @user.save
+    #   render json: @user, status: :created, location: @user
+    # else
+    #   render json: @user.errors, status: :unprocessable_entity
+    # end
+    @user = User.create(user_params)
+
+    if user.valid?
+      session[:user_id] = @user.id
+      render json: user, status: :created
+
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors.full_messages, status: :unprocessable_entity
+
     end
+
   end
 
   # PATCH/PUT /user/1
@@ -47,6 +58,6 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:username, :email, :phone_no)
+    params.require(:user).permit(:username, :email, :phone_no, :password, :password_confirmation)
   end
 end

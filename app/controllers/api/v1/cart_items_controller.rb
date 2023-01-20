@@ -16,7 +16,7 @@ class Api::V1::CartItemsController < ApplicationController
   # POST /products
   def create
     @cart_item = CartItem.new(cart_item_params)
-
+    @cart_item.shopping_cart_id = initialize_cart.id
     if @cart_item.save
       render json: @cart_item, status: :created
     else
@@ -46,7 +46,7 @@ class Api::V1::CartItemsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def product_params
-    params.require(:cart_item).permit(:quantity, :shopping_cart_id, :product_id)
+  def cart_item_params
+    params.require(:cart_item).permit(:quantity, :product_id, :shopping_cart_id)
   end
 end
