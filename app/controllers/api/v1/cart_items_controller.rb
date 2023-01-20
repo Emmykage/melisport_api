@@ -1,6 +1,6 @@
 class Api::V1::CartItemsController < ApplicationController
-  before_action :set_cart_item, only: %i[show update destroy]
-
+  # before_action :set_cart_item, only: %i[show update destroy]
+  before_action :initialize_cart
   # GET /products
   def index
     @cart_items = CartItem.all
@@ -15,8 +15,8 @@ class Api::V1::CartItemsController < ApplicationController
 
   # POST /products
   def create
-    @cart_item = CartItem.new(cart_item_params)
-    @cart_item.shopping_cart_id = initialize_cart.id
+    @cart_item = @shopping_cart.cart_items.new(cart_item_params)
+    # @cart_item.shopping_cart_id = initialize_cart.id
     if @cart_item.save
       render json: @cart_item, status: :created
     else
@@ -47,6 +47,6 @@ class Api::V1::CartItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def cart_item_params
-    params.require(:cart_item).permit(:quantity, :product_id, :shopping_cart_id)
+    params.require(:cart_item).permit(:quantity, :product_id)
   end
 end

@@ -15,10 +15,11 @@ class Api::V1::ShoppingCartsController < ApplicationController
 
   # POST /shopping_carts
   def create
-    @shopping_cart = ShoppingCart.new(shopping_cart_params)
+    # @shopping_cart = ShoppingCart.new(shopping_cart_params)
+    @shopping_cart = current_user.shopping_carts.new
 
     if @shopping_cart.save
-      render json: @shopping_cart, status: :created, location: @shopping_cart
+      render json: @shopping_cart, status: :created
     else
       render json: @shopping_cart.errors, status: :unprocessable_entity
     end

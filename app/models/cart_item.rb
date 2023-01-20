@@ -6,20 +6,22 @@ class CartItem < ApplicationRecord
 
   def unit_price
     if persisted?
-      self[:product.price]
+      # self[:product.price]
+      self[:price]
+
     else
       product.price
     end
   end
 
-  def total 
+  def total
     unit_price * quantity
   end
 
   private
 
   def set_unit_price
-    self[:product.price]
+    self[:price]
   end
 
   def set_total

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :products
       resources :addresses
       resources :cart_items
+      resources :shopping_carts
       resources :product_categories
       resources :user_payments
 

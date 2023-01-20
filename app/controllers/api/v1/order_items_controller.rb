@@ -1,5 +1,6 @@
 class Api::V1::OrderItemsController < ApplicationController
   before_action :set_order_item, only: %i[show update destroy]
+  before_action :initialize_cart
 
   # GET /order_items
   def index

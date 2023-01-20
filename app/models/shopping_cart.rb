@@ -4,13 +4,12 @@ class ShoppingCart < ApplicationRecord
   has_many :products, through: :cart_items
 
   def subTotal
-    cart_items.collect{|cart_item| cart_item.valid? ? cart_item.product.price * cart_item.quantity : 0 }.sum
-
+    cart_items.collect { |cart_item| cart_item.valid? ? cart_item.product.price * cart_item.quantity : 0 }.sum
   end
 
   private
-  def set_subtotal
 
+  def set_subtotal
     self[:subtotal] = subTotal
   end
 end
