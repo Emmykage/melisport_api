@@ -35,7 +35,10 @@ class Api::V1::CartItemsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    @cart_item.destroy
+   @item =  CartItem.find(params[:id])
+   if @item.present?
+    @item.destroy
+   end
   end
 
   private

@@ -1,30 +1,34 @@
 class CartItem < ApplicationRecord
   belongs_to :shopping_cart
   belongs_to :product
-  before_save :set_unit_price
+  # before_save :set_unit_price
   # before_action :set_total
 
-  def unit_price
-    if persisted?
-      # self[:product.price]
-      self[:price]
-
-    else
-      product.price
-    end
-  end
-
   def total
-    unit_price * quantity
+    product.price * quantity
   end
 
-  private
+  # def unit_price
+  #   if persisted?
+  #     # self[:product.price]
+  #     self[:price]
 
-  def set_unit_price
-    self[:price]
-  end
+  #   else
+  #     product.price
+  #   end
+  # end
 
-  def set_total
-    self[:total] = total * quantity
-  end
+  # def total
+  #   unit_price * quantity
+  # end
+
+  # private
+
+  # def set_unit_price
+  #   self[:price]
+  # end
+
+  # def set_total
+  #   self[:total] = total * quantity
+  # end
 end

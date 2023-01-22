@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
 
 
   def current_user
-    User.first
+    User.find_by(id: 2)
   end
 
   def initialize_cart
