@@ -11,6 +11,12 @@ Rails.application.routes.draw do
       resources :product_categories
       resources :user_payments
 
+      get 'shopping_cart', to: 'shopping_cart#show'
+      post 'shopping_cart/add', to: 'shopping_cart#add'
+      post 'shopping_cart/remove'
+      patch 'cart_item/:id/:data' to: ''
+      
+
       # post "add_cart", to: "cart_items#create"
       
 
