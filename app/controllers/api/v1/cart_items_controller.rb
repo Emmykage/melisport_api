@@ -26,19 +26,20 @@ class Api::V1::CartItemsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    if @cart_item.update(cart_item_params)
-      render json: @cart_item
+    cart_item = CartItem.find(params[:id])
+    if cart_item.update(cart_item_params)
+      render json: cart_item
     else
-      render json: @cart_item.errors, status: :unprocessable_entity
+      render json: cart_item.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /products/1
   def destroy
-   @item =  CartItem.find(params[:id])
-   if @item.present?
+    @item = CartItem.find(params[:id])
+    return unless @item.present?
+
     @item.destroy
-   end
   end
 
   private
@@ -49,6 +50,9 @@ class Api::V1::CartItemsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
+  def cart_item_update_params
+    params.require(:cart_item).permit(:quantity)
+  end
   def cart_item_params
     params.require(:cart_item).permit(:quantity, :product_id)
   end

@@ -4,7 +4,7 @@ class ShoppingCart < ApplicationRecord
   has_many :products, through: :cart_items
 
   def total
-    cart_items.to_a.sum {|item| item.total}
+    cart_items.to_a.sum(&:total)
   end
 
   # def subTotal
