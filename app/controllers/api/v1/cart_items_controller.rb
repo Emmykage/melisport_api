@@ -16,7 +16,6 @@ class Api::V1::CartItemsController < ApplicationController
   # POST /products
   def create
     @cart_item = @shopping_cart.cart_items.new(cart_item_params)
-    # @cart_item.shopping_cart_id = initialize_cart.id
     if @cart_item.save
       render json: @cart_item, status: :created
     else
