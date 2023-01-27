@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::API
-  before_action :initialize_cart
+  # before_action :initialize_cart
   # include ::ActionController::Cookies
-
+  def encode_token(payload)
+    JWT.encode(payload, 'secret')
+  end
 
   def current_user
     User.find_by(id: 2)

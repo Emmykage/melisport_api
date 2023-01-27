@@ -14,6 +14,14 @@ class Api::V1::UsersController < ApplicationController
 
   # POST /users
   def create
+    @user = User.create(user_params)
+
+    if @user.valid?
+      token = encode_token({ user_id: @user.id })
+      render json: { user: @user, token: }, status: :ok
+    else
+      render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
+    end
     # @user = User.new(user_params)
 
     # if @user.save
@@ -21,14 +29,26 @@ class Api::V1::UsersController < ApplicationController
     # else
     #   render json: @user.errors, status: :unprocessable_entity
     # end
-    @user = User.create(user_params)
+    # @user = User.create(user_params)
 
-    if user.valid?
-      session[:user_id] = @user.id
-      render json: user, status: :created
+    # if @user.valid?
+    #   session[:user_id] = @user.id
+    #   render json: user, status: :created
 
-    else
-      render json: user.errors.full_messages, status: :unprocessable_entity
+    # else
+    #   render json: @user.errors.full_messages, status: :unprocessable_entity
+
+    # end
+  end
+
+  def login
+    @user = User.find_by(username: user_params[:username] )
+
+    if @user && @user.authenticate(user_params[:password])
+      token = encode_token({user_id: @user.id})
+      render json: { user: @user, token: token }, status: :ok
+      else
+        render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
 
     end
   end
@@ -56,6 +76,6 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:username, :email, :phone_no, :password, :password_confirmation)
+    params.require(:user).permit(:username, :email, :phone_no, :password)
   end
 end

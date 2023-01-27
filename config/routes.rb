@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :product_categories
       resources :user_payments
 
+      post "/login", to: "users#login"
+
       get 'shopping_cart', to: 'shopping_cart#show'
       post 'shopping_cart/add', to: 'shopping_cart#add'
       post 'shopping_cart/remove'
