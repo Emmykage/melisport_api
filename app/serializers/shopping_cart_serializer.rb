@@ -1,3 +1,3 @@
-# class ShoppingCartSerializer < ActiveModel::Serializer
-#   attributes :id
-# end
+class ShoppingCartSerializer < ActiveModel::Serializer
+  attributes :id
+end

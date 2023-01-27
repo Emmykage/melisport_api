@@ -53,6 +53,7 @@ class Api::V1::CartItemsController < ApplicationController
   def cart_item_update_params
     params.require(:cart_item).permit(:quantity)
   end
+
   def cart_item_params
     params.require(:cart_item).permit(:quantity, :product_id)
   end

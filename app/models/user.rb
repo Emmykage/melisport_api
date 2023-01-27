@@ -1,5 +1,6 @@
-class User < ApplicationRecord
-  has_many :shopping_carts
+class User < ApplicationRecord   
+  has_secure_password
+  has_many :shopping_carts 
   has_many :user_payments
   has_many :addresses
   has_one :order_detail
