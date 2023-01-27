@@ -42,13 +42,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(username: user_params[:username] )
+    @user = User.find_by(username: user_params[:username])
 
-    if @user && @user.authenticate(user_params[:password])
-      token = encode_token({user_id: @user.id})
-      render json: { user: @user, token: token }, status: :ok
-      else
-        render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
+    if @user&.authenticate(user_params[:password])
+      token = encode_token({ user_id: @user.id })
+      render json: { user: @user, token: }, status: :ok
+    else
+      render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
 
     end
   end
