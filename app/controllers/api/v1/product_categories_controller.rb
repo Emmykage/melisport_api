@@ -1,4 +1,5 @@
 class Api::V1::ProductCategoriesController < ApplicationController
+  # before_action :authorize
   before_action :set_product_category, only: %i[show update destroy]
 
   # GET /product_category

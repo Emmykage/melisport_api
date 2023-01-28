@@ -1,9 +1,12 @@
 class Api::V1::CartItemsController < ApplicationController
-  # before_action :set_cart_item, only: %i[show update destroy]
+
+  before_action :authorize
   before_action :initialize_cart
+  before_action :set_cart_item, only: %i[show update destroy]
+  
   # GET /products
   def index
-    @cart_items = CartItem.all
+    @cart_items = @user.cart_items.all
 
     render json: @cart_items
   end
@@ -25,11 +28,11 @@ class Api::V1::CartItemsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    cart_item = CartItem.find(params[:id])
-    if cart_item.update(cart_item_params)
-      render json: cart_item
+    # cart_item = CartItem.find(params[:id])
+    if @cart_item.update(cart_item_params)
+      render json: @cart_item
     else
-      render json: cart_item.errors, status: :unprocessable_entity
+      render json: @cart_item.errors, status: :unprocessable_entity
     end
   end
 
@@ -44,8 +47,8 @@ class Api::V1::CartItemsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_product
-    @cart_item = CartItem.find(params[:id])
+  def set_cart_item
+    @cart_item = @user.cart_items.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

@@ -22,23 +22,6 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
     end
-    # @user = User.new(user_params)
-
-    # if @user.save
-    #   render json: @user, status: :created, location: @user
-    # else
-    #   render json: @user.errors, status: :unprocessable_entity
-    # end
-    # @user = User.create(user_params)
-
-    # if @user.valid?
-    #   session[:user_id] = @user.id
-    #   render json: user, status: :created
-
-    # else
-    #   render json: @user.errors.full_messages, status: :unprocessable_entity
-
-    # end
   end
 
   def login
@@ -55,10 +38,12 @@ class Api::V1::UsersController < ApplicationController
 
   # PATCH/PUT /user/1
   def update
-    if @user.update(user_params)
-      render json: @user
+    # authorize
+    user = User.find(params[:id])
+    if user.update(user_params)
+      render json: user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
@@ -71,7 +56,7 @@ class Api::V1::UsersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = Product.find(params[:id])
+    authorize
   end
 
   # Only allow a list of trusted parameters through.
