@@ -1,9 +1,8 @@
 class Api::V1::CartItemsController < ApplicationController
-
   before_action :authorize
   before_action :initialize_cart
   before_action :set_cart_item, only: %i[show update destroy]
-  
+
   # GET /products
   def index
     @cart_items = @user.cart_items.all
