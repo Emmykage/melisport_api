@@ -32,10 +32,6 @@ class ApplicationController < ActionController::API
     authorized_user
   end
 
-  # def current_user
-  #   User.find_by(id: 2)
-  # end
-
   def initialize_cart
     @shopping_cart ||= ShoppingCart.find_by(user_id: @user.id)
     return unless @shopping_cart.nil?

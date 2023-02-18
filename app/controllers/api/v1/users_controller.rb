@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
       token = encode_token({ user_id: @user.id })
       render json: { user: @user, token: }, status: :ok
     else
-      render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
+      render json: { error: 'Invalid username or password' }, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
       token = encode_token({ user_id: @user.id })
       render json: { user: @user, token: }, status: :ok
     else
-      render json: { error: 'Invalid username or password' }, staus: :unprocessable_entity
+      render json: { error: 'Invalid username or password' }, status: :unprocessable_entity
 
     end
   end
@@ -61,6 +61,6 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:username, :email, :phone_no, :password)
+    params.require(:user).permit(:username, :email, :phone_no, :password, :role)
   end
 end
