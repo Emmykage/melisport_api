@@ -6,6 +6,13 @@ class User < ApplicationRecord
   has_many :addresses
   has_one :order_detail
 
+  validates :email, :username, presence: true
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :password, length: {in: 6..20}
+
+
+
+
   # validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {maximum: 50}
   # validates :email, presence: true,
   # uniqueness: { case_sensitive: false },

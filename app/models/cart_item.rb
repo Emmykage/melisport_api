@@ -1,6 +1,8 @@
 class CartItem < ApplicationRecord
   belongs_to :shopping_cart
   belongs_to :product
+
+  # validates :product_id, uniqueness: true
   # before_save :set_unit_price
   # before_action :set_total
 
