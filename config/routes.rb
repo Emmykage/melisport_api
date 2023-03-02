@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get 'shopping_cart', to: 'shopping_cart#show'
       post 'shopping_cart/add', to: 'shopping_cart#add'
       post 'shopping_cart/remove'
+      delete 'clear_cart', to: 'cart_items#delete_all'
       # patch 'cart_item/:id/:data' to: 'shopping_cart#creat'
       
 

@@ -43,6 +43,11 @@ class Api::V1::CartItemsController < ApplicationController
     @item.destroy
   end
 
+  def delete_all
+    @shopping_cart.cart_items.destroy_all
+
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
