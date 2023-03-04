@@ -1,4 +1,4 @@
-class ProductInventoriesController < ApplicationController
+class Api::V1::ProductInventoriesController < ApplicationController
   before_action :set_product_inventory, only: %i[show update destroy]
 
   # GET /product_inventory
