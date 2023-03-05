@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_one :order_detail
 
   validates :email, :username, presence: true
-  validates :email, uniqueness: { case_sensitive: false }
+  # validates :email, uniqueness: { case_sensitive: false }
   validates :password, length: {in: 6..20}
 
 
