@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_12_133950) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_12_142216) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,14 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_133950) do
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
-  create_table "careers", force: :cascade do |t|
-    t.string "name"
-    t.string "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "gender"
-  end
-
   create_table "cart_items", force: :cascade do |t|
     t.integer "quantity"
     t.bigint "shopping_cart_id", null: false
@@ -44,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_133950) do
   end
 
   create_table "genders", force: :cascade do |t|
-    t.string "type"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
