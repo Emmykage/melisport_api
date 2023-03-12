@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_19_183624) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_12_133950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_183624) do
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
+  create_table "careers", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "gender"
+  end
+
   create_table "cart_items", force: :cascade do |t|
     t.integer "quantity"
     t.bigint "shopping_cart_id", null: false
@@ -33,6 +41,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_183624) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_cart_items_on_product_id"
     t.index ["shopping_cart_id"], name: "index_cart_items_on_shopping_cart_id"
+  end
+
+  create_table "genders", force: :cascade do |t|
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "order_details", force: :cascade do |t|
@@ -91,7 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_183624) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.integer "grip_size"
+    t.string "grip_size"
     t.integer "head_size"
     t.decimal "rating"
     t.string "length"
@@ -106,6 +120,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_183624) do
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "gender_id", null: false
+    t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
@@ -147,6 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_183624) do
   add_foreign_key "order_items", "products"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_inventories", "products"
+  add_foreign_key "products", "genders"
   add_foreign_key "products", "product_categories"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "user_payments", "users"
