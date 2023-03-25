@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_12_142216) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_25_114432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,13 +41,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_142216) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "levels", force: :cascade do |t|
+    t.string "stage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "order_details", force: :cascade do |t|
     t.decimal "total"
     t.bigint "user_id", null: false
-    t.bigint "payment_detail_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["payment_detail_id"], name: "index_order_details_on_payment_detail_id"
     t.index ["user_id"], name: "index_order_details_on_user_id"
   end
 
@@ -67,6 +71,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_142216) do
     t.boolean "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "order_detail_id", null: false
+    t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
   end
 
   create_table "product_categories", force: :cascade do |t|
@@ -113,7 +119,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_142216) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "gender_id", null: false
+    t.bigint "level_id"
     t.index ["gender_id"], name: "index_products_on_gender_id"
+    t.index ["level_id"], name: "index_products_on_level_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
@@ -149,13 +157,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_142216) do
   add_foreign_key "addresses", "users"
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
-  add_foreign_key "order_details", "payment_details"
   add_foreign_key "order_details", "users"
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"
+  add_foreign_key "payment_details", "order_details"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_inventories", "products"
   add_foreign_key "products", "genders"
+  add_foreign_key "products", "levels"
   add_foreign_key "products", "product_categories"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "user_payments", "users"

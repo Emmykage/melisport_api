@@ -1,5 +1,8 @@
 class Api::V1::OrderDetailsController < ApplicationController
-  before_action :set_product, only: %i[show update destroy]
+  # before_action :initialize_cart
+  before_action :authorize
+
+  before_action :set_order_detail, only: %i[show update destroy]
 
   # GET /products
   def index
@@ -15,13 +18,16 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # POST /products
   def create
-    @order_detail = OrderDetail.new(order_detail_params)
-
-    if @order_detail.save
-      render json: @order_detail, status: :created, location: @order_detail
+    order_detail = @user.order_details.create(order_detail_params)
+    # @order_item = OrderItem.new(order_item_params)
+    # @order_item =  OrderItem.create(order_item_params.merge(order_detail_id: order_detail.id))
+    puts order_detail.id
+    if order_detail.valid?
+      render json: order_detail, status: :created
     else
-      render json: @order_detail.errors, status: :unprocessable_entity
+      render json: order_detail.errors, status: :unprocessable_entity
     end
+
   end
 
   # PATCH/PUT /products/1
@@ -41,12 +47,15 @@ class Api::V1::OrderDetailsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_product
+  def set_order_detail
     @order_detail = OrderDetail.find(params[:id])
+  end
+  def order_item_params
+    params.require(:order_item).permit(:quantity, :product_id)
   end
 
   # Only allow a list of trusted parameters through.
-  def product_params
-    params.require(:order_detail).permit(:total, :user_id, :payment_detail_id)
+  def order_detail_params
+    params.require(:order_detail).permit(:total, order_items_attributes: [:product_id, :quantity] )
   end
 end

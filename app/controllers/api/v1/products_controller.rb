@@ -17,6 +17,11 @@ class Api::V1::ProductsController < ApplicationController
   # POST /products
   def create
     @product = Product.new(product_params)
+    # @user = User.create([{:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
+    #   :stiffness, :composition, :description, :price, :sku, :image, :product_category_id}, {:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
+    #     :stiffness, :composition, :description, :price, :sku, :image, :product_category_id}, {:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
+    #       :stiffness, :composition, :description, :price, :sku, :image, :product_category_id}])
+
     if @product.save
       render json: @product, status: :created
     else
@@ -48,6 +53,6 @@ class Api::V1::ProductsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def product_params
     params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
-                                    :stiffness, :composition, :description, :price, :sku, :image, :product_category_id)
+                                    :stiffness, :composition, :description, :price, :sku, :image, :product_category_id, :gender_id)
   end
 end

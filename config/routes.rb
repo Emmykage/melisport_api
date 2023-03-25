@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :images
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
  
   namespace :api do
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
       resources :shopping_carts
       resources :product_categories
       resources :user_payments
+      resources :order_details
+      resources :order_items
 
       post "/login", to: "users#login"
 

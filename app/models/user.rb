@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :cart_items, through: :shopping_carts
   has_many :user_payments
   has_many :addresses
-  has_one :order_detail
+  has_many :order_details
 
   validates :email, :username, presence: true, uniqueness: true
   # validates :email, uniqueness: { case_sensitive: false }
