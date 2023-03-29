@@ -2,6 +2,7 @@ class CartItem < ApplicationRecord
   belongs_to :shopping_cart
   belongs_to :product
 
+  validates :quantity, presence: true
   validates :product_id, uniqueness: { scope: :shopping_cart_id}
   validates :quantity, numericality: { greater_than: 0 }
   # before_save :set_unit_price

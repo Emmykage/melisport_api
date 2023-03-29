@@ -5,5 +5,5 @@ class Product < ApplicationRecord
   has_many :cart_items
   has_many :shopping_carts, through: :cart_items
 
-  validates :name, :description, :image, presence: true
+  validates :name, :description, :image, :price, presence: true
 end
