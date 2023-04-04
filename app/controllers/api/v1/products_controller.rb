@@ -43,6 +43,12 @@ class Api::V1::ProductsController < ApplicationController
     @product.destroy
   end
 
+  # /search
+  def search
+    @products = Product.where('name LIKE :search', search: "%#{params[:search]}%")
+    render json: @products
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
