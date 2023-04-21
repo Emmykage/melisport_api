@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_114432) do
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "gender_id", null: false
+    t.bigint "gender_id"
     t.bigint "level_id"
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"

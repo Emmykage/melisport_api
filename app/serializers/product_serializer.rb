@@ -3,4 +3,5 @@ class ProductSerializer < ActiveModel::Serializer
              :description, :price, :sku, :image
   belongs_to :product_category
   belongs_to :gender
+  belongs_to :level
 end

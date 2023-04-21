@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'levels/index'
+  get 'genders/index'
+  get 'genderd/index'
   resources :images
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
  
@@ -10,6 +13,8 @@ Rails.application.routes.draw do
       resources :cart_items
       resources :shopping_carts
       resources :product_categories
+      resources :levels
+      resources :genders
       resources :user_payments
       resources :order_details
       resources :order_items
