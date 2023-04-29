@@ -19,6 +19,7 @@ class Api::V1::OrderDetailsController < ApplicationController
   # POST /products
   def create
     order_detail = @user.order_details.create(order_detail_params)
+    
     # @order_item = OrderItem.new(order_item_params)
     # @order_item =  OrderItem.create(order_item_params.merge(order_detail_id: order_detail.id))
     puts order_detail.id
