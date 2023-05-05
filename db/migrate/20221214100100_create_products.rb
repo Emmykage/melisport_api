@@ -4,7 +4,9 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :grip_size
       t.integer :head_size
+      t.integer :size
       t.decimal :rating
+      t.string :colour
       t.string :length
       t.string :weight
       t.string :swing_weight
