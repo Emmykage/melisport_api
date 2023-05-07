@@ -1,5 +1,5 @@
 class Api::V1::ImagesController < ApplicationController
-  before_action :set_image, only: %i[ show edit update destroy ]
+  before_action :set_image, only: %i[show edit update destroy]
 
   # GET /images
   def index
@@ -7,8 +7,7 @@ class Api::V1::ImagesController < ApplicationController
   end
 
   # GET /images/1
-  def show
-  end
+  def show; end
 
   # GET /images/new
   def new
@@ -16,15 +15,14 @@ class Api::V1::ImagesController < ApplicationController
   end
 
   # GET /images/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /images
   def create
     @image = Image.new(image_params)
 
     if @image.save
-      redirect_to @image, notice: "Image was successfully created."
+      redirect_to @image, notice: 'Image was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,7 +31,7 @@ class Api::V1::ImagesController < ApplicationController
   # PATCH/PUT /images/1
   def update
     if @image.update(image_params)
-      redirect_to @image, notice: "Image was successfully updated."
+      redirect_to @image, notice: 'Image was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -42,17 +40,18 @@ class Api::V1::ImagesController < ApplicationController
   # DELETE /images/1
   def destroy
     @image.destroy
-    redirect_to images_url, notice: "Image was successfully destroyed."
+    redirect_to images_url, notice: 'Image was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_image
-      @image = Image.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def image_params
-      params.require(:image).permit(:url, :product_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_image
+    @image = Image.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def image_params
+    params.require(:image).permit(:url, :product_id)
+  end
 end

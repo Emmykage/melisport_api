@@ -1,6 +1,5 @@
 class Level < ApplicationRecord
-    has_many :products
+  has_many :products
 
-    validates :stage, presence: true, uniqueness: true
-
+  validates :stage, presence: true, uniqueness: true
 end

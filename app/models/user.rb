@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   validates :email, :username, presence: true, uniqueness: true
   # validates :email, uniqueness: { case_sensitive: false }
-  validates :password, length: {in: 6..20}
+  validates :password, length: { in: 6..20 }
 
 
 

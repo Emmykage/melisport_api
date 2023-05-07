@@ -45,7 +45,6 @@ class Api::V1::CartItemsController < ApplicationController
 
   def delete_all
     @shopping_cart.cart_items.destroy_all
-
   end
 
   private

@@ -53,7 +53,8 @@ class Api::V1::OrderItemsController < ApplicationController
   def order_item_params
     params.require(:order_item).permit(:quantity, :product_id)
   end
+
   def order_detail_params
-    params.require(:order_detail).permit(:total, order_items_attributes: [:product_id, :quantity] )
+    params.require(:order_detail).permit(:total, order_items_attributes: %i[product_id quantity])
   end
 end

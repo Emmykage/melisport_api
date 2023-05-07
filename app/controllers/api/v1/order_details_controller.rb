@@ -19,7 +19,7 @@ class Api::V1::OrderDetailsController < ApplicationController
   # POST /products
   def create
     order_detail = @user.order_details.create(order_detail_params)
-    
+
     # @order_item = OrderItem.new(order_item_params)
     # @order_item =  OrderItem.create(order_item_params.merge(order_detail_id: order_detail.id))
     puts order_detail.id
@@ -28,7 +28,6 @@ class Api::V1::OrderDetailsController < ApplicationController
     else
       render json: order_detail.errors, status: :unprocessable_entity
     end
-
   end
 
   # PATCH/PUT /products/1
@@ -51,12 +50,13 @@ class Api::V1::OrderDetailsController < ApplicationController
   def set_order_detail
     @order_detail = OrderDetail.find(params[:id])
   end
+
   def order_item_params
     params.require(:order_item).permit(:quantity, :product_id)
   end
 
   # Only allow a list of trusted parameters through.
   def order_detail_params
-    params.require(:order_detail).permit(:total, order_items_attributes: [:product_id, :quantity] )
+    params.require(:order_detail).permit(:total, order_items_attributes: %i[product_id quantity])
   end
 end
