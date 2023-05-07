@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_25_114432) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_07_162720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,9 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_114432) do
     t.string "name"
     t.string "grip_size"
     t.integer "head_size"
-    t.integer "size"
     t.decimal "rating"
-    t.string "colour"
     t.string "length"
     t.string "weight"
     t.string "swing_weight"
@@ -118,12 +116,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_114432) do
     t.decimal "price"
     t.string "sku"
     t.string "image"
-    t.string "strung"
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "gender_id"
     t.bigint "level_id"
+    t.string "strung"
+    t.string "colour"
+    t.string "size"
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
