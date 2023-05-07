@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_07_162720) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_07_165013) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,7 +110,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_162720) do
     t.string "weight"
     t.string "swing_weight"
     t.string "stiffness"
-    t.string "tension"
     t.string "composition"
     t.text "description"
     t.decimal "price"
@@ -124,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_162720) do
     t.string "strung"
     t.string "colour"
     t.string "size"
+    t.string "tension"
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
