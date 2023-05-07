@@ -6,7 +6,6 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.integer :head_size
       t.integer :size
       t.decimal :rating
-      t.string :colour
       t.string :length
       t.string :weight
       t.string :swing_weight
@@ -18,6 +17,8 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.string :sku
       t.string :image
       t.string :strung
+      t.string :colour
+
 
 
       t.references :product_category, null: false, foreign_key: true
