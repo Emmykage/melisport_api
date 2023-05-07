@@ -11,11 +11,15 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.string :weight
       t.string :swing_weight
       t.string :stiffness
+      t.string :tension
       t.string :composition
       t.text :description
       t.decimal :price
       t.string :sku
       t.string :image
+      t.string :strung
+
+
       t.references :product_category, null: false, foreign_key: true
 
       t.timestamps

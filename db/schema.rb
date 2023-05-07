@@ -112,11 +112,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_114432) do
     t.string "weight"
     t.string "swing_weight"
     t.string "stiffness"
+    t.string "tension"
     t.string "composition"
     t.text "description"
     t.decimal "price"
     t.string "sku"
     t.string "image"
+    t.string "strung"
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
