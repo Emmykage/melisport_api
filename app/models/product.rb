@@ -5,6 +5,12 @@ class Product < ApplicationRecord
   has_many :product_images
   has_many :cart_items
   has_many :shopping_carts, through: :cart_items
+  has_many :sizes
+  has_many :cloth_sizes
+  has_many :shoe_sizes
+
+  accepts_nested_attributes_for :cloth_sizes
+  accepts_nested_attributes_for :shoe_sizes
 
   validates :name, :description, :image, :price, presence: true
 end

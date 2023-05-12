@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_07_165013) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_10_190334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_165013) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_cart_items_on_product_id"
     t.index ["shopping_cart_id"], name: "index_cart_items_on_shopping_cart_id"
+  end
+
+  create_table "cloth_sizes", force: :cascade do |t|
+    t.string "abbrv"
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_cloth_sizes_on_product_id"
   end
 
   create_table "genders", force: :cascade do |t|
@@ -129,12 +137,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_165013) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
+  create_table "shoe_sizes", force: :cascade do |t|
+    t.string "abbrv"
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shoe_sizes_on_product_id"
+  end
+
   create_table "shopping_carts", force: :cascade do |t|
     t.integer "total"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_shopping_carts_on_user_id"
+  end
+
+  create_table "sizes", force: :cascade do |t|
+    t.string "abbrv"
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_sizes_on_product_id"
   end
 
   create_table "user_payments", force: :cascade do |t|
@@ -161,6 +185,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_165013) do
   add_foreign_key "addresses", "users"
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
+  add_foreign_key "cloth_sizes", "products"
   add_foreign_key "order_details", "users"
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"
@@ -170,6 +195,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_165013) do
   add_foreign_key "products", "genders"
   add_foreign_key "products", "levels"
   add_foreign_key "products", "product_categories"
+  add_foreign_key "shoe_sizes", "products"
   add_foreign_key "shopping_carts", "users"
+  add_foreign_key "sizes", "products"
   add_foreign_key "user_payments", "users"
 end
