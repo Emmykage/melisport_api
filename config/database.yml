@@ -89,3 +89,4 @@ production:
   database: melisport_api_production
   username: melisport_api
   password: <%= ENV["MELISPORT_API_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
