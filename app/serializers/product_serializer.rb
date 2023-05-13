@@ -5,4 +5,5 @@ class ProductSerializer < ActiveModel::Serializer
   belongs_to :gender
   belongs_to :level
   has_many :cloth_sizes
+  has_many :shoe_sizes
 end

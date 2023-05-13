@@ -112,7 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_190334) do
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "grip_size"
-    t.integer "head_size"
+    t.string "head_size"
     t.decimal "rating"
     t.string "length"
     t.string "weight"
