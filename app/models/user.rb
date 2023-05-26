@@ -10,8 +10,9 @@ class User < ApplicationRecord
   # validates :email, uniqueness: { case_sensitive: false }
   validates :password, length: { in: 6..20 }
 
-
-
+  def full_name
+   full_name =  self.first_name + ' ' + self.last_name
+  end
 
   # validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {maximum: 50}
   # validates :email, presence: true,

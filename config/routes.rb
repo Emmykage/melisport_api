@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       resources :user_payments
       resources :order_details
       resources :order_items
+      resources :payments
+      resources :payment_intents
 
       post "/login", to: "users#login"
 

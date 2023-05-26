@@ -39,4 +39,9 @@ class ApplicationController < ActionController::API
     @shopping_cart = @user.shopping_carts.create
     # session[:shopping_cart_id] = @shopping_cart.id
   end
+  def initializeStripe
+    StripeService.new
+
+  end
+
 end
