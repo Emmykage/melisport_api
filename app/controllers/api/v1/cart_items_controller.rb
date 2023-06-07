@@ -25,7 +25,7 @@ class Api::V1::CartItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1
+  # PATCH/PUT /products/1 
   def update
     # cart_item = CartItem.find(params[:id])
     if @cart_item.update(cart_item_params)

@@ -8,6 +8,7 @@ class Product < ApplicationRecord
   has_many :sizes
   has_many :cloth_sizes
   has_many :shoe_sizes
+  has_one_attached :picture
 
   accepts_nested_attributes_for :cloth_sizes
   accepts_nested_attributes_for :shoe_sizes
