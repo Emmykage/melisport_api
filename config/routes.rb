@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :messages
   get 'levels/index'
   get 'genders/index'
   get 'genderd/index'
@@ -18,8 +19,9 @@ Rails.application.routes.draw do
       resources :user_payments
       resources :order_details
       resources :order_items
-      resources :payments
+      # resources :payments
       resources :payment_intents
+      resources :messages
 
       post "/login", to: "users#login"
 

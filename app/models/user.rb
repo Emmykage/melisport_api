@@ -5,18 +5,14 @@ class User < ApplicationRecord
   has_many :user_payments
   has_many :addresses
   has_many :order_details
+  
 
-  validates :email, :username, presence: true, uniqueness: true
-  # validates :email, uniqueness: { case_sensitive: false }
+  validates :email, :first_name, :last_name, presence: true, uniqueness: true
+  validates :email, uniqueness: { case_sensitive: false }
   validates :password, length: { in: 6..20 }
 
   def full_name
    full_name =  self.first_name + ' ' + self.last_name
   end
 
-  # validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {maximum: 50}
-  # validates :email, presence: true,
-  # uniqueness: { case_sensitive: false },
-  # length: {maximum: 50}, format: { with: ConstantData::VALID_EMAIL_REGEX }, if: :method_name?
-  # validates :phone_no, presence: true
 end
