@@ -30,6 +30,7 @@ class Api::V1::UsersController < ApplicationController
 
     if @user&.authenticate(user_params[:password])
       token = encode_token({ user_id: @user.id })
+      #return 
       render json: { user: {last_name: @user.last_name, first_name: @user.first_name, email: @user.email, role:@user.role }, token:}, status: :ok
 
     else
