@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :order_details
   
+  # validates :email, uniqueness: true, format: { with: /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\z/i, message: ":Please enter a valid email address."}
 
   validates :email, :first_name, :last_name, presence: true
   validates :email, uniqueness: { case_sensitive: false }
