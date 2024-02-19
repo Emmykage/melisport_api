@@ -1,6 +1,10 @@
 require "active_support/core_ext/integer/time"
 
-Rails.application.configure do
+Rails.application.routes.default_url_options = {
+  host: 'http://localhost:3000'
+}
+
+Rails.application.configure do  
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -63,8 +67,8 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :user_name            => <gmail_username>,
-    :password             => "Chemistry-101",
+    :user_name            => "emmiemenz@gmail.com",
+    :password             => "Mechanical-101",
     :authentication       => "plain",
     :enable_starttls_auto => true
   }

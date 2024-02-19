@@ -1,5 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
-  # before_action :authorize
+  # before_action :authorize, only: %i[create destroy update]
   before_action :set_product, only: %i[show update destroy]
 
   # GET /products
@@ -17,6 +17,10 @@ class Api::V1::ProductsController < ApplicationController
   # POST /products
   def create
     @product = Product.new(product_params)
+
+    @product.cloth_sizes = params[:product][:cloth_sizes].split(',').map(&:strip) if params[:product][:cloth_sizes]
+    @product.shoe_sizes = params[:product][:shoe_sizes].split(',').map(&:strip) if params[:product][:shoe_sizes]
+   
     if @product.save
       render json: @product, status: :created
     else
@@ -53,7 +57,8 @@ class Api::V1::ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight, :size, :tension, :colour, :strung,
-                                    :stiffness, :composition, :description, :price, :sku, :image, :product_category_id, :gender_id, :level_id, cloth_sizes_attributes: [:abbrv], shoe_sizes_attributes: [:abbrv])
+    params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight, :size, :tension, :colour, :strung, :stiffness, :composition, :description, :price, :sku, :image, :photo, :quantity, :product_category_id, :gender_id, :level_id, cloth_sizes: [], shoe_sizes: []
+    # , product_sizes_attributes: [:size, :category,]
+    )
   end
 end

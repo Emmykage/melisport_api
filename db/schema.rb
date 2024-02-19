@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_16_191217) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_04_160244) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "addresses", force: :cascade do |t|
     t.string "city"
@@ -33,14 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_191217) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_cart_items_on_product_id"
     t.index ["shopping_cart_id"], name: "index_cart_items_on_shopping_cart_id"
-  end
-
-  create_table "cloth_sizes", force: :cascade do |t|
-    t.string "abbrv"
-    t.bigint "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_cloth_sizes_on_product_id"
   end
 
   create_table "genders", force: :cascade do |t|
@@ -117,6 +137,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_191217) do
     t.index ["product_id"], name: "index_product_inventories_on_product_id"
   end
 
+  create_table "product_sizes", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.string "size"
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_sizes_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "grip_size"
@@ -131,6 +160,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_191217) do
     t.decimal "price"
     t.string "sku"
     t.string "image"
+    t.string "shoe_sizes", default: [], array: true
+    t.string "cloth_sizes", default: [], array: true
     t.bigint "product_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -145,28 +176,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_191217) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
-  create_table "shoe_sizes", force: :cascade do |t|
-    t.string "abbrv"
-    t.bigint "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_shoe_sizes_on_product_id"
-  end
-
   create_table "shopping_carts", force: :cascade do |t|
     t.integer "total"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_shopping_carts_on_user_id"
-  end
-
-  create_table "sizes", force: :cascade do |t|
-    t.string "abbrv"
-    t.bigint "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_sizes_on_product_id"
   end
 
   create_table "user_payments", force: :cascade do |t|
@@ -193,21 +208,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_191217) do
     t.integer "stripe_customer_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
-  add_foreign_key "cloth_sizes", "products"
   add_foreign_key "order_details", "users"
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"
   add_foreign_key "payment_details", "order_details"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_inventories", "products"
+  add_foreign_key "product_sizes", "products"
   add_foreign_key "products", "genders"
   add_foreign_key "products", "levels"
   add_foreign_key "products", "product_categories"
-  add_foreign_key "shoe_sizes", "products"
   add_foreign_key "shopping_carts", "users"
-  add_foreign_key "sizes", "products"
   add_foreign_key "user_payments", "users"
 end

@@ -14,6 +14,9 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.decimal :price
       t.string :sku
       t.string :image
+      t.string :shoe_sizes, array: true, default: [] # Add shoe_sizes column as an array
+      t.string :cloth_sizes, array: true, default: [] # Add shoe_sizes column as an array
+
     
 
 
