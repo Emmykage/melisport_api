@@ -7,11 +7,9 @@ class Product < ApplicationRecord
   has_many :product_images
   has_many :cart_items
   has_many :shopping_carts, through: :cart_items
-  has_many :product_sizes, dependent: :destroy
   
-  accepts_nested_attributes_for :product_sizes, allow_destroy: true
 
-  validates :name, :description, :image, :price, presence: true
+  validates :name, :description, :price, presence: true
 
   def photo_url
     Rails.application.routes.url_helpers.url_for(photo) if photo.attached?
