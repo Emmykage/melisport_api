@@ -137,15 +137,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_04_160244) do
     t.index ["product_id"], name: "index_product_inventories_on_product_id"
   end
 
-  create_table "product_sizes", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.string "size"
-    t.string "category"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_product_sizes_on_product_id"
-  end
-
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "grip_size"
@@ -219,7 +210,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_04_160244) do
   add_foreign_key "payment_details", "order_details"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_inventories", "products"
-  add_foreign_key "product_sizes", "products"
   add_foreign_key "products", "genders"
   add_foreign_key "products", "levels"
   add_foreign_key "products", "product_categories"
