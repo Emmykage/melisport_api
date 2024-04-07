@@ -27,12 +27,16 @@ class Api::V1::UsersController < ApplicationController
 
   def login
     @user = User.find_by(email: user_params[:email])
-    puts user_params[:email]
 
+    
     if @user&.authenticate(user_params[:password])
+
+      # temporary confirm by user login
+      @user.confirmed_at = Time.now
+
       token = encode_token({ user_id: @user.id })
       #return 
-      render json: { user: {last_name: @user.last_name, first_name: @user.first_name, email: @user.email, role:@user.role }, token:}, status: :ok
+      render json: { user: {last_name: @user.last_name, first_name: @user.first_name, email: @user.email, role:@user.role, confirmed_at: @user.confirmed_at }, token:}, status: :ok
 
     else
       render json: { error: 'Invalid username or password' }, status: :unprocessable_entity

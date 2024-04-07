@@ -21,4 +21,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
+Adding config/master.key to store the encryption key: f683deb3718ad829d84d7124fb558232
+
 * ...
