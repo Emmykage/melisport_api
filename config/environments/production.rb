@@ -9,12 +9,13 @@ Rails.application.configure do
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => "premium165.web-hosting.com",
-    :port                 => "25/587",
+    :port                 => 587,
     :user_name            => "support@melisports.com",
     :password             => "support-melisports-2024",
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
+  # server1.web-hosting.com
   # Code is not reloaded between requests.
   config.cache_classes = true
 
