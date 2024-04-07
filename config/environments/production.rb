@@ -9,7 +9,7 @@ Rails.application.configure do
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => "premium165.web-hosting.com",
-    :port                 => 465,
+    :port                 => 25/587,
     :user_name            => "support@melisports.com",
     :password             => "support-melisports-2024",
     :authentication       => "plain",
