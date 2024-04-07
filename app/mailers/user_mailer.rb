@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-    default from: "info@melisports.com"
+    default from: "support@melisports.com"
 
     def confirmation_email(user) 
         # @user = params[:user]
