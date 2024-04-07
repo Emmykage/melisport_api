@@ -17,9 +17,9 @@ class Api::V1::UsersController < ApplicationController
     @user = User.create(user_params)
 
     if @user.valid?
-      UserMailer.with(user: @user).welcome_email.deliver_later
+      # UserMailer.with(user: @user).welcome_email.deliver_later
       # token = encode_token({ user_id: @user.id })
-      render json: { success: "Confirmation email sent", token: }, status: :ok
+      render json: { user: @user,  message: "Confirmation email sent" }, status: :ok
     else
       render json: { error: 'failed to create user' }, status: :unprocessable_entity
     end

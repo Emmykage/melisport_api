@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'passwords/reset_password'
   resources :messages
   get 'levels/index'
   get 'genders/index'
@@ -39,6 +40,8 @@ Rails.application.routes.draw do
       end
     end
 
+    get 'confirm_email', to: "registrations#confirm_email"
+    get 'reset_password', to: "password#reset_password"
 
   # Defines the root path route ("/")
   # root "articles#index"
