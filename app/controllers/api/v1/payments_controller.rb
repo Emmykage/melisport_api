@@ -1,5 +1,5 @@
 class Api::V1::PaymentsController < ApplicationController
-    before_action :StripeService.new
+    # before_action :StripeService.new
     def create
         customer = Stripe::Customer.create({
             :email => Params[:stripeEmail],
