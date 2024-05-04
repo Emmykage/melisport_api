@@ -42,12 +42,10 @@ end
       @user.confirmed_at = Time.now
 
       token = encode_token({ user_id: @user.id })
-      #return
       render json: { user: {last_name: @user.last_name, first_name: @user.first_name, email: @user.email, role:@user.role, confirmed_at: @user.confirmed_at }, token:}, status: :ok
 
     else
       render json: { error: 'Invalid username or password' }, status: :unprocessable_entity
-
     end
   end
 

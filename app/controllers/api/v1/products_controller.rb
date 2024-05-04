@@ -18,9 +18,10 @@ class Api::V1::ProductsController < ApplicationController
   def create
 
     @product = Product.new(product_params)
-    
+
     @product.cloth_sizes = params[:product][:cloth_sizes].split(',').map(&:strip) if params[:product][:cloth_sizes]
     @product.shoe_sizes = params[:product][:shoe_sizes].split(',').map(&:strip) if params[:product][:shoe_sizes]
+    @product.colours = params[:product][:colours].split(',').map(&:strip) if params[:product][:colours]
     if @product.save
       render json: @product, status: :created
     else
@@ -56,18 +57,32 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def product_params
-    if params[:product][:photo] == "undefined"
-    params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight, :size, :tension, :colour, :strung, :stiffness, :composition, :description, :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
-     :cloth_sizes, :shoe_sizes
-    # , product_sizes_attributes: [:size, :category,]
-    )
-    else
-      # binding.b
 
-      params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight, :size, :tension, :colour, :strung, :stiffness, :composition, :description, :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id, :photo,
-      :cloth_sizes, :shoe_sizes
-     )
-    end
+  # def product_params
+  #   if params[:product][:photo] == "undefined"
+  #   params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight, :size, :tension, :colour, :strung, :stiffness, :composition, :description, :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
+  #    :cloth_sizes, :shoe_sizes
+  #   # , product_sizes_attributes: [:size, :category,]
+  #   )
+  #   else
+  #     params.require(:product).permit(:name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight, :size, :tension, :colour, :strung, :stiffness, :composition, :description, :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id, photos:[],
+  #     :cloth_sizes, :shoe_sizes
+  #    )
+  #   end
+  # end
+
+  def product_params
+    permitted_params = params.require(:product).permit(
+      :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
+      :size, :tension, :colour, :strung, :stiffness, :composition, :description,
+      :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
+      :cloth_sizes, :shoe_sizes, :colours
+    )
+
+    if params[:product][:photos] && params[:product][:photos].values.first == "undefined"
+      permitted_params.except(:image).merge(photos: [])
+    else
+      permitted_params.merge(photos: params[:product][:photos].values || [])    end
   end
+
 end
