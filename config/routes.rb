@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "api/v1/products#index"
+
   get 'passwords/reset_password'
   resources :messages
   get 'levels/index'
@@ -6,7 +8,7 @@ Rails.application.routes.draw do
   get 'genderd/index'
   resources :images
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
- 
+
   namespace :api do
     namespace :v1 do
       resources :users
@@ -32,10 +34,10 @@ Rails.application.routes.draw do
       delete 'clear_cart', to: 'cart_items#delete_all'
       post 'search', to: 'products#search'
       # patch 'cart_item/:id/:data' to: 'shopping_cart#creat'
-      
+
 
       # post "add_cart", to: "cart_items#create"
-      
+
 
       end
     end
