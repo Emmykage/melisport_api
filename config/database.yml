@@ -73,5 +73,7 @@ test:
 production:
   <<: *default
   database: melisport_api_production
+
+  url: <%= ENV['DATABASE_URL'] %>
   # username: melisport_api
   # password: <%= ENV["MELISPORT_API_DATABASE_PASSWORD"] %>
