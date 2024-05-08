@@ -31,6 +31,9 @@ class Api::V1::ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
+    @product.cloth_sizes = params[:product][:cloth_sizes].split(',').map(&:strip) if params[:product][:cloth_sizes]
+    @product.shoe_sizes = params[:product][:shoe_sizes].split(',').map(&:strip) if params[:product][:shoe_sizes]
+    @product.colours = params[:product][:colours].split(',').map(&:strip) if params[:product][:colours]
     if @product.update(product_params)
       render json: @product
     else
@@ -54,6 +57,8 @@ class Api::V1::ProductsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_product
     @product = Product.find(params[:id])
+
+
   end
 
   # Only allow a list of trusted parameters through.
@@ -79,10 +84,15 @@ class Api::V1::ProductsController < ApplicationController
       :cloth_sizes, :shoe_sizes, :colours
     )
 
-    if params[:product][:photos] && params[:product][:photos].values.first == "undefined"
-      permitted_params.except(:image).merge(photos: [])
+    if params[:product][:photos].nil?
+      permitted_params
+
+    elsif params[:product][:photos] && params[:product][:photos].values.first == "undefined"
+      permitted_params.merge(photos: [])
+
     else
-      permitted_params.merge(photos: params[:product][:photos].values || [])    end
+      permitted_params.merge(photos: params[:product][:photos].values || [])
+    end
   end
 
 end
