@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 
 Rails.application.routes.default_url_options = {
-  host: 'melisports.com'
+  host: 'melisports-b5453615f37a.herokuapp.com'
 }
 
 Rails.application.configure do
