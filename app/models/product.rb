@@ -10,6 +10,7 @@ class Product < ApplicationRecord
 
 
   validates :name, :description, :price, :sku, :ms_code, presence: true
+  validates :ms_code, uniqueness: true
 
   def photo_urls
     photos.map do |photo|
