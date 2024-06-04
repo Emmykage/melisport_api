@@ -9,7 +9,7 @@ class Product < ApplicationRecord
   has_many :shopping_carts, through: :cart_items
 
 
-  validates :name, :description, :price, presence: true
+  validates :name, :description, :price, :sku, :ms_code, presence: true
 
   def photo_urls
     photos.map do |photo|
