@@ -17,11 +17,10 @@ class Api::V1::ProductCategoriesController < ApplicationController
   # POST /product_categories
   def create
     @product_category = ProductCategory.new(product_category_params)
-
     if @product_category.save
       render json: @product_category, status: :created
     else
-      render json: @product_category.errors, status: :unprocessable_entity
+      render json: {message: @product_category.errors}, status: :unprocessable_entity
     end
   end
 
