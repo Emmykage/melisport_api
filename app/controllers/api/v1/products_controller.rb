@@ -37,7 +37,7 @@ class Api::V1::ProductsController < ApplicationController
     if @product.update(product_params)
       render json: @product
     else
-      render json: @product.errors.full_messages.to_sentence, status: :unprocessable_entity
+      render json: {message: @product.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
 
