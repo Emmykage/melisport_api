@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_19_104408) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_21_224332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -166,6 +166,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_19_104408) do
     t.integer "quantity"
     t.string "colours", default: [], array: true
     t.string "ms_code"
+    t.string "grip_sizes", default: [], array: true
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"

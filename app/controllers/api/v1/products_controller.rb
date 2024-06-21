@@ -21,6 +21,7 @@ class Api::V1::ProductsController < ApplicationController
 
     @product.cloth_sizes = params[:product][:cloth_sizes].split(',').map(&:strip) if params[:product][:cloth_sizes]
     @product.shoe_sizes = params[:product][:shoe_sizes].split(',').map(&:strip) if params[:product][:shoe_sizes]
+    @product.grip_sizes = params[:product][:grip_sizes].split(',').map(&:strip) if params[:product][:grip_sizes]
     @product.colours = params[:product][:colours].split(',').map(&:strip) if params[:product][:colours]
     if @product.save
       render json: @product, status: :created
@@ -81,7 +82,7 @@ class Api::V1::ProductsController < ApplicationController
       :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
       :size, :tension, :colour, :strung, :stiffness, :composition, :description,
       :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
-      :cloth_sizes, :shoe_sizes, :colours, :ms_code
+      :cloth_sizes, :shoe_sizes, :grip_sizes, :colours, :ms_code
     )
 
     if params[:product][:photos].nil?
