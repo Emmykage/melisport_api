@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :order_details
 
+ before_create :downcase_email
+
+
   before_create :generate_confirmation_token
   after_create :send_confirmation_email
 
@@ -43,6 +46,12 @@ class User < ApplicationRecord
   def skip_email_validation?
     skip_email_validation
   end
+
+  def downcase_email
+    self.email = email.downcase if email.present?
+
+  end
+
 
   def skip_password_validation?
     skip_password_validation

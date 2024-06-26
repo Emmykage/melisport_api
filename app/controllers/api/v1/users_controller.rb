@@ -72,6 +72,9 @@ end
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:username, :first_name, :last_name, :email, :phone_no, :password, :role,)
+
+    permitted_params = params.require(:user).permit(:username, :first_name, :last_name, :email, :phone_no, :password, :role)
+    permitted_params[:email] = permitted_parameter[:email].downcase if permitted_parameter[:email].present?
+    permitted_params
   end
 end
