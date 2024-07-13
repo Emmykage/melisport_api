@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   # serialize :cloth_sizes, Array
   has_many_attached :photos
   belongs_to :product_category
+  belongs_to :sport_category, optional: true
+
   belongs_to :gender, optional: true
   belongs_to :level, optional: true
   has_many :product_images

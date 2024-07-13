@@ -11,12 +11,17 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users
+      resources :users do
+        collection do
+          post :password_reset
+        end
+      end
       resources :products
       resources :addresses
       resources :cart_items
       resources :shopping_carts
       resources :product_categories
+      resources :sport_categories
       resources :levels
       resources :genders
       resources :user_payments

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_21_224332) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_12_165529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -167,9 +167,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_21_224332) do
     t.string "colours", default: [], array: true
     t.string "ms_code"
     t.string "grip_sizes", default: [], array: true
+    t.uuid "sport_category_id"
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
+    t.index ["sport_category_id"], name: "index_products_on_sport_category_id"
   end
 
   create_table "shopping_carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -178,6 +180,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_21_224332) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_shopping_carts_on_user_id"
+  end
+
+  create_table "sport_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -223,6 +231,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_21_224332) do
   add_foreign_key "products", "genders"
   add_foreign_key "products", "levels"
   add_foreign_key "products", "product_categories"
+  add_foreign_key "products", "sport_categories"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "user_payments", "users"
 end

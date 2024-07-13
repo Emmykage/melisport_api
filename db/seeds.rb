@@ -1,5 +1,6 @@
 user_one = User.create(first_name: "Morris", last_name: "Menanya", phone_no: '07064334160', email: "emmiemenz@gmail.com", role: "admin", password: "chemistry101" )
 
+sport_category = SportCategory.create([{name: "Padel"}, {name: "Tennis"}, {name: "Badminton"}])
 genders = Gender.create([{name: "men"}, {name: "women"}])
 levels = Level.create([{stage: "professional"}, {stage: "intermediate"}, {stage: "beginner"}, {stage: "junior"}])
 categories = ProductCategory.create([{name: "racquet", description: "For your first time on court to collecting titles on the pro tour, Babolat has a tennis racquet for every player. Babolat tennis racquets are designed to help you play your best and enjoy the game. We make tennis racquets for men, women, juniors & kids of all ages and abilities. Join millions of players around the world and check out the most popular Babolat tennis racquets like the spin producing Pure Aero, the power generating Pure Drive, or the control oriented Pure Strike. Not convinced? Ask Rafael Nadal, Dominic Thiem, Sofia Kenin, Li Na, and Kim Clijsters, or any other Babolat player."},

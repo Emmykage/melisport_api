@@ -4,5 +4,6 @@ class ProductSerializer < ActiveModel::Serializer
   belongs_to :product_category
   belongs_to :gender
   belongs_to :level
+  belongs_to :sport_category
 
 end

@@ -49,6 +49,17 @@ end
     end
   end
 
+  def password_reset
+    @user = find_by(email: params[:user][:email])
+    @user.generate_password_token
+    UserMailer.password_reset_email(@user).deliver_later
+
+
+
+
+  end
+
+
   # PATCH/PUT /user/1
   def update
     if @user.update(user_params.merge(skip_email_validation: true, skip_password_validation: true))

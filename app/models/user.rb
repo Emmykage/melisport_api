@@ -30,6 +30,11 @@ class User < ApplicationRecord
 
   end
 
+  def generate_password_token
+    self.reset_password_token = SecureRandom.hex(10)
+    self.reset_password_sent_at = Time.now
+    save
+  end
 
 
   private
@@ -45,7 +50,7 @@ class User < ApplicationRecord
   end
   def skip_email_validation?
     skip_email_validation
-  end
+  endpassggp
 
   def downcase_email
     self.email = email.downcase if email.present?

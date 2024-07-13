@@ -82,7 +82,7 @@ class Api::V1::ProductsController < ApplicationController
       :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
       :size, :tension, :colour, :strung, :stiffness, :composition, :description,
       :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
-      :cloth_sizes, :shoe_sizes, :grip_sizes, :colours, :ms_code
+      :cloth_sizes, :shoe_sizes, :grip_sizes, :colours, :ms_code, :sport_category_id
     )
 
     if params[:product][:photos].nil?
