@@ -50,7 +50,7 @@ class User < ApplicationRecord
   end
   def skip_email_validation?
     skip_email_validation
-  endpassggp
+  end
 
   def downcase_email
     self.email = email.downcase if email.present?
