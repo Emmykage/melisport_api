@@ -50,12 +50,9 @@ end
   end
 
   def password_reset
-    @user = find_by(email: params[:user][:email])
+    @user = User.find_by(email: params[:user][:email])
     @user.generate_password_token
     UserMailer.password_reset_email(@user).deliver_later
-
-
-
 
   end
 
@@ -85,7 +82,7 @@ end
   def user_params
 
     permitted_params = params.require(:user).permit(:username, :first_name, :last_name, :email, :phone_no, :password, :role)
-    permitted_params[:email] = permitted_parameter[:email].downcase if permitted_parameter[:email].present?
+    permitted_params[:email] = permitted_params[:email].downcase if permitted_params[:email].present?
     permitted_params
   end
 end
