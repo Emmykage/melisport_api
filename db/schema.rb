@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_12_165529) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_26_135846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -168,6 +168,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_12_165529) do
     t.string "ms_code"
     t.string "grip_sizes", default: [], array: true
     t.uuid "sport_category_id"
+    t.integer "status", default: 0
+    t.string "player_type"
+    t.string "head_shape"
+    t.string "recommended_grip"
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"

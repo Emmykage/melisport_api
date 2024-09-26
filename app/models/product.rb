@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
   # serialize :cloth_sizes, Array
+
+  enum :status, {active: 0, inactive: 1}
   has_many_attached :photos
   belongs_to :product_category
   belongs_to :sport_category, optional: true
