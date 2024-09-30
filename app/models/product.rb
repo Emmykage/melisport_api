@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   # serialize :cloth_sizes, Array
+  has_rich_text :description_body
 
   enum :status, {active: 0, inactive: 1}
   has_many_attached :photos
