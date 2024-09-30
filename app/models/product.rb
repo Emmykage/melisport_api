@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   has_many :shopping_carts, through: :cart_items
 
 
-  validates :name, :description, :price, :sku, :ms_code, presence: true
+  validates :name, :description_body, :price, :sku, :ms_code, presence: true
   validates :ms_code, uniqueness: true
 
   def photo_urls
