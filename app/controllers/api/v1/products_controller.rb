@@ -5,7 +5,6 @@ class Api::V1::ProductsController < ApplicationController
   # GET /products
   def index
     @products = Product.all
-
     render json: @products
   end
 
@@ -35,9 +34,12 @@ class Api::V1::ProductsController < ApplicationController
     @product.cloth_sizes = params[:product][:cloth_sizes].split(',').map(&:strip) if params[:product][:cloth_sizes]
     @product.shoe_sizes = params[:product][:shoe_sizes].split(',').map(&:strip) if params[:product][:shoe_sizes]
     @product.colours = params[:product][:colours].split(',').map(&:strip) if params[:product][:colours]
+
     if @product.update(product_params)
       render json: @product
     else
+      # logger.debug @product.errors.full_messages
+
       render json: {message: @product.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
@@ -82,7 +84,7 @@ class Api::V1::ProductsController < ApplicationController
       :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
       :size, :tension, :colour, :strung, :stiffness, :composition, :description, :description_body,
       :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
-      :cloth_sizes, :shoe_sizes, :grip_sizes, :colours, :ms_code, :sport_category_id
+      :cloth_sizes, :shoe_sizes, :grip_sizes, :colours, :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness
     )
 
     if params[:product][:photos].nil?
