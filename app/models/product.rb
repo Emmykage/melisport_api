@@ -17,6 +17,20 @@ class Product < ApplicationRecord
   validates :name, :description_body, :price, :sku, :ms_code, presence: true
   validates :ms_code, uniqueness: true
 
+
+
+
+  def new_product
+
+  if (Time.now - self.created_at) / (60 * 60 * 24) < 30
+    true
+  else
+    false
+  end
+
+  end
+
+
   def photo_urls
     photos.map do |photo|
     Rails.application.routes.url_helpers.url_for(photo)

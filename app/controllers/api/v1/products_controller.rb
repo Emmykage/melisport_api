@@ -8,6 +8,14 @@ class Api::V1::ProductsController < ApplicationController
     render json: @products
   end
 
+
+  def new_arrivals
+    # @products = Product.all.select(&:new_product)
+    @products = Product.where('created_at >= ?', 30.days.ago).order(created_at: desc )
+    render json: @products
+  end
+
+
   # GET /products/1
   def show
     render json: @product

@@ -16,7 +16,12 @@ Rails.application.routes.draw do
           post :password_reset
         end
       end
-      resources :products
+      resources :products do
+        collection do
+          get :new_arrivals
+        end
+
+      end
       resources :addresses
       resources :cart_items
       resources :shopping_carts
