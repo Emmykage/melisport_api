@@ -1,5 +1,4 @@
 class Product < ApplicationRecord
-  # serialize :cloth_sizes, Array
   has_rich_text :description_body
 
   enum :status, {active: 0, inactive: 1}
@@ -22,7 +21,6 @@ class Product < ApplicationRecord
 
   def new_product
    created_at >= 30.days.ago
-
   end
 
 
