@@ -21,12 +21,7 @@ class Product < ApplicationRecord
 
 
   def new_product
-
-  if (Time.now - self.created_at) / (60 * 60 * 24) < 30
-    true
-  else
-    false
-  end
+   created_at >= 30.days.ago
 
   end
 

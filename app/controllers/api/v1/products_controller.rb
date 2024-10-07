@@ -4,14 +4,20 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
+      @products = Rails.cache.fetch("products/all", expires_in: 4.hours) do
+      Product.all.to_a
+    end
+
     render json: @products
+
   end
 
 
   def new_arrivals
-    # @products = Product.all.select(&:new_product)
-    @products = Product.where('created_at >= ?', 30.days.ago).order(created_at: desc )
+    @products = Rails.cache.fetch("new arrivals", expires_in: 4.hours) do
+
+      Product.where('created_at >= ?', 30.days.ago).order(created_at: :desc ).to_a
+    end
     render json: @products
   end
 

@@ -4,7 +4,7 @@ Rails.application.routes.default_url_options = {
   host: 'http://localhost:3000'
 }
 
-Rails.application.configure do  
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -29,7 +29,7 @@ Rails.application.configure do
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
   else
-    config.action_controller.perform_caching = false
+    config.action_controller.perform_caching = true
 
     config.cache_store = :null_store
   end
