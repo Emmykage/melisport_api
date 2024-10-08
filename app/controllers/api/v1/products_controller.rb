@@ -6,16 +6,19 @@ class Api::V1::ProductsController < ApplicationController
   def index
       @products = Rails.cache.fetch("products/all", expires_in: 4.hours) do
       Product.all.to_a
-    end
+      # Product.all.as_json #cache  serialized json instead of actual product data onject to avoid type error when making changes
 
-    render json: @products
+      end
 
+      render json: {
+        data: ActiveModelSerializers::SerializableResource.new(@products)
+      },
+        status: :ok
   end
 
 
   def new_arrivals
     @products = Rails.cache.fetch("new arrivals", expires_in: 4.hours) do
-
       Product.where('created_at >= ?', 30.days.ago).order(created_at: :desc ).to_a
     end
     render json: @products
