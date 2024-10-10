@@ -46,7 +46,7 @@ end
       @user.confirm_user
 
       token = encode_token({ user_id: @user.id })
-      render json: {data: @user.slice(:id, :role, :first_name, :last_name, :confirmed_at).merge(confirmed: @user.confirmed), token: token, message: "Login Successful"}, status: :ok
+      render json: {data: @user.slice(:id, :role, :first_name, :last_name).merge(confirmed: @user.confirmed), token: token, message: "Login Successful"}, status: :ok
 
     else
       render json: { message: 'Invalid username or password' }, status: :unprocessable_entity
