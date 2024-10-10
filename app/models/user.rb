@@ -19,16 +19,28 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :password, length: { in: 6..20 }, unless: -> { skip_password_validation? }
 
-
-  # attr_accessor :skip_email_validation, :skip_password_validation
   def full_name
-   full_name =  self.first_name + ' ' + self.last_name
+   "#{first_name}  #{last_name}"
   end
 
-  def confirm
-    self.confirmed_at.present?
+
+  def confirm_user
+    if confirmed_at.blank?
+      # self.skip_password_validation = true
+      update_column(:confirmed_at, Time.now)  # Directly update the column
+    #  self.confirmed_at = Time.now
+    #  save
+    end
 
   end
+
+
+  def confirmed
+    confirmed_at.present?
+
+  end
+
+
 
   def generate_password_token
     self.reset_password_token = SecureRandom.hex(10)
@@ -59,6 +71,6 @@ class User < ApplicationRecord
 
 
   def skip_password_validation?
-    skip_password_validation
+    !!skip_password_validation
   end
 end

@@ -40,7 +40,7 @@ class Api::V1::ProductsController < ApplicationController
     @product.grip_sizes = params[:product][:grip_sizes].split(',').map(&:strip) if params[:product][:grip_sizes]
     @product.colours = params[:product][:colours].split(',').map(&:strip) if params[:product][:colours]
     if @product.save
-      render json: @product, status: :created
+      render json: {data: @productm, message: "Product Successfully Created"}, status: :created
     else
       render json: {message: @product.errors}, status: :unprocessable_entity
     end

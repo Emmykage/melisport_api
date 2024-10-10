@@ -13,8 +13,15 @@ class Product < ApplicationRecord
   has_many :shopping_carts, through: :cart_items
 
 
-  validates :name, :description_body, :price, :sku, :ms_code, presence: true
+  validates :name, :description_body, :sku, :ms_code, presence: true
   validates :ms_code, uniqueness: true
+  validates :price, presence: true,  if: :is_active?
+
+
+
+
+
+
 
 
 
@@ -30,4 +37,14 @@ class Product < ApplicationRecord
 
     end if photos.attached?
   end
+
+
+  private
+
+  def is_active?
+    # status == "active"
+
+  end
+
+
 end

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
-  before_action :authorize, only: %i[showUser]
+  before_action :authorize, only: %i[showUser userProfile]
 
   # GET /users
   def index
@@ -14,9 +14,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def showUser
-
   render json: @user
 end
+
+  def userProfile
+    render json: {data: ActiveModelSerializers::SerializableResource.new(@user)}, status: :ok
+  end
+
 
 
   # POST /users
@@ -39,13 +43,13 @@ end
     if @user&.authenticate(user_params[:password])
 
       # temporary confirm by user login
-      @user.confirmed_at = Time.now
+      @user.confirm_user
 
       token = encode_token({ user_id: @user.id })
-      render json: { user: {last_name: @user.last_name, first_name: @user.first_name, email: @user.email, role:@user.role, confirmed_at: @user.confirmed_at }, token:}, status: :ok
+      render json: {data: @user.slice(:id, :role, :first_name, :last_name, :confirmed_at).merge(confirmed: @user.confirmed), token: token, message: "Login Successful"}, status: :ok
 
     else
-      render json: { error: 'Invalid username or password' }, status: :unprocessable_entity
+      render json: { message: 'Invalid username or password' }, status: :unprocessable_entity
     end
   end
 
