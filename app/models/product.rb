@@ -13,9 +13,9 @@ class Product < ApplicationRecord
   has_many :shopping_carts, through: :cart_items
 
 
-  validates :name, :description_body, :sku, :ms_code, presence: true
-  validates :ms_code, uniqueness: true
-  validates :price, presence: true,  if: :is_active?
+  validates :name, :description_body, presence: true
+  validates :ms_code, uniqueness: true, presence: true, if: :is_active?
+  validates :price, :sku,  presence: true,  if: :is_active?
 
 
 
