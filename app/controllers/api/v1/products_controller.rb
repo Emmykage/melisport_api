@@ -5,7 +5,7 @@ class Api::V1::ProductsController < ApplicationController
   # GET /products
   def index
       @products = Rails.cache.fetch("products/all", expires_in: 4.hours) do
-      # Product.includes(:photos_attachments, :rich_text_description_body).all.to_a
+      # Product.includes(:photos_attachments, :rich_text_description_body).all.to_a #dont use this
       Product.includes({photos_attachments: :blob}, :rich_text_description_body).all.to_a
 
       # Product.all.as_json #cache  serialized json instead of actual product data onject to avoid type error when making changes
