@@ -1,8 +1,8 @@
 class Product < ApplicationRecord
   has_rich_text :description_body
+  has_many_attached :photos
 
   enum :status, {active: 0, inactive: 1}
-  has_many_attached :photos
   belongs_to :product_category
   belongs_to :sport_category, optional: true
 
@@ -42,9 +42,17 @@ class Product < ApplicationRecord
   private
 
   def is_active?
-    # status == "active"
+    status == "active"
 
   end
+
+# safer method
+# The second method is safer and more robust. It ensures that you're only trying to generate URLs for photos that are actually persisted in the database. If some photos fail to save or are still in an invalid state, they will be skipped.
+  # def photo_urls
+  #   photos.map do |photo|
+  #     Rails.application.routes.url_helpers.rails_blob_url(photo, only_path: true) if photo.persisted?
+  #   end.compact
+  # end
 
 
 end
