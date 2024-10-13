@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   has_rich_text :description_body
   has_many_attached :photos
 
+  after_commit :clear_cache, om: [:create, :update, :destroy ]
+
   enum :status, {active: 0, inactive: 1}
   belongs_to :product_category
   belongs_to :sport_category, optional: true
@@ -19,6 +21,10 @@ class Product < ApplicationRecord
 
 
 
+def clear_cache
+  Rails.cache.delete("products/all")
+
+end
 
 
 
