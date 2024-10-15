@@ -6,8 +6,7 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # GET /products
   def index
-    @order_details = OrderDetail.all
-
+    @order_details = @current_user.order_details
     render json: @order_details
   end
 
@@ -18,7 +17,7 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # POST /products
   def create
-    order_detail = @user.order_details.create(order_detail_params)
+    order_detail = @current_user.order_details.create(order_detail_params)
 
     # @order_item = OrderItem.new(order_item_params)
     # @order_item =  OrderItem.create(order_item_params.merge(order_detail_id: order_detail.id))
@@ -57,6 +56,6 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def order_detail_params
-    params.require(:order_detail).permit(:total, order_items_attributes: %i[product_id quantity])
+    params.require(:order_detail).permit(:total, :status, order_items_attributes: %i[product_id quantity amount])
   end
 end

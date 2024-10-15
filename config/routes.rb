@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users do
+        resources :order_details, only: [:show, :index]
         collection do
           post :password_reset
           get :userProfile
@@ -31,8 +32,8 @@ Rails.application.routes.draw do
       resources :levels
       resources :genders
       resources :user_payments
-      resources :order_details
-      resources :order_items
+      resources :order_details, only: %i[ create]
+
       # resources :payments
       resources :payment_intents
       resources :messages

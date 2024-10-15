@@ -12,6 +12,7 @@ class ApplicationController < ActionController::API
     return unless auth_header
 
     token = auth_header.split[1]
+
     begin
       JWT.decode(token, 'secret', true, algorithm: 'HS256')
     rescue JWT::DecodeError
@@ -24,7 +25,7 @@ class ApplicationController < ActionController::API
     return unless decode_token
 
     user_id = decode_token[0]['user_id']
-    @user = User.find_by(id: user_id)
+    @current_user = User.find_by(id: user_id)
   end
 
   def authorize
@@ -33,10 +34,10 @@ class ApplicationController < ActionController::API
   end
 
   def initialize_cart
-    @shopping_cart ||= ShoppingCart.find_by(user_id: @user.id)
+    @shopping_cart ||= ShoppingCart.find_by(user_id: @current_user.id)
     return unless @shopping_cart.nil?
 
-    @shopping_cart = @user.shopping_carts.create
+    @shopping_cart = @current_user.shopping_carts.create
     # session[:shopping_cart_id] = @shopping_cart.id
   end
   def initializeStripe

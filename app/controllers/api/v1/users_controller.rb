@@ -14,11 +14,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def showUser
-  render json: @user
+  render json: @current_user
 end
 
   def userProfile
-    render json: {data: ActiveModelSerializers::SerializableResource.new(@user)}, status: :ok
+    render json: {data: ActiveModelSerializers::SerializableResource.new(@current_user)}, status: :ok
   end
 
 

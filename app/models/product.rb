@@ -13,7 +13,8 @@ class Product < ApplicationRecord
   has_many :product_images
   has_many :cart_items
   has_many :shopping_carts, through: :cart_items
-
+  has_many :order_items
+  has_many :order_details, through: :order_items
 
   validates :name, :description_body, presence: true
   validates :ms_code, uniqueness: true, presence: true, if: :is_active?
