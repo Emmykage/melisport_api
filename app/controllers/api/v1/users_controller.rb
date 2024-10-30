@@ -39,14 +39,14 @@ end
   def login
     @user = User.find_by(email: user_params[:email])
 
-
     if @user&.authenticate(user_params[:password])
+      @user.generate_refresh_token
 
       # temporary confirm by user login
       @user.confirm_user
 
       token = encode_token({ user_id: @user.id })
-      render json: {data: @user.slice(:id, :role, :first_name, :last_name).merge(confirmed: @user.confirmed), token: token, message: "Login Successful"}, status: :ok
+      render json: {data: @user.slice(:id, :role, :first_name, :last_name).merge(confirmed: @user.confirmed), token: {access_token: token, refresh_token: @user.refresh_token}, message: "Login Successful"}, status: :ok
 
     else
       render json: { message: 'Invalid username or password' }, status: :unprocessable_entity

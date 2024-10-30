@@ -34,6 +34,24 @@ class User < ApplicationRecord
 
   end
 
+  def generate_refresh_token
+    if self.refresh_token.nil?
+      self.refresh_token = SecureRandom.hex(14)
+      save(validate: false)
+    end
+  end
+
+  # def generate_refresh_token
+  #  refresh_token =  encode_token({user_id: id})
+  #  self.refresh_token = refresh_token
+
+  #  save(validation: false)
+
+
+  # end
+
+
+
 
   def confirmed
     confirmed_at.present?

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       resources :messages
 
       post "/login", to: "users#login"
-
+      get "/refresh_token/:refresh_token", to: "refresh_tokens#generate_refresh_token"
       get 'shopping_cart', to: 'shopping_cart#show'
       post 'shopping_cart/add', to: 'shopping_cart#add'
       post 'shopping_cart/remove'
