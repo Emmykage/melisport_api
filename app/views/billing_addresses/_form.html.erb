@@ -1,0 +1,52 @@
+<%= form_with(model: billing_address) do |form| %>
+  <% if billing_address.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(billing_address.errors.count, "error") %> prohibited this billing_address from being saved:</h2>
+
+      <ul>
+        <% billing_address.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :phone_no, style: "display: block" %>
+    <%= form.text_field :phone_no %>
+  </div>
+
+  <div>
+    <%= form.label :street, style: "display: block" %>
+    <%= form.text_field :street %>
+  </div>
+
+  <div>
+    <%= form.label :city, style: "display: block" %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :postal_code, style: "display: block" %>
+    <%= form.text_field :postal_code %>
+  </div>
+
+  <div>
+    <%= form.label :order_detail_id, style: "display: block" %>
+    <%= form.text_field :order_detail_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

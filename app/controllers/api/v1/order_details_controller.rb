@@ -2,7 +2,7 @@ class Api::V1::OrderDetailsController < ApplicationController
   # before_action :initialize_cart
   before_action :authorize
 
-  before_action :set_order_detail, only: %i[show update destroy]
+  before_action :set_order_detail, only: %i[update destroy]
 
   # GET /products
   def index
@@ -12,7 +12,8 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # GET /order_details/1
   def show
-    render json: @order_detail
+    @order_detail = OrderDetail.includes(order_items: :product).find(params[:id])
+    render json: {data: OrderDetailSerializer.new(@order_detail).as_json}
   end
 
   # POST /products
@@ -21,11 +22,12 @@ class Api::V1::OrderDetailsController < ApplicationController
 
     # @order_item = OrderItem.new(order_item_params)
     # @order_item =  OrderItem.create(order_item_params.merge(order_detail_id: order_detail.id))
-    puts order_detail.id
+
+
     if order_detail.valid?
-      render json: order_detail, status: :created
+      render json: {data: OrderDetailSerializer.new(order_detail).as_json}, status: :created
     else
-      render json: order_detail.errors, status: :unprocessable_entity
+      render json: {message: order_detail.errors}, status: :unprocessable_entity
     end
   end
 
@@ -56,6 +58,6 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def order_detail_params
-    params.require(:order_detail).permit(:total, :status, order_items_attributes: %i[product_id quantity amount])
+    params.require(:order_detail).permit(:total, :status, :payment_method, order_items_attributes: %i[product_id quantity amount], billing_address_attributes: %i[name email city street phone_no postal_code ] )
   end
 end

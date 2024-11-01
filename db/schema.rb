@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_21_192456) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_31_130259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -64,6 +64,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_21_192456) do
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
+  create_table "billing_addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone_no"
+    t.string "street"
+    t.string "city"
+    t.string "postal_code"
+    t.uuid "order_detail_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_detail_id"], name: "index_billing_addresses_on_order_detail_id"
+  end
+
   create_table "cart_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "quantity"
     t.uuid "shopping_cart_id", null: false
@@ -99,6 +112,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_21_192456) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
+    t.integer "payment_method", default: 0
+    t.string "invoice_number"
     t.index ["user_id"], name: "index_order_details_on_user_id"
   end
 
@@ -238,6 +253,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_21_192456) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
+  add_foreign_key "billing_addresses", "order_details"
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
   add_foreign_key "order_details", "users"

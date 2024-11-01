@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :billing_addresses
   root "api/v1/products#index"
 
   get 'passwords/reset_password'
@@ -11,8 +12,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :order_details, only: [:show, :index]
+
       resources :users do
-        resources :order_details, only: [:show, :index]
         collection do
           post :password_reset
           get :userProfile

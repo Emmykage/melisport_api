@@ -66,13 +66,15 @@ end
     if @user.update(user_params.merge(skip_email_validation: true, skip_password_validation: true))
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json:{message: @user.errors}, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1
   def destroy
     @user.destroy
+    render json:{message: "deleted Successfully"}, status: :ok
+
   end
 
   private

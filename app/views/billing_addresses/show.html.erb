@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @billing_address %>
+
+<div>
+  <%= link_to "Edit this billing address", edit_billing_address_path(@billing_address) %> |
+  <%= link_to "Back to billing addresses", billing_addresses_path %>
+
+  <%= button_to "Destroy this billing address", @billing_address, method: :delete %>
+</div>
