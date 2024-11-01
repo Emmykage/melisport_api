@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   # before_action :initialize_cart
   # include ::ActionController::Cookies
-  def encode_token(payload, exp = 10.seconds.from_now)
+  def encode_token(payload, exp = 10.hours.from_now)
     payload[:exp] = exp.to_i
     JWT.encode(payload, 'secret')
   end
