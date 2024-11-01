@@ -20,9 +20,6 @@ class Api::V1::OrderDetailsController < ApplicationController
   def create
     order_detail = @current_user.order_details.create(order_detail_params)
 
-    # @order_item = OrderItem.new(order_item_params)
-    # @order_item =  OrderItem.create(order_item_params.merge(order_detail_id: order_detail.id))
-
 
     if order_detail.valid?
       render json: {data: OrderDetailSerializer.new(order_detail).as_json}, status: :created
