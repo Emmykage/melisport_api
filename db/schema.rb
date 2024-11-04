@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_31_130259) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_03_121830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_31_130259) do
     t.uuid "order_detail_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "state"
     t.index ["order_detail_id"], name: "index_billing_addresses_on_order_detail_id"
   end
 
@@ -108,7 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_31_130259) do
 
   create_table "order_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.decimal "total"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"

@@ -1,6 +1,6 @@
 class OrderDetail < ApplicationRecord
 
-  belongs_to :user
+  belongs_to :user, optional: true
   has_one :payment_detail
   has_many :order_items
   has_one :billing_address
@@ -18,7 +18,7 @@ class OrderDetail < ApplicationRecord
 
 
   def generate_invoice
-    self.invoice_number = "555#{SecureRandom.random_number(10**5).to_s.rjust(5, '0')}"
+    self.invoice_number = "555#{SecureRandom.random_number(10**5).to_s.rjust(5, '0')}-E"
 
   end
 

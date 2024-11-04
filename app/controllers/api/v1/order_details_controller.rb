@@ -1,6 +1,6 @@
 class Api::V1::OrderDetailsController < ApplicationController
   # before_action :initialize_cart
-  before_action :authorize
+  before_action :authorize, except: %i[create]
 
   before_action :set_order_detail, only: %i[update destroy]
 
@@ -18,10 +18,14 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # POST /products
   def create
-    order_detail = @current_user.order_details.create(order_detail_params)
 
+    order_detail = if @current_user.present?
+      @current_user.order_details.create(order_detail_params)
+    else
+      OrderDetail.create(order_detail_params)
+    end
 
-    if order_detail.valid?
+   if order_detail.valid?
       render json: {data: OrderDetailSerializer.new(order_detail).as_json}, status: :created
     else
       render json: {message: order_detail.errors}, status: :unprocessable_entity
