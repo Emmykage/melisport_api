@@ -2,8 +2,8 @@ class OrderDetail < ApplicationRecord
 
   belongs_to :user, optional: true
   has_one :payment_detail
-  has_many :order_items
-  has_one :billing_address
+  has_many :order_items, dependent: :destroy
+  has_one :billing_address, dependent: :destroy
   has_many :products, through: :order_items
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :billing_address

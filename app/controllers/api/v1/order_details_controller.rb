@@ -6,9 +6,10 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # GET /products
   def index
-    @order_details = @current_user.order_details
-    render json: @order_details
-  end
+
+    @order_details = OrderDetail.includes({order_items: [:product]}, :billing_address).all
+    render json: {data:  ActiveModelSerializers::SerializableResource.new(@order_details)}, status: :ok
+   end
 
   # GET /order_details/1
   def show
@@ -35,15 +36,18 @@ class Api::V1::OrderDetailsController < ApplicationController
   # PATCH/PUT /products/1
   def update
     if @order_detail.update(order_detail_params)
-      render json: @order_detail
+
+      render json: {data: OrderDetailSerializer.new(@order_detail).as_json}, status: :ok
+
     else
-      render json: @order_detail.errors, status: :unprocessable_entity
+      render json:{messsage: @order_detail.errors}, status: :unprocessable_entity
     end
   end
 
   # DELETE /products/1
   def destroy
     @order_detail.destroy
+    render json: {message: "Order has been Successfully Deleted"}, status: :ok
   end
 
   private

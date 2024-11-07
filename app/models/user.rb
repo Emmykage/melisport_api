@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :cart_items, through: :shopping_carts
   has_many :user_payments
   has_many :addresses
-  has_many :order_details
+  has_many :order_details, dependent: :destroy
 
  before_create :downcase_email
 

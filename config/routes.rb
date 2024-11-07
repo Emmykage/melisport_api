@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       resources :levels
       resources :genders
       resources :user_payments
-      resources :order_details, only: %i[ create]
+      resources :order_details, only: %i[ create update destroy]
 
       # resources :payments
       resources :payment_intents
