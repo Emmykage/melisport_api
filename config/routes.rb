@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :sport_categories
       resources :levels
       resources :genders
+      resources :statistics
       resources :user_payments
       resources :order_details, only: %i[ create update destroy]
 

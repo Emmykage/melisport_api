@@ -35,6 +35,7 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
+
     if @order_detail.update(order_detail_params)
 
       render json: {data: OrderDetailSerializer.new(@order_detail).as_json}, status: :ok
@@ -63,6 +64,6 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def order_detail_params
-    params.require(:order_detail).permit(:total, :status, :payment_method, order_items_attributes: %i[product_id quantity amount], billing_address_attributes: %i[name email city street phone_no postal_code ] )
+    params.require(:order_detail).permit(:total, :viewed, :status, :payment_method, order_items_attributes: %i[product_id quantity amount], billing_address_attributes: %i[name email city street phone_no postal_code ] )
   end
 end

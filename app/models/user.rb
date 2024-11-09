@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :order_details, dependent: :destroy
 
- before_create :downcase_email
+  before_create :downcase_email
 
 
   before_create :generate_confirmation_token
