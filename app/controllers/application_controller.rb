@@ -41,9 +41,17 @@ class ApplicationController < ActionController::API
     @shopping_cart = @current_user.shopping_carts.create
     # session[:shopping_cart_id] = @shopping_cart.id
   end
+
   def initializeStripe
     StripeService.new
 
+  end
+
+
+  def ensure_super_user
+    unless @current_user&.role == "super-user"
+      render json: { message: 'You are not allowed to perform this operation' }, status: :forbidden
+    end
   end
 
 end

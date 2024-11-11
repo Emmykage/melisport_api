@@ -3,11 +3,12 @@ class Api::V1::OrderDetailsController < ApplicationController
   before_action :authorize, except: %i[create]
 
   before_action :set_order_detail, only: %i[update destroy]
+  before_action :ensure_super_user, only: %i[delete]
 
   # GET /products
   def index
 
-    @order_details = OrderDetail.includes({order_items: [:product]}, :billing_address).all
+    @order_details = OrderDetail.includes({order_items: [:product]}, :billing_address).all.order(created_at: :asc)
     render json: {data:  ActiveModelSerializers::SerializableResource.new(@order_details)}, status: :ok
    end
 
@@ -66,4 +67,6 @@ class Api::V1::OrderDetailsController < ApplicationController
   def order_detail_params
     params.require(:order_detail).permit(:total, :viewed, :status, :payment_method, order_items_attributes: %i[product_id quantity amount], billing_address_attributes: %i[name email city street phone_no postal_code ] )
   end
+
+
 end
