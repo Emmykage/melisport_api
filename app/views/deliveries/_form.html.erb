@@ -1,0 +1,27 @@
+<%= form_with(model: delivery) do |form| %>
+  <% if delivery.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+
+      <ul>
+        <% delivery.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :state, style: "display: block" %>
+    <%= form.text_field :state %>
+  </div>
+
+  <div>
+    <%= form.label :delivery_fee, style: "display: block" %>
+    <%= form.text_field :delivery_fee %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

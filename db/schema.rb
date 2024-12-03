@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_09_085327) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_02_231309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -88,6 +88,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_09_085327) do
     t.index ["shopping_cart_id"], name: "index_cart_items_on_shopping_cart_id"
   end
 
+  create_table "deliveries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "state"
+    t.string "city"
+    t.decimal "delivery_fee"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "genders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -117,6 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_09_085327) do
     t.string "order_number"
     t.boolean "viewed", default: false
     t.datetime "paid_at"
+    t.decimal "delivery_fee"
+    t.decimal "net_total"
     t.index ["user_id"], name: "index_order_details_on_user_id"
   end
 
