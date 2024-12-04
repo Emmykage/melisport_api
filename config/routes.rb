@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
       end
       resources :deliveries
+      resources :reviews
 
       resources :addresses
       resources :cart_items
