@@ -29,7 +29,7 @@ class Api::V1::ReviewsController < ApplicationController
     if @review.update(review_params)
       render json: {data:  @review}, status: :ok
     else
-      render :json {message: @review.errors }, status: :unprocessable_entity
+      render json: {message: @review.errors }, status: :unprocessable_entity
     end
   end
 
