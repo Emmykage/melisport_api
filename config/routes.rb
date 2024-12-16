@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :product_colours
+  resources :colours
+  resources :shoe_sizes
   resources :billing_addresses
   root "api/v1/products#index"
 

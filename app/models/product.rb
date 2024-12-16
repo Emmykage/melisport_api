@@ -15,12 +15,14 @@ class Product < ApplicationRecord
   has_many :shopping_carts, through: :cart_items
   has_many :order_items
   has_many :order_details, through: :order_items
-
+  has_many :shoe_sizes, class_name: "ShoeSize", dependent: :destroy
+  has_many :product_colours, dependent: :destroy
   validates :name, :description_body, presence: true
   validates :ms_code, uniqueness: true, presence: true, if: :is_active?
   validates :price, :sku,  presence: true,  if: :is_active?
 
-
+  accepts_nested_attributes_for :shoe_sizes
+  accepts_nested_attributes_for :product_colours
 
 def clear_cache
   Rails.cache.delete("products/all")
@@ -28,13 +30,12 @@ def clear_cache
 end
 
 
-
-
-
-
-
   def new_product
    created_at >= 30.days.ago
+  end
+
+  def total_qty
+    shoe_sizes.sum(:quantity) + product_colours.sum(:quantity)
   end
 
 

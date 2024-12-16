@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_03_081523) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_11_094531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -159,6 +159,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_03_081523) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "product_colours", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "colour"
+    t.integer "quantity", default: 0
+    t.uuid "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_colours_on_product_id"
+  end
+
   create_table "product_images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "images"
     t.uuid "product_id", null: false
@@ -191,7 +200,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_03_081523) do
     t.decimal "price"
     t.string "sku"
     t.string "image"
-    t.string "shoe_sizes", default: [], array: true
     t.string "cloth_sizes", default: [], array: true
     t.uuid "product_category_id", null: false
     t.datetime "created_at", null: false
@@ -223,6 +231,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_03_081523) do
     t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "shoe_sizes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "size"
+    t.integer "quantity", default: 0
+    t.uuid "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shoe_sizes_on_product_id"
   end
 
   create_table "shopping_carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -284,12 +301,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_03_081523) do
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"
   add_foreign_key "payment_details", "order_details"
+  add_foreign_key "product_colours", "products"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_inventories", "products"
   add_foreign_key "products", "genders"
   add_foreign_key "products", "levels"
   add_foreign_key "products", "product_categories"
   add_foreign_key "products", "sport_categories"
+  add_foreign_key "shoe_sizes", "products"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "user_payments", "users"
 end

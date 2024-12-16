@@ -37,7 +37,7 @@ class Api::V1::ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      render json: {data: @productm, message: "Product Successfully Created"}, status: :created
+      render json: {data: @product, message: "Product Successfully Created"}, status: :created
     else
       render json: {message: @product.errors}, status: :unprocessable_entity
     end
@@ -47,13 +47,15 @@ class Api::V1::ProductsController < ApplicationController
   def update
 
     if @product.update(product_params)
-      render json: @product
+      render json: {data: @product, message: "Product updated Created"}, status: :ok
     else
       # logger.debug @product.errors.full_messages
 
       render json: {message: @product.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
+
+  # def update
 
   # DELETE /products/1
   def destroy
@@ -82,7 +84,7 @@ class Api::V1::ProductsController < ApplicationController
   :size, :tension, :colour, :strung, :stiffness, :composition, :description, :description_body,
   :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
   :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness,
-  cloth_sizes: [], shoe_sizes: [], grip_sizes: [], colours: [],
+  cloth_sizes: [], grip_sizes: [], colours: [], shoe_sizes_attributes: %i[size quantity], product_colours_attributes: %i[color quantity ]
 )
 
     if params[:product][:photos].nil?
