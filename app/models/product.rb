@@ -18,8 +18,8 @@ class Product < ApplicationRecord
   has_many :shoe_sizes, class_name: "ShoeSize", dependent: :destroy
   has_many :product_colours, dependent: :destroy
   validates :name, :description_body, presence: true
-  validates :ms_code, uniqueness: true, presence: true, if: :is_active?
-  validates :price, :sku,  presence: true,  if: :is_active?
+  validates :sku, uniqueness: true, presence: true, if: :is_active?
+  validates :price, :ms_code,  presence: true,  if: :is_active?
 
   accepts_nested_attributes_for :shoe_sizes
   accepts_nested_attributes_for :product_colours
