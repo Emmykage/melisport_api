@@ -57,7 +57,7 @@ end
   end
 
   def update_quantity
-    self.quantity = product_inventories.sum(:quantity) if product_inventories.exists?
+    self.quantity = product_inventories.to_a.sum(&:quantity) if product_inventories.any?
   end
 
 
