@@ -19,7 +19,5 @@ categories = ProductCategory.create([{name: "racquet", description: "For your fi
     all_courts_shoe = Product.create(name: "Jet Tere All Court Men",  rating: 5,  weight: "300", price: 80000, image: "https://media.babolat.com/image/upload/f_auto,q_auto,c_pad,w_1008,h_1008/t_michelin_logo/v1658505676/Product_Media/2023/Soes/30S23649-JET_TERE_ALL_COURT_MEN-1005-1-Exterieur.png", product_category: shoe_category, description: "The Jet Tere is designed for speed (Tere is Māori for speed). Thanks to its understated design and breathable mesh, you'll fly around the court enjoying how light, comfortable and agile this shoe is.", gender: men)
 
 
-    # binding.b
-
     # payment = UserPayment.create(payment_type: "master", provider: "Access Bank", account_no: 004457, user: user_one )
     # payment_detail = PaymentDetail.create(amount: 80000, provider: "access bank", status: :true)

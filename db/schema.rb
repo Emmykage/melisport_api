@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_11_094531) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_30_151704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -181,8 +181,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_11_094531) do
     t.string "sku"
     t.decimal "price"
     t.uuid "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "size"
+    t.string "location"
+    t.string "colour"
     t.index ["product_id"], name: "index_product_inventories_on_product_id"
   end
 
@@ -198,7 +199,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_11_094531) do
     t.string "composition"
     t.text "description"
     t.decimal "price"
-    t.string "sku"
+    t.string "ms_item_code"
     t.string "image"
     t.string "cloth_sizes", default: [], array: true
     t.uuid "product_category_id", null: false

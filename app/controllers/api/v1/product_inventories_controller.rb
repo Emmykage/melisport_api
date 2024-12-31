@@ -47,6 +47,6 @@ class Api::V1::ProductInventoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_inventory_params
-    params.require(:product_inventory).permit(:quantity, :sku, :price, :product_id)
+    params.require(:product_inventory).permit(:quantity, :sku, :price, :location, :product_id)
   end
 end

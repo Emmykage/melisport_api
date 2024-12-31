@@ -82,9 +82,9 @@ class Api::V1::ProductsController < ApplicationController
    permitted_params = params.require(:product).permit(
   :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
   :size, :tension, :colour, :strung, :stiffness, :composition, :description, :description_body,
-  :price, :sku, :image, :quantity, :product_category_id, :gender_id, :level_id,
+  :price, :ms_item_code, :image, :quantity, :product_category_id, :gender_id, :level_id,
   :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness,
-  cloth_sizes: [], grip_sizes: [], colours: [], shoe_sizes_attributes: %i[size quantity], product_colours_attributes: %i[color quantity ]
+  cloth_sizes: [], grip_sizes: [], colours: [], shoe_sizes_attributes: %i[size quantity], product_colours_attributes: %i[color quantity ], product_inventories_attributes: %i[size location colour sku price quantity]
 )
 
     if params[:product][:photos].nil?
