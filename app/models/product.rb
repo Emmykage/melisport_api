@@ -16,13 +16,12 @@ class Product < ApplicationRecord
   has_many :shopping_carts, through: :cart_items
   has_many :order_items
   has_many :order_details, through: :order_items
-  has_many :shoe_sizes, class_name: "ShoeSize", dependent: :destroy
   has_many :product_colours, dependent: :destroy
   validates :name, :description_body, presence: true
   validates :ms_item_code, uniqueness: true, presence: true, if: :is_active?
   validates :price, :ms_code,  presence: true,  if: :is_active?
 
-  accepts_nested_attributes_for :shoe_sizes
+  # accepts_nested_attributes_for :shoe_sizes
   accepts_nested_attributes_for :product_colours
   accepts_nested_attributes_for :product_inventories
 
@@ -35,11 +34,6 @@ end
   def new_product
    created_at >= 30.days.ago
   end
-
-  def total_qty
-    shoe_sizes.sum(:quantity) + product_colours.sum(:quantity)
-  end
-
 
   def photo_urls
     photos.map do |photo|
@@ -57,7 +51,7 @@ end
   end
 
   def update_quantity
-    self.quantity = product_inventories.to_a.sum(&:quantity) if product_inventories.any?
+    self.product_quantity = product_inventories.to_a.sum(&:quantity) if product_inventories.any?
   end
 
 
