@@ -23,7 +23,7 @@ class Product < ApplicationRecord
 
   # accepts_nested_attributes_for :shoe_sizes
   accepts_nested_attributes_for :product_colours
-  accepts_nested_attributes_for :product_inventories
+  accepts_nested_attributes_for :product_inventories, allow_destroy: true
 
 def clear_cache
   Rails.cache.delete("products/all")
