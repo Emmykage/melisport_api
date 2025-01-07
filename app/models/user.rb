@@ -40,6 +40,7 @@ class User < ApplicationRecord
       save(validate: false)
     end
   end
+  # SecureRandom.hex
 
   # def generate_refresh_token
   #  refresh_token =  encode_token({user_id: id})

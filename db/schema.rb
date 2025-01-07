@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_02_125603) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_06_181615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -184,6 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_125603) do
     t.string "size"
     t.string "location"
     t.string "colour"
+    t.string "locations", default: [], array: true
     t.index ["product_id"], name: "index_product_inventories_on_product_id"
   end
 
