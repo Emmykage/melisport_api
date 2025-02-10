@@ -34,6 +34,20 @@ end
   def new_product
    created_at >= 30.days.ago
   end
+  def last_updated
+    return "Now" if updated_at >= 10.minutes.ago
+    return "Today" if updated_at >= 1.day.ago
+    return "Yesterday" if updated_at >= 2.days.ago
+    return "#{(Time.current.to_date - updated_at.to_date).to_i} days ago" if updated_at >= 1.week.ago
+    return "This week" if updated_at >= 2.weeks.ago
+    return "Last week" if updated_at >= 1.month.ago
+    return "This month" if updated_at >= 2.months.ago
+    return nil
+    # return "Last month" if updated_at >= 1.year.ago
+    # updated_at.strftime("%b %d, %Y") # Format for older dates
+  end
+
+
 
   def photo_urls
     photos.map do |photo|

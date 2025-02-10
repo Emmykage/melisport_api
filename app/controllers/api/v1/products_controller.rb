@@ -11,6 +11,8 @@ class Api::V1::ProductsController < ApplicationController
       # Product.all.as_json #cache  serialized json instead of actual product data onject to avoid type error when making changes
 
       end
+      # @products = Product.includes({photos_attachments: :blob}, :rich_text_description_body).all.to_a
+
       render json: {
         data: ActiveModelSerializers::SerializableResource.new(@products)
       },
