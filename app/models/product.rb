@@ -31,6 +31,25 @@ def clear_cache
 end
 
 
+def product_sizes
+ sizes =  product_inventories.pluck(:size).uniq
+
+  # new_sizes = []
+  # sizes.each do |size|
+  #   unless new_sizes.include?(size)
+  #     new_sizes.push(size)
+
+  #   end
+
+  #   end
+  #   new_sizes
+
+
+
+end
+
+
+
   def new_product
    created_at >= 30.days.ago
   end

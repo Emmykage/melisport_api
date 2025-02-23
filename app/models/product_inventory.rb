@@ -6,6 +6,8 @@ class ProductInventory < ApplicationRecord
 
   after_update :update_product_total_amount, if: -> { saved_change_to_quantity? }
 
+
+
   def update_product_total_amount
     product.product_quantity = product.product_inventories.sum(:quantity)
     product.save
