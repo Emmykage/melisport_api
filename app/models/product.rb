@@ -11,12 +11,13 @@ class Product < ApplicationRecord
 
   belongs_to :gender, optional: true
   belongs_to :level, optional: true
-  has_many :product_inventories
+  has_many :product_inventories, dependent: :destroy
   has_many :cart_items
   has_many :shopping_carts, through: :cart_items
   has_many :order_items
   has_many :order_details, through: :order_items
   has_many :product_colours, dependent: :destroy
+  has_many :shoe_sizes, dependent: :destroy
   validates :name, :description_body, presence: true
   validates :ms_item_code, uniqueness: true, presence: true, if: :is_active?
   validates :price, :ms_code,  presence: true,  if: :is_active?

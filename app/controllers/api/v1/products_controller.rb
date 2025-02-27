@@ -63,8 +63,18 @@ class Api::V1::ProductsController < ApplicationController
   # def update
 
   # DELETE /products/1
+  # def destroy
+  #   @product.destroy
+  #   render json: { message: "Product deleted successfully" }, status: :ok
+
+  # end
+
   def destroy
-    @product.destroy
+    if @product.destroy
+      render json: { message: "Product deleted successfully" }, status: :ok
+    else
+      render json: { error: "Failed to delete product" }, status: :unprocessable_entity
+    end
   end
 
   # /search
