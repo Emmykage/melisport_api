@@ -4,20 +4,24 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-      @products = Rails.cache.fetch("products/all", expires_in: 4.hours) do
-      # Product.includes(:photos_attachments, :rich_text_description_body).all.to_a #dont use this
-      Product.includes({photos_attachments: :blob}, :rich_text_description_body).all.to_a
+    # binding.b
 
-      # Product.all.as_json #cache  serialized json instead of actual product data onject to avoid type error when making changes
+    @products = Product.all
 
-      end
-      # @products = Product.includes({photos_attachments: :blob}, :rich_text_description_body).all.to_a
+      filter_sport = params[:sport]
+      filter_category = params[:category]
 
+      filtered_products = @products
+
+
+      filtered_products = filtered_products.joins(:product_category).where(product_categories: { name: filter_category }) if filter_category.present?
+      filtered_products = filtered_products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
       render json: {
-        data: ActiveModelSerializers::SerializableResource.new(@products)
+        data: ActiveModelSerializers::SerializableResource.new(filtered_products)
       },
         status: :ok
-  end
+
+    end
 
 
   def new_arrivals

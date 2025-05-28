@@ -1,13 +1,13 @@
 class User < ApplicationRecord
   has_secure_password
-  attr_accessor :skip_email_validation, :skip_password_validation
+  attr_accessor :skip_email_validation, :skip_password_validation, :confirm_password, :old_password
 
   has_many :shopping_carts, dependent: :destroy
   has_many :cart_items, through: :shopping_carts
   has_many :user_payments, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_many :order_details, dependent: :destroy
-
+  has_one :profile
   before_create :downcase_email
 
 
@@ -16,9 +16,12 @@ class User < ApplicationRecord
 
   # validates :email, uniqueness: true, format: { with: /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\z/i, message: ":Please enter a valid email address."}
   validates :email, presence: true, uniqueness: {case_sensitive: false}, unless: -> { skip_email_validation? }
-  validates :first_name, :last_name, presence: true
-  validates :password, length: { in: 6..20 }, unless: -> { skip_password_validation? }
+  validates :first_name, :last_name, presence: true, on: :create
+  # validates :password, length: { in: 6..20 }, unless: -> { skip_password_validation? }
+  validates :password, length: { in: 6..20 }, allow_nil: true
 
+
+  accepts_nested_attributes_for :profiles, allow_destroy: true
   def full_name
    "#{first_name}  #{last_name}"
   end

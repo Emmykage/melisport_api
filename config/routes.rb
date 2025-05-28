@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :profiles
   resources :product_colours
   resources :colours
   resources :shoe_sizes
@@ -21,6 +22,8 @@ Rails.application.routes.draw do
         collection do
           post :password_reset
           get :userProfile
+          patch :user_profile_update
+          patch :user_password_update
         end
       end
       resources :products do
