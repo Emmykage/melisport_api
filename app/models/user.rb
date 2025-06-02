@@ -21,7 +21,7 @@ class User < ApplicationRecord
   validates :password, length: { in: 6..20 }, allow_nil: true
 
 
-  accepts_nested_attributes_for :profiles, allow_destroy: true
+  accepts_nested_attributes_for :profile, allow_destroy: true
   def full_name
    "#{first_name}  #{last_name}"
   end
