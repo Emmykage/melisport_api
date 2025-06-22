@@ -37,8 +37,11 @@ class Api::V1::DeliveriesController < ApplicationController
 
   # DELETE /deliveries/1
   def destroy
-    @delivery.destroy
-    redirect_to deliveries_url, notice: "Delivery was successfully destroyed."
+    if  @delivery.destroy
+    render json: {message: "Delivery was successfully destroyed."}, status: :ok
+      else
+      render json: { message: "Failed to delete product" }, status: :unprocessable_entity
+    end
   end
 
   private
