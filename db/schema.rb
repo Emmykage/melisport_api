@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_05_28_174018) do
+ActiveRecord::Schema[7.0].define(version: 2025_06_21_160706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_28_174018) do
     t.datetime "paid_at"
     t.decimal "delivery_fee"
     t.decimal "net_total"
+    t.string "ref_code"
     t.index ["user_id"], name: "index_order_details_on_user_id"
   end
 
