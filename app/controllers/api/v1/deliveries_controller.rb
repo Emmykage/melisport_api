@@ -20,18 +20,18 @@ class Api::V1::DeliveriesController < ApplicationController
     @delivery = Delivery.new(delivery_params)
 
     if @delivery.save
-      render @delivery, notice: "Delivery was successfully created."
+      render json: { data: @delivery, message: "Delivery was successfully created."}, status: :ok
     else
-      render :new, status: :unprocessable_entity
+      render json: { message: @delivery.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /deliveries/1
   def update
     if @delivery.update(delivery_params)
-      render @delivery, notice: "Delivery was successfully updated."
+      render json: { data: @delivery, message: "Delivery Update was successfully created."}, status: :ok
     else
-      render :edit, status: :unprocessable_entity
+      render json: { message: @delivery.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
 
