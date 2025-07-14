@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :invoices
       resources :order_details, only: [:show, :index]
 
       resources :users do
@@ -32,6 +33,8 @@ Rails.application.routes.draw do
         end
 
       end
+      resources :courts
+
       resources :deliveries
       resources :reviews
 

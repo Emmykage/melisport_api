@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_06_21_160706) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_08_133416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -100,6 +100,15 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_21_160706) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "invoice_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "order_detail_id", null: false
+    t.index ["invoice_number"], name: "index_invoices_on_invoice_number", unique: true
+    t.index ["order_detail_id"], name: "index_invoices_on_order_detail_id"
   end
 
   create_table "levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -310,6 +319,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_21_160706) do
   add_foreign_key "billing_addresses", "order_details"
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
+  add_foreign_key "invoices", "order_details"
   add_foreign_key "order_details", "users"
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"

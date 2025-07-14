@@ -5,13 +5,15 @@ class OrderDetail < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_one :billing_address, dependent: :destroy
   has_many :products, through: :order_items
+
+  has_one :invoice
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :billing_address
 
   before_create :generate_number, :set_delivery_fee, :calculate_net_total
 
   # enum :status, {pending: 0, approved: 1, declined: 2}
-  enum :payment_method, {"pay later" => 0, paypal: 1 }
+  enum :payment_method, {"pay later" => 0, paystack: 1 }
 
   def total_amount
     order_items.collect{|item| item.price_order}.sum

@@ -4,4 +4,5 @@ class OrderDetailSerializer < ActiveModel::Serializer
   has_many :order_items
   belongs_to :user
   has_one :billing_address
+  has_one :invoice
 end
