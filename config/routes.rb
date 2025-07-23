@@ -48,7 +48,6 @@ Rails.application.routes.draw do
       resources :statistics
       resources :user_payments
       resources :order_details, only: %i[ create update destroy]
-
       # resources :payments
       resources :payment_intents
       resources :messages
