@@ -74,7 +74,7 @@ end
   end
 
   def user_profile_update
-    # binding.b
+
     if @current_user.update(user_params)
       render json:{data: @current_user, message: "user updated"}
     else
