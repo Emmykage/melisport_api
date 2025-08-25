@@ -12,7 +12,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create agent" do
     assert_difference("Agent.count") do
-      post agents_url, params: { agent: { commission: @agent.commission, discout: @agent.discout, email: @agent.email, name: @agent.name, phone: @agent.phone, referral_code: @agent.referral_code, role: @agent.role, status: @agent.status } }, as: :json
+      post agents_url, params: { agent: { commission: @agent.commission, discount: @agent.discout, email: @agent.email, name: @agent.name, phone: @agent.phone, referral_code: @agent.referral_code, role: @agent.role, status: @agent.status } }, as: :json
     end
 
     assert_response :created

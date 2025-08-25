@@ -20,7 +20,7 @@ class Api::V1::AgentsController < ApplicationController
     if @agent.save
       render json: {data: @agent}, status: :created
     else
-      render json:{message:  @agent.errors}, status: :unprocessable_entity
+      render json:{message:  @agent.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +46,6 @@ class Api::V1::AgentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def agent_params
-      params.require(:agent).permit(:name, :email, :phone, :discout, :referral_code, :commission, :role, :status)
+      params.require(:agent).permit(:name, :email, :phone, :discount, :referral_code, :commission, :role, :discount, :active)
     end
 end

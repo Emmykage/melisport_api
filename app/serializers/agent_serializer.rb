@@ -1,3 +1,3 @@
 class AgentSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :phone, :discout, :referral_code, :commission, :role, :status
+  attributes :id, :name, :email, :phone, :discount, :referral_code, :commission, :role, :active
 end
