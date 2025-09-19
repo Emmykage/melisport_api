@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       end
       resources :products do
         collection do
+          get :related_products
           get :new_arrivals
         end
 

@@ -23,12 +23,49 @@ class Api::V1::ProductsController < ApplicationController
 
     end
 
+    def related_products
+
+      filter_by_id = params[:product_id]
+
+      @product = Product.find_by(id: filter_by_id)
+      # Ensure we don't try to select more products than exist
+      target_size = [Product.count, 10].min
+
+      selected_ids = Set.new
+        # ids = Product
+        #   .where(product_category_id: @product.product_category_id)
+        #   .where.not(id: @product.id)
+        #   .pluck(:id)
+
+        # random_ids = ids.sample(10)  # pick 10 random IDs
+
+      while selected_ids.size < target_size
+        product = Product.offset(rand(Product.count)).first
+        selected_ids.add(product.id) unless selected_ids.include?(product.id)
+        break if product.nil?
+      end
+
+
+      @products = if @product.present?
+        Product.where(product_category_id: @product.product_category_id).where.not(id: @product.id).order("RANDOM()").limit(10)
+      else
+         Product.where(id: selected_ids.to_a)
+      end
+
+      render json: {
+        data: ActiveModelSerializers::SerializableResource.new(@products)
+      },
+        status: :ok
+
+    end
+
+
 
   def new_arrivals
     @products = Rails.cache.fetch("new arrivals", expires_in: 4.hours) do
       Product.where('created_at >= ?', 30.days.ago).order(created_at: :desc ).to_a
     end
-    render json: @products
+    render json: {data: ActiveModelSerializers::SerializableResource.new(@products)}
   end
 
 
