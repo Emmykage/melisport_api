@@ -45,12 +45,12 @@ class Api::V1::ProductsController < ApplicationController
         break if product.nil?
       end
 
-
       @products = if @product.present?
         Product.where(product_category_id: @product.product_category_id).where.not(id: @product.id).order("RANDOM()").limit(10)
       else
          Product.where(id: selected_ids.to_a)
       end
+      binding.b
 
       render json: {
         data: ActiveModelSerializers::SerializableResource.new(@products)
@@ -58,6 +58,8 @@ class Api::V1::ProductsController < ApplicationController
         status: :ok
 
     end
+
+
 
 
 
