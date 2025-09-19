@@ -4,8 +4,6 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-    # binding.b
-
     @products = Product.all
 
       filter_sport = params[:sport]
@@ -50,8 +48,6 @@ class Api::V1::ProductsController < ApplicationController
       else
          Product.where(id: selected_ids.to_a)
       end
-      binding.b
-
       render json: {
         data: ActiveModelSerializers::SerializableResource.new(@products)
       },
@@ -90,10 +86,6 @@ class Api::V1::ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-
-    # binding.b
-
-
     if @product.update(product_params)
       render json: {data:ProductSerializer.new(@product), message: "Product updated Created"}, status: :ok
     else
