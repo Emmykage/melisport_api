@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         collection do
           get :related_products
           get :new_arrivals
+          get :search
         end
 
       end
