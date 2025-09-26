@@ -10,10 +10,11 @@ class Api::V1::ProductsController < ApplicationController
       filter_sport = params[:sport]
       filter_category = params[:category]
       product_name = params[:name]
+      filter_gender = params[:gender]
 
       products = products.joins(:product_category).where(product_categories: { name: filter_category }) if filter_category.present?
       products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
-      # products = products.where(name: product_name.downcase) if product_name.present?
+      products = products.join(:gender).where(gender: {name: filter_gender}) if filter_gender.present?
 
       products = products.where("products.name ILIKE ?", "%#{product_name}%") if product_name.present?
       render json: {
