@@ -4,18 +4,20 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
+    products = Product.all
+
 
       filter_sport = params[:sport]
       filter_category = params[:category]
+      product_name = params[:name]
 
-      filtered_products = @products
+      products = products.joins(:product_category).where(product_categories: { name: filter_category }) if filter_category.present?
+      products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
+      # products = products.where(name: product_name.downcase) if product_name.present?
 
-
-      filtered_products = filtered_products.joins(:product_category).where(product_categories: { name: filter_category }) if filter_category.present?
-      filtered_products = filtered_products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
+      products = products.where("products.name ILIKE ?", "%#{product_name}%") if product_name.present?
       render json: {
-        data: ActiveModelSerializers::SerializableResource.new(filtered_products)
+        data: ActiveModelSerializers::SerializableResource.new(products)
       },
         status: :ok
 

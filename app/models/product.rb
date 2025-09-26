@@ -54,6 +54,7 @@ end
   def new_product
    created_at >= 30.days.ago
   end
+
   def last_updated
     return "Now" if updated_at >= 10.minutes.ago
     return "Today" if updated_at >= 1.day.ago
