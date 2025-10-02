@@ -25,22 +25,22 @@ class Api::V1::ProductsController < ApplicationController
     end
 
     def search
-  products = Product.all
+      products = Product.all
 
-  if params[:search].present?
-    search_name = params[:search].strip.downcase
+      if params[:search].present?
+        search_name = params[:search].strip.downcase
 
-    # Combine name search and sport category search using OR
-    products = products
-                 .left_joins(:sport_category) # left join to include products without sport_category
-                 .where("LOWER(products.name) LIKE :search OR LOWER(sport_categories.name) = :search_exact",
-                        search: "%#{search_name}%", search_exact: search_name)
-  end
+        # Combine name search and sport category search using OR
+        products = products
+                    .left_joins(:sport_category) # left join to include products without sport_category
+                    .where("LOWER(products.name) LIKE :search OR LOWER(sport_categories.name) = :search_exact",
+                            search: "%#{search_name}%", search_exact: search_name)
+      end
 
-  render json: {
-    data: ActiveModelSerializers::SerializableResource.new(products)
-  }, status: :ok
-end
+      render json: {
+        data: ActiveModelSerializers::SerializableResource.new(products)
+      }, status: :ok
+    end
 
 
     def related_products
@@ -135,10 +135,10 @@ end
   end
 
   # /search
-  def search
-    @products = Product.where('name LIKE :search', search: "%#{params[:search]}%")
-    render json: @products
-  end
+  # def search
+  #   @products = Product.where('name LIKE :search', search: "%#{params[:search]}%")
+  #   render json: @products
+  # end
 
   private
 
