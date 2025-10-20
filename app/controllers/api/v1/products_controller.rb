@@ -155,7 +155,7 @@ class Api::V1::ProductsController < ApplicationController
   :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
   :size, :tension, :colour, :strung, :stiffness, :composition, :description, :description_body,
   :price, :ms_item_code, :image, :product_quantity, :product_category_id, :gender_id, :level_id,
-  :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness,
+  :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness, :discount, :discount_amount, :discount_percentage,
   cloth_sizes: [], grip_sizes: [], colours: [], product_colours_attributes: %i[color quantity], product_inventories_attributes: %i[id size  colour sku price quantity _destroy ] + [{locations: []}]
 )
 

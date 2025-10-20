@@ -6,6 +6,8 @@ class Product < ApplicationRecord
   before_save :update_quantity
 
   enum :status, {active: 0, inactive: 1}
+  enum :discount, {inactive_discount: 0, active_discount: 1}
+
   belongs_to :product_category
   belongs_to :sport_category, optional: true
 
@@ -46,6 +48,12 @@ def product_sizes
   #   new_sizes
 
 
+
+end
+
+
+def discount_amount
+  price * ( discount_percentage / 100)
 
 end
 

@@ -1,5 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :name, :head_size, :rating, :length, :weight, :swing_weight, :stiffness, :composition,
+  attributes :id, :name, :head_size, :rating, :length, :weight, :swing_weight, :stiffness, :composition, :discount, :discount_amount, :discount_percentage,
              :description, :price, :ms_item_code, :image, :colour, :tension, :strung, :photo_urls, :product_quantity, :colours, :product_sizes, :ms_code, :description_body, :status, :player_type, :head_shape, :recommended_grip, :created_at, :new_product, :updated_at, :last_updated
   belongs_to :product_category
   belongs_to :gender

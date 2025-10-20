@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_25_083637) do
+ActiveRecord::Schema[7.0].define(version: 2025_10_20_093846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -254,6 +254,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_25_083637) do
     t.string "head_shape"
     t.string "recommended_grip"
     t.string "thickness"
+    t.integer "discount", default: 0
+    t.decimal "discount_percentage"
     t.index ["created_at"], name: "index_products_on_created_at"
     t.index ["gender_id"], name: "index_products_on_gender_id"
     t.index ["level_id"], name: "index_products_on_level_id"
