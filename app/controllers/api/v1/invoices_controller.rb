@@ -1,16 +1,16 @@
 class Api::V1::InvoicesController < ApplicationController
-  before_action :set_invoice, only: %i[ show update destroy ]
+  before_action :set_invoice, only: %i[show update destroy]
 
   # GET /invoices
   def index
     @invoices = Invoice.all
 
-    render json: {data: InvoiceSeializer.new(@invoices)}
+    render json: { data: InvoiceSeializer.new(@invoices) }
   end
 
   # GET /invoices/1
   def show
-    render json: {data: InvoiceSerializer.new(@invoice)}
+    render json: { data: InvoiceSerializer.new(@invoice) }
   end
 
   # POST /invoices
@@ -18,9 +18,10 @@ class Api::V1::InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
 
     if @invoice.save
-      render json:  {data: ActiveModelSerializers::SerializableResource.new(@invoice), message: "Invoice has been generated"}, status: :created
+      render json: { data: ActiveModelSerializers::SerializableResource.new(@invoice), message: 'Invoice has been generated' },
+             status: :created
     else
-      render json:{message: @invoice.errors.full_messages.to_sentence}, status: :unprocessable_entity
+      render json: { message: @invoice.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -39,13 +40,14 @@ class Api::V1::InvoicesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_invoice
-      @invoice = Invoice.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def invoice_params
-      params.require(:invoice).permit(:invoice_number, :order_detail_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_invoice
+    @invoice = Invoice.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def invoice_params
+    params.require(:invoice).permit(:invoice_number, :order_detail_id)
+  end
 end

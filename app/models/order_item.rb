@@ -12,8 +12,5 @@ class OrderItem < ApplicationRecord
   def photo_url
     # product.photo_urls.first
     product&.photo_urls&.first
-
   end
-
-
 end

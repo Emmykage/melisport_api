@@ -20,7 +20,7 @@ class Api::V1::ProductCategoriesController < ApplicationController
     if @product_category.save
       render json: @product_category, status: :created
     else
-      render json: {message: @product_category.errors}, status: :unprocessable_entity
+      render json: { message: @product_category.errors }, status: :unprocessable_entity
     end
   end
 

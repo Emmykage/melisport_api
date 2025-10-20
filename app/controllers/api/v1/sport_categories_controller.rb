@@ -9,14 +9,13 @@ class Api::V1::SportCategoriesController < ApplicationController
     render json: @sport_categories
   end
 
-
   # POST /sport_categories
   def create
     @sport_categories = SportCategory.new(sport_category_params)
     if @sport_categories.save
       render json: @sport_categories, status: :created
     else
-      render json: {message: @sport_categories.errors}, status: :unprocessable_entity
+      render json: { message: @sport_categories.errors }, status: :unprocessable_entity
     end
   end
 

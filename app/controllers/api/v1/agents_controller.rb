@@ -1,5 +1,5 @@
 class Api::V1::AgentsController < ApplicationController
-  before_action :set_agent, only: %i[ show update destroy ]
+  before_action :set_agent, only: %i[show update destroy]
 
   # GET /agents
   def index
@@ -10,7 +10,7 @@ class Api::V1::AgentsController < ApplicationController
 
   # GET /agents/1
   def show
-    render json: {data: @agent}
+    render json: { data: @agent }
   end
 
   # POST /agents
@@ -18,9 +18,9 @@ class Api::V1::AgentsController < ApplicationController
     @agent = Agent.new(agent_params)
 
     if @agent.save
-      render json: {data: @agent}, status: :created
+      render json: { data: @agent }, status: :created
     else
-      render json:{message:  @agent.errors.full_messages.to_sentence}, status: :unprocessable_entity
+      render json: { message: @agent.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -39,13 +39,15 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_agent
-      @agent = Agent.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def agent_params
-      params.require(:agent).permit(:name, :email, :phone, :discount, :referral_code, :commission, :role, :discount, :active)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_agent
+    @agent = Agent.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def agent_params
+    params.require(:agent).permit(:name, :email, :phone, :discount, :referral_code, :commission, :role, :discount,
+                                  :active)
+  end
 end

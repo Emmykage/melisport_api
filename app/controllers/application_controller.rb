@@ -44,14 +44,11 @@ class ApplicationController < ActionController::API
 
   def initializeStripe
     StripeService.new
-
   end
-
 
   def ensure_super_user
-    unless @current_user&.role == "super-user"
-      render json: { message: 'You are not allowed to perform this operation' }, status: :forbidden
-    end
-  end
+    return if @current_user&.role == 'super-user'
 
+    render json: { message: 'You are not allowed to perform this operation' }, status: :forbidden
+  end
 end

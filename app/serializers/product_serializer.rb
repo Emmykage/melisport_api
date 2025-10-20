@@ -9,14 +9,9 @@ class ProductSerializer < ActiveModel::Serializer
 
   def description_body
     object.description_body.to_s
-
   end
 
   def photo_urls
     object.photo_urls
-
   end
-
-
-
 end

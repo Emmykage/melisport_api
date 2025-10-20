@@ -15,7 +15,7 @@ class User < ApplicationRecord
   after_create :send_confirmation_email
 
   # validates :email, uniqueness: true, format: { with: /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\z/i, message: ":Please enter a valid email address."}
-  validates :email, presence: true, uniqueness: {case_sensitive: false}, unless: -> { skip_email_validation? }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, unless: -> { skip_email_validation? }
   validates :first_name, :last_name, presence: true, on: :create
   # validates :password, length: { in: 6..20 }, unless: -> { skip_password_validation? }
   validates :password, length: { in: 6..20 }, allow_nil: true
@@ -23,25 +23,23 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :profile, allow_destroy: true
   def full_name
-   "#{first_name}  #{last_name}"
+    "#{first_name}  #{last_name}"
   end
 
-
   def confirm_user
-    if confirmed_at.blank?
-      # self.skip_password_validation = true
-      update_column(:confirmed_at, Time.now)  # Directly update the column
+    return unless confirmed_at.blank?
+
+    # self.skip_password_validation = true
+    update_column(:confirmed_at, Time.now) # Directly update the column
     #  self.confirmed_at = Time.now
     #  save
-    end
-
   end
 
   def generate_refresh_token
-    if self.refresh_token.nil?
-      self.refresh_token = SecureRandom.hex(14)
-      save(validate: false)
-    end
+    return unless refresh_token.nil?
+
+    self.refresh_token = SecureRandom.hex(14)
+    save(validate: false)
   end
   # SecureRandom.hex
 
@@ -59,10 +57,7 @@ class User < ApplicationRecord
 
   def confirmed
     confirmed_at.present?
-
   end
-
-
 
   def generate_password_token
     self.reset_password_token = SecureRandom.hex(10)
@@ -80,17 +75,15 @@ class User < ApplicationRecord
 
   def send_confirmation_email
     SendConfirmationInstructionJob.perform_now(self)
-
   end
+
   def skip_email_validation?
     skip_email_validation
   end
 
   def downcase_email
     self.email = email.downcase if email.present?
-
   end
-
 
   def skip_password_validation?
     !!skip_password_validation
