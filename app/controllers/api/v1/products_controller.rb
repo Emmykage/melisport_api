@@ -5,18 +5,24 @@ class Api::V1::ProductsController < ApplicationController
   # GET /products
   def index
     products = Product.all
-
-
     filter_sport = params[:sport]
     filter_category = params[:category]
     product_name = params[:name]
+    features = params[:features].split(",").map(&:strip)
+
     filter_gender = params[:gender]
+    filter_level = params[:level]
 
     if filter_category.present?
       products = products.joins(:product_category).where(product_categories: { name: filter_category })
     end
     products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
-    products = products.join(:gender).where(gender: { name: filter_gender }) if filter_gender.present?
+    products = products.joins(:gender).where(gender: { name: filter_gender }) if filter_gender.present?
+    products = products.joins(:level).where(level: { name: level }) if filter_level.present?
+    products = products.joins(:rich_text_description_body).where(
+      features.map{'action_text_rich_texts.body ILIKE ?'}.join(" OR "),
+       *features.map{|f| "%#{f}%" }
+       ) if features.present?
 
     products = products.where('products.name ILIKE ?', "%#{product_name}%") if product_name.present?
     render json: {
@@ -144,7 +150,7 @@ class Api::V1::ProductsController < ApplicationController
       :name, :grip_size, :head_size, :rating, :weight, :length, :swing_weight,
       :size, :tension, :colour, :strung, :stiffness, :composition, :description, :description_body,
       :price, :ms_item_code, :image, :product_quantity, :product_category_id, :gender_id, :level_id,
-      :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness, :discount, :discount_amount, :discount_percentage,
+      :ms_code, :sport_category_id, :player_type, :head_shape, :recommended_grip, :status, :thickness, :discount, :discount_percentage,
       cloth_sizes: [], grip_sizes: [], colours: [], product_colours_attributes: %i[color quantity], product_inventories_attributes: %i[id size colour sku price quantity _destroy] + [{ locations: [] }]
     )
 
