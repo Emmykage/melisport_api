@@ -11,14 +11,14 @@ class Api::V1::ProductsController < ApplicationController
     features = params[:features].split(",").map(&:strip)
 
     filter_gender = params[:gender]
-    filter_level = params[:level]
+    filter_levels = params[:levels].split(",").map{|l| l.strip}
 
     if filter_category.present?
       products = products.joins(:product_category).where(product_categories: { name: filter_category })
     end
     products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
-    products = products.joins(:gender).where(gender: { name: filter_gender }) if filter_gender.present?
-    products = products.joins(:level).where(level: { name: level }) if filter_level.present?
+    products = products.joins(:gender).where(genders: { name: filter_gender }) if filter_gender.present?
+    products = products.joins(:level).where( filter_levels.map{ 'levels.name ILIKE ? '}.join(" OR "),  *filter_levels.map{|level| "%#{level}%" }) if filter_levels.present?
     products = products.joins(:rich_text_description_body).where(
       features.map{'action_text_rich_texts.body ILIKE ?'}.join(" OR "),
        *features.map{|f| "%#{f}%" }
