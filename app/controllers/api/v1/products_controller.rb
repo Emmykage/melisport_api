@@ -8,10 +8,14 @@ class Api::V1::ProductsController < ApplicationController
     filter_sport = params[:sport]
     filter_category = params[:category]
     product_name = params[:name]
-    features = params[:features].split(",").map(&:strip)
+
+
+    features = params[:features].to_s.split(",").map(&:strip)
 
     filter_gender = params[:gender]
-    filter_levels = params[:levels].split(",").map{|l| l.strip}
+                   binding.b
+
+    filter_levels = params[:levels].to_s.split(",").map{|l| l.strip}
 
     if filter_category.present?
       products = products.joins(:product_category).where(product_categories: { name: filter_category })
@@ -23,6 +27,7 @@ class Api::V1::ProductsController < ApplicationController
       features.map{'action_text_rich_texts.body ILIKE ?'}.join(" OR "),
        *features.map{|f| "%#{f}%" }
        ) if features.present?
+
 
     products = products.where('products.name ILIKE ?', "%#{product_name}%") if product_name.present?
     render json: {
