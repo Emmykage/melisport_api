@@ -13,7 +13,6 @@ class Api::V1::ProductsController < ApplicationController
     features = params[:features].to_s.split(",").map(&:strip)
 
     filter_gender = params[:gender]
-                   binding.b
 
     filter_levels = params[:levels].to_s.split(",").map{|l| l.strip}
 
