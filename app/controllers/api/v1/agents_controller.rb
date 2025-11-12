@@ -18,6 +18,9 @@ class Api::V1::AgentsController < ApplicationController
     @agent = Agent.new(agent_params)
 
     if @agent.save
+
+      # binding.pry
+
       render json: { data: @agent }, status: :created
     else
       render json: { message: @agent.errors.full_messages.to_sentence }, status: :unprocessable_entity
