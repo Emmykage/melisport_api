@@ -11,6 +11,10 @@ class OrderDetail < ApplicationRecord
 
   before_create :generate_number, :set_delivery_fee, :calculate_net_total
 
+
+  default_scope { order(created_at: :desc)}
+  # Ex:- scope :active, -> {where(:active => true)}
+
   # enum :status, {pending: 0, approved: 1, declined: 2}
   enum :payment_method, { 'pay later' => 0, paystack: 1 }
 
