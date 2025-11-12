@@ -16,7 +16,7 @@ class Product < ApplicationRecord
   has_many :product_inventories, dependent: :destroy
   has_many :cart_items
   has_many :shopping_carts, through: :cart_items
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   has_many :order_details, through: :order_items
   has_many :product_colours, dependent: :destroy
   has_many :shoe_sizes, dependent: :destroy

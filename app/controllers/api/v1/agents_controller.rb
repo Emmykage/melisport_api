@@ -21,7 +21,7 @@ class Api::V1::AgentsController < ApplicationController
 
       # binding.pry
 
-      render json: { data: @agent }, status: :created
+      render json: { data: @agent, message: "Agent #{@agent.name} has been created" }, status: :created
     else
       render json: { message: @agent.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end

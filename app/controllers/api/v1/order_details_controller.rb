@@ -36,7 +36,7 @@ class Api::V1::OrderDetailsController < ApplicationController
   def update
     if @order_detail.update(order_detail_params)
 
-      render json: { data: OrderDetailSerializer.new(@order_detail).as_json }, status: :ok
+      render json: { data: OrderDetailSerializer.new(@order_detail).as_json, message: "Order has been confirmed" }, status: :ok
 
     else
       render json: { messsage: @order_detail.errors }, status: :unprocessable_entity
