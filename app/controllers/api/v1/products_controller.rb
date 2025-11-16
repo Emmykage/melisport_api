@@ -8,13 +8,12 @@ class Api::V1::ProductsController < ApplicationController
     filter_sport = params[:sport]
     filter_category = params[:category]
     product_name = params[:name]
-
-
     features = params[:features].to_s.split(",").map(&:strip)
 
     filter_gender = params[:gender]
 
     filter_levels = params[:levels].to_s.split(",").map{|l| l.strip}
+
 
     if filter_category.present?
       products = products.joins(:product_category).where(product_categories: { name: filter_category })
@@ -37,15 +36,16 @@ class Api::V1::ProductsController < ApplicationController
 
   def search
     products = Product.all
-
-    if params[:search].present?
-      search_name = params[:search].strip.downcase
-
+    query =  params[:search].strip.downcase
+    products =  if query.present?
       # Combine name search and sport category search using OR
-      products = products
+       products
         .left_joins(:sport_category) # left join to include products without sport_category
         .where('LOWER(products.name) LIKE :search OR LOWER(sport_categories.name) = :search_exact',
-               search: "%#{search_name}%", search_exact: search_name)
+               search: "%#{query}%", search_exact: query)
+
+    else
+      Product.none
     end
 
     render json: {
