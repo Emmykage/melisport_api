@@ -31,8 +31,6 @@ class Api::V1::ProductsController < ApplicationController
        *features.map{|f| "%#{f}%" }
        ) if features.present?
 
-       binding.b
-
     products = products.where('products.name ILIKE ?', "%#{product_name}%") if product_name.present?
     render json: {
              data: ActiveModelSerializers::SerializableResource.new(products)
