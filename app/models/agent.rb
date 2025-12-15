@@ -1,4 +1,5 @@
 class Agent < ApplicationRecord
+  has_many :order_details, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :referral_code, presence: true, uniqueness: true

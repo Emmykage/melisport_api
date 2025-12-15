@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_10_20_093846) do
+ActiveRecord::Schema[7.0].define(version: 2025_12_15_094927) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -157,7 +157,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_20_093846) do
     t.datetime "paid_at"
     t.decimal "delivery_fee"
     t.decimal "net_total"
-    t.string "ref_code"
+    t.string "referral_code"
+    t.decimal "sub_total"
+    t.decimal "vat"
+    t.decimal "bonus"
+    t.uuid "agent_id"
+    t.decimal "discount"
+    t.index ["agent_id"], name: "index_order_details_on_agent_id"
     t.index ["user_id"], name: "index_order_details_on_user_id"
   end
 
@@ -191,12 +197,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_20_093846) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "product_colours", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "product_colours", id: false, force: :cascade do |t|
     t.string "colour"
     t.integer "quantity", default: 0
     t.uuid "product_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_product_colours_on_product_id"
   end
 
@@ -278,8 +282,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_20_093846) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "shoe_sizes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "size"
+  create_table "shoe_sizes", id: false, force: :cascade do |t|
+    t.string "size", null: false
     t.integer "quantity", default: 0
     t.uuid "product_id"
     t.datetime "created_at", null: false
@@ -343,6 +347,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_20_093846) do
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "shopping_carts"
   add_foreign_key "invoices", "order_details"
+  add_foreign_key "order_details", "agents"
   add_foreign_key "order_details", "users"
   add_foreign_key "order_items", "order_details"
   add_foreign_key "order_items", "products"

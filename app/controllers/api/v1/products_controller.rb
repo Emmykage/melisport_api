@@ -6,7 +6,9 @@ class Api::V1::ProductsController < ApplicationController
   def index
     products = Product.all
     filter_sport = params[:sport]
-    filter_category = params[:category]
+    discount = ActiveModel::Type::Boolean.new.cast(params[:discount])
+    filter_discount = discount ? "active_discount" : "inactive_discount"
+    filter_category = params[:category].to_s.split(",").map(&:strip)
     product_name = params[:name]
     features = params[:features].to_s.split(",").map(&:strip)
 
@@ -14,9 +16,12 @@ class Api::V1::ProductsController < ApplicationController
 
     filter_levels = params[:levels].to_s.split(",").map{|l| l.strip}
 
+    products = Product.where(discount: filter_discount) if discount.present?
+
 
     if filter_category.present?
-      products = products.joins(:product_category).where(product_categories: { name: filter_category })
+      # products = products.joins(:product_category).where(product_categories: { name: filter_category })
+      products = products.joins(:product_category).where(filter_category.map{"product_categories.name ILIKE ? "}.join(" OR "), *filter_category.map{|cat| "%#{cat}%"} )
     end
     products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
     products = products.joins(:gender).where(genders: { name: filter_gender }) if filter_gender.present?
@@ -26,6 +31,7 @@ class Api::V1::ProductsController < ApplicationController
        *features.map{|f| "%#{f}%" }
        ) if features.present?
 
+       binding.b
 
     products = products.where('products.name ILIKE ?', "%#{product_name}%") if product_name.present?
     render json: {

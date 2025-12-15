@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :invoices
-      resources :agents
+      resources :agents do
+        member do
+        get :get_agent_by_code
+        end
+    end
       resources :order_details, only: [:show, :index]
 
       resources :users do
