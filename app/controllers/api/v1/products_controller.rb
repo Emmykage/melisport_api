@@ -13,10 +13,15 @@ class Api::V1::ProductsController < ApplicationController
     features = params[:features].to_s.split(",").map(&:strip)
 
     filter_gender = params[:gender]
-
     filter_levels = params[:levels].to_s.split(",").map{|l| l.strip}
 
+    filter_head_shape = params[:head_shape].to_s.split(",").map{|h| h.strip}
+    filter_play_type = params[:play_type].to_s.split(",").map(&:strip)
+
     products = Product.where(discount: filter_discount) if discount.present?
+
+    products = Product.where(play_type: filter_play_type) if filter_play_type.present?
+    products = Product.where(play_type: filter_head_shape) if filter_head_shape.present?
 
 
     if filter_category.present?
