@@ -25,7 +25,7 @@ class Api::V1::ProductsController < ApplicationController
     end
     products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
     products = products.joins(:gender).where(genders: { name: filter_gender }) if filter_gender.present?
-    products = products.joins(:level).where( filter_levels.map{ 'levels.name ILIKE ? '}.join(" OR "),  *filter_levels.map{|level| "%#{level}%" }) if filter_levels.present?
+    products = products.joins(:level).where( filter_levels.map{ 'levels.stage ILIKE ? '}.join(" OR "),  *filter_levels.map{|level| "%#{level}%" }) if filter_levels.present?
     products = products.joins(:rich_text_description_body).where(
       features.map{'action_text_rich_texts.body ILIKE ?'}.join(" OR "),
        *features.map{|f| "%#{f}%" }
