@@ -4,9 +4,20 @@ class Api::V1::ProductCategoriesController < ApplicationController
 
   # GET /product_category
   def index
-    @product_categories = ProductCategory.all
+    filter_by_name = params[:name]
+    product_categories = ProductCategory.all
 
-    render json: @product_categories
+
+    render json: {data: product_categories}
+  end
+
+    def category_by_name
+    filter_by_name = params[:name]
+    product_category = ProductCategory.find_by(name: filter_by_name)
+
+   return render json: {data: product_category}, status: :not_found unless product_category
+
+       render json: {data: product_category}, status: :ok
   end
 
   # GET /product_categories/1

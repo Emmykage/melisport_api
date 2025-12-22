@@ -48,7 +48,11 @@ Rails.application.routes.draw do
       resources :addresses
       resources :cart_items
       resources :shopping_carts
-      resources :product_categories
+      resources :product_categories do
+        collection do
+          get :category_by_name
+        end
+      end
       resources :sport_categories
       resources :levels
       resources :genders
