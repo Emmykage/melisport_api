@@ -40,15 +40,16 @@ class OrderDetail < ApplicationRecord
     self.delivery_fee = fee['delivery_fee']
   end
 
-  def discounted_amount
-   self.bonus = ((agent.discount.to_i  / 100) * total_amount) || 0
-  end
+ def discounted_amount
+  return 0 if agent.nil? || agent.discount.nil?
+  self.bonus = ((agent.discount.to_i / 100) * total_amount)
+end
 
   def calculate_vat
     self.vat = total_amount * 0.1
   end
 
   def calculate_net_total
-    total_amount + delivery_fee + sub_total - discounted_Amount
+    total_amount + (delivery_fee || 0) + (sub_total || 0) - (discounted_amount || 0)
   end
 end
