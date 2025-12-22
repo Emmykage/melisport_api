@@ -20,8 +20,8 @@ class Api::V1::ProductsController < ApplicationController
 
     products = Product.where(discount: filter_discount) if discount.present?
 
-    products = Product.where(play_type: filter_play_type) if filter_play_type.present?
-    products = Product.where(play_type: filter_head_shape) if filter_head_shape.present?
+    products = Product.where(player_type: filter_play_type) if filter_play_type.present?
+    products = Product.where(head_shape: filter_head_shape) if filter_head_shape.present?
 
 
     if filter_category.present?
