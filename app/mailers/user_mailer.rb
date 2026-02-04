@@ -17,6 +17,15 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Password Reset')
   end
 
+  def login_notification (user)
+    @user = user
+    @email = user.email
+
+    mail(to: @user.email, subject: "Login in Notification")
+
+  end
+
+
   def confirmation_url(confirmation_token)
     "#{Rails.application.config.action_mailer.default_url_options[:host]}/confirm_email?confirmation_token=#{confirmation_token}"
   end

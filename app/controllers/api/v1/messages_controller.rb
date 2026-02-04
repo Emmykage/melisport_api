@@ -22,9 +22,9 @@ class Api::V1::MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
-      render status: :created
+      render json: {message: "Message received"}, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: {message: @message.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
 

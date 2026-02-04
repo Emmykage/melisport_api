@@ -67,9 +67,8 @@ Rails.application.configure do
 
   # Email deliver set up
 
-  config.action_mailer.delivery_method = :smtp
-  host = 'http://localhost:3000' #replace with your own url
-  config.action_mailer.default_url_options = { host: 'localhost:3000', port: 3000 }
+  host = 'localhost:3000' #replace with your own url
+  config.action_mailer.default_url_options = { host: host, port: 3000 }
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
   # SMTP settings for gmail

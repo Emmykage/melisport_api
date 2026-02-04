@@ -42,7 +42,11 @@ class Api::V1::UsersController < ApplicationController
       @user.generate_refresh_token
 
       # temporary confirm by user login
-      @user.confirm_user
+      # @user.confirm_user
+
+      SendLoginNotificationJob.perform_later(@user)
+
+
 
       token = encode_token({ user_id: @user.id })
       render json: { data: @user.slice(:id, :role, :first_name, :last_name, :email, :phone_no).merge(confirmed: @user.confirmed), token: { access_token: token, refresh_token: @user.refresh_token }, message: 'Login Successful' },
