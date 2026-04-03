@@ -16,7 +16,7 @@ Rails.application.configure do
     :address              => "smtp.zoho.com",
     :port                 => 587,
     :user_name            => "info@melisports.com",
-    :password             => "Chemistry.101",
+    :password             =>  ENV['EMAIL_PASSWORD'],
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
