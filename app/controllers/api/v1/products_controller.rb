@@ -7,16 +7,16 @@ class Api::V1::ProductsController < ApplicationController
     products = Product.all
     filter_sport = params[:sport]
     discount = ActiveModel::Type::Boolean.new.cast(params[:discount])
-    filter_discount = discount ? "active_discount" : "inactive_discount"
-    filter_category = params[:category].to_s.split(",").map(&:strip)
+    filter_discount = discount ? 'active_discount' : 'inactive_discount'
+    filter_category = params[:category].to_s.split(',').map(&:strip)
     product_name = params[:name]
-    features = params[:features].to_s.split(",").map(&:strip)
+    features = params[:features].to_s.split(',').map(&:strip)
 
     filter_gender = params[:gender]
-    filter_levels = params[:levels].to_s.split(",").map{|l| l.strip}
+    filter_levels = params[:levels].to_s.split(',').map(&:strip)
 
-    filter_head_shape = params[:head_shape].to_s.split(",").map{|h| h.strip}
-    filter_play_type = params[:play_type].to_s.split(",").map(&:strip)
+    filter_head_shape = params[:head_shape].to_s.split(',').map(&:strip)
+    filter_play_type = params[:play_type].to_s.split(',').map(&:strip)
 
     products = Product.where(discount: filter_discount) if discount.present?
 
@@ -26,15 +26,27 @@ class Api::V1::ProductsController < ApplicationController
 
     if filter_category.present?
       # products = products.joins(:product_category).where(product_categories: { name: filter_category })
-      products = products.joins(:product_category).where(filter_category.map{"product_categories.name ILIKE ? "}.join(" OR "), *filter_category.map{|cat| "%#{cat}%"} )
+      products = products.joins(:product_category).where(filter_category.map do
+        'product_categories.name ILIKE ? '
+      end.join(' OR '), *filter_category.map do |cat|
+                          "%#{cat}%"
+                        end)
     end
     products = products.joins(:sport_category).where(sport_categories: { name: filter_sport }) if filter_sport.present?
     products = products.joins(:gender).where(genders: { name: filter_gender }) if filter_gender.present?
-    products = products.joins(:level).where( filter_levels.map{ 'levels.stage ILIKE ? '}.join(" OR "),  *filter_levels.map{|level| "%#{level}%" }) if filter_levels.present?
-    products = products.joins(:rich_text_description_body).where(
-      features.map{'action_text_rich_texts.body ILIKE ?'}.join(" OR "),
-       *features.map{|f| "%#{f}%" }
-       ) if features.present?
+    if filter_levels.present?
+      products = products.joins(:level).where(filter_levels.map do
+        'levels.stage ILIKE ? '
+      end.join(' OR '), *filter_levels.map do |level|
+                          "%#{level}%"
+                        end)
+    end
+    if features.present?
+      products = products.joins(:rich_text_description_body).where(
+        features.map { 'action_text_rich_texts.body ILIKE ?' }.join(' OR '),
+        *features.map { |f| "%#{f}%" }
+      )
+    end
 
     products = products.where('products.name ILIKE ?', "%#{product_name}%") if product_name.present?
     render json: {
@@ -45,17 +57,17 @@ class Api::V1::ProductsController < ApplicationController
 
   def search
     products = Product.all
-    query =  params[:search].strip.downcase
-    products =  if query.present?
-      # Combine name search and sport category search using OR
-       products
-        .left_joins(:sport_category) # left join to include products without sport_category
-        .where('LOWER(products.name) LIKE :search OR LOWER(sport_categories.name) = :search_exact',
-               search: "%#{query}%", search_exact: query)
+    query = params[:search].strip.downcase
+    products = if query.present?
+                 # Combine name search and sport category search using OR
+                 products
+                   .left_joins(:sport_category) # left join to include products without sport_category
+                   .where('LOWER(products.name) LIKE :search OR LOWER(sport_categories.name) = :search_exact',
+                          search: "%#{query}%", search_exact: query)
 
-    else
-      Product.none
-    end
+               else
+                 Product.none
+               end
 
     render json: {
       data: ActiveModelSerializers::SerializableResource.new(products)

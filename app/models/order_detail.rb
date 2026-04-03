@@ -11,9 +11,10 @@ class OrderDetail < ApplicationRecord
   accepts_nested_attributes_for :billing_address
 
   before_create :generate_number, :set_delivery_fee, :save_discount, :calculate_vat
+  after_create :send_mail_notification
 
 
-  default_scope { order(created_at: :desc)}
+  default_scope { order(created_at: :desc) }
   # Ex:- scope :active, -> {where(:active => true)}
 
   # enum :status, {pending: 0, approved: 1, declined: 2}
@@ -24,7 +25,7 @@ class OrderDetail < ApplicationRecord
   end
 
   def save_discount
-    self.discount = agent.discount
+    self.discount = agent&.discount || 0
   end
 
   def orders_count
@@ -40,10 +41,11 @@ class OrderDetail < ApplicationRecord
     self.delivery_fee = fee['delivery_fee']
   end
 
- def discounted_amount
-  return 0 if agent.nil? || agent.discount.nil?
-  self.bonus = ((agent.discount.to_i / 100) * total_amount)
-end
+  def discounted_amount
+    return 0 if agent.nil? || agent.discount.nil?
+
+    self.bonus = ((agent.discount.to_i / 100) * total_amount)
+  end
 
   def calculate_vat
     self.vat = total_amount * 0.1
@@ -51,5 +53,9 @@ end
 
   def calculate_net_total
     total_amount + (delivery_fee || 0) + (sub_total || 0) - (discounted_amount || 0)
+  end
+
+  def send_mail_notification
+    SendOrderNotificationJob.perform_later(self)
   end
 end

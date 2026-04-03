@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Confirmed – Melisports</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f2ee;
+            font-family: 'Outfit', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 16px;
+        }
+
+        .primary-color {
+            color: #ff4500
+        }
+
+        .wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── Top bar ── */
+        .topbar {
+            background: #16304b;
+            border-radius: 14px 14px 0 0;
+            padding: 20px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, #f5c842, #e8a800);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: #f5f2ee;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-name span {
+            color: #f5c842;
+        }
+
+        .order-badge {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #f5c842;
+            background: rgba(245, 200, 66, 0.12);
+            border: 1px solid rgba(245, 200, 66, 0.25);
+            padding: 5px 12px;
+            border-radius: 20px;
+            marlen-left: 20px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #16304b 0%, #16304ba8 60%, #16304b83 100%);
+            padding: 48px 36px 44px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 80% 20%, rgba(245, 200, 66, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 10% 80%, rgba(245, 200, 66, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .check-wrap {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #f5c842, #e8a800);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 0 0 12px rgba(245, 200, 66, 0.1), 0 0 0 24px rgba(245, 200, 66, 0.05);
+        }
+
+        .theme-bg {
+            background: #16304b
+        }
+
+        .theme-color {
+            color: #16304b
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            line-height: 1.15;
+            color: #f5f2ee;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: #f5c842;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: #9a8a72;
+            line-height: 1.6;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .hero p strong {
+            color: #c8b48a;
+            font-weight: 500;
+        }
+
+        /* ── Content card ── */
+        .card {
+            background: #ffffff;
+            border-left: 1px solid #e8e2d8;
+            border-right: 1px solid #e8e2d8;
+            padding: 0;
+        }
+
+        .section {
+            padding: 32px 36px;
+            border-bottom: 1px solid #f0ece5;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #f0ece5;
+        }
+
+        /* ── Order meta grid ── */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1px;
+            background: #f0ece5;
+            border: 1px solid #f0ece5;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .meta-cell {
+            background: #fff;
+            padding: 18px 20px;
+        }
+
+        .meta-cell-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #b0a090;
+            margin-bottom: 6px;
+        }
+
+        .meta-cell-value {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #2a1f0e;
+        }
+
+        .status-pill {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            color: #7a5c00;
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* ── Items table ── */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .items-table thead tr {
+            border-bottom: 2px solid #f0ece5;
+        }
+
+        .items-table thead th {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #b0a090;
+            padding: 0 0 12px;
+            text-align: left;
+        }
+
+        .items-table thead th:nth-child(2) {
+            text-align: center;
+        }
+
+        .items-table thead th:last-child {
+            text-align: right;
+        }
+
+        .items-table tbody tr {
+            border-bottom: 1px solid #f5f2ee;
+        }
+
+        .items-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .items-table tbody td {
+            padding: 14px 0;
+            font-size: 14px;
+            color: #3a2e1e;
+        }
+
+        .items-table tbody td:first-child {
+            font-weight: 500;
+        }
+
+        .items-table tbody td:nth-child(2) {
+            text-align: center;
+            color: #7a6a52;
+        }
+
+        .items-table tbody td:last-child {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* ── Totals block ── */
+        .totals {
+            background: #faf8f4;
+            border: 1px solid #ede8de;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .totals-row {
+            gap: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 18px;
+            border-bottom: 1px solid #ede8de;
+            font-size: 13.5px;
+        }
+
+        .totals-row:last-child {
+            border-bottom: none;
+        }
+
+        .totals-row .label {
+            color: #8a7a62;
+        }
+
+        .totals-row .value {
+            font-weight: 500;
+            color: #2a1f0e;
+        }
+
+        .totals-row.grand {
+            background: #1a1208;
+            padding: 16px 18px;
+        }
+
+        .totals-row.grand .label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9a8a72;
+        }
+
+        .totals-row.grand .value {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: #f5c842;
+            font-weight: 700;
+        }
+
+        /* ── Address ── */
+        .address-box {
+            background: #faf8f4;
+            border: 1px solid #ede8de;
+            border-left: 3px solid #ff4500;
+            border-radius: 10px;
+            padding: 20px 22px;
+        }
+
+        .address-box p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #4a3a22;
+        }
+
+        .address-box .country {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #b0a090;
+            margin-top: 4px;
+        }
+
+        /* ── Notice strip ── */
+        .notice {
+            background: #fcbda6c4;
+            border-top: 1px solid #fde68a;
+            border-bottom: 1px solid #fde68a;
+            padding: 16px 36px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .notice p {
+            font-size: 13px;
+            line-height: 1.65;
+            color: #78600a;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #16304b;
+            border-radius: 0 0 14px 14px;
+            padding: 30px 36px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #2c2010;
+        }
+
+        .footer-tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: #f5f2ee;
+            margin-bottom: 4px;
+        }
+
+        .footer-tagline em {
+            color: #f5c842;
+            font-style: italic;
+        }
+
+        .footer-sub {
+            font-size: 12px;
+            color: #6a5a42;
+        }
+
+        .footer-team {
+            text-align: right;
+        }
+
+        .footer-team-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ff4500;
+        }
+
+        .footer-team-role {
+            font-size: 11px;
+            color: #6a5a42;
+            margin-top: 2px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .footer-copy {
+            font-size: 11px;
+            color: #ffffff;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 14px;
+        }
+
+        .footer-links a {
+            font-size: 11px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- Top bar -->
+        <div class="topbar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <img src="https://melisports.com/static/media/melisport_1.1f3222d30b0296d63d3f.png" width="34" height="34" alt="Melisports" style="display:block;" />
+                </div>
+            </div>
+            <span class="order-badge">Order Confirmed</span>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+
+            <h1>Your order has been <br><em>Taken</em>.</h1>
+            <p>
+                Thanks, <strong><%= @full_name || @email %></strong>. We've received your order
+                and our team is already getting it ready.
+            </p>
+        </div>
+
+        <!-- Card body -->
+        <div class="card">
+
+            <!-- Order meta -->
+            <div class="section">
+                <div class="section-label">Order Summary</div>
+                <div class="meta-grid">
+                    <div class="meta-cell">
+                        <div class="meta-cell-label">Order ID</div>
+                        <div class="meta-cell-value">#<%= @order.order_number %></div>
+                    </div>
+                    <div class="meta-cell">
+                        <div class="meta-cell-label">Date</div>
+                        <div class="meta-cell-value"><%= @order.created_at.strftime("%b %-d, %Y") %></div>
+                    </div>
+                    <div class="meta-cell">
+                        <div class="meta-cell-label">Status</div>
+                        <div class="meta-cell-value">
+                            <span class="status-pill"><%= @order.status.humanize %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items -->
+            <div class="section">
+                <div class="section-label">Items Ordered</div>
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @order.order_items.each do |item| %>
+                        <tr>
+                            <td><%= item.product.name %></td>
+                            <td><%= item.quantity %></td>
+                            <td>₦<%= number_to_currency(item.amount, unit: "", precision: 2) %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+
+                <div class="totals">
+                    <div class="totals-row">
+                        <span class="label">Subtotal</span>
+                        <span class="value">₦<%= number_to_currency(@order.net_total - @order.delivery_fee, unit: "", precision: 2) %></span>
+                    </div>
+                    <div class="totals-row">
+                        <span class="label">Delivery Fee</span>
+                        <span class="value">₦<%= number_to_currency(@order.delivery_fee, unit: "", precision: 2) %></span>
+                    </div>
+                    <div class="totals-row grand">
+                        <span class="label">Total Paid</span>
+                        <span class="value">₦<%= number_to_currency(@order.net_total, unit: "", precision: 2) %></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery -->
+            <div class="section">
+                <div class="section-label">Delivery Address</div>
+                <div class="address-box">
+                    <p>
+                        <%= @order.billing_address.street %><br>
+                        <%= @order.billing_address.city %>, <%= @order.billing_address.state %> <%= @order.billing_address.postal_code %>
+                    </p>
+                    <p class="country">Nigeria</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Shipping notice -->
+        <div class="notice">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;margin-top:2px" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1.5" y="5.5" width="10" height="8" rx="1.5" stroke="#d4a017" stroke-width="1.3" />
+                <path d="M11.5 8.5h2.5l2 3v1.5h-4.5V8.5z" stroke="#d4a017" stroke-width="1.3" stroke-linejoin="round" />
+                <circle cx="4.5" cy="13.5" r="1" stroke="#d4a017" stroke-width="1.3" />
+                <circle cx="13.5" cy="13.5" r="1" stroke="#d4a017" stroke-width="1.3" />
+            </svg>
+            <p>
+                You'll receive a shipping confirmation email with tracking details once your order has been dispatched.
+                If you have any questions, simply reply to this email or contact our support team.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-tagline">Thanks for playing<br><em>with the best.</em></div>
+                    <div class="footer-sub">melisports.com</div>
+                </div>
+                <div class="footer-team">
+                    <div class="footer-team-name">Melisports Team</div>
+                    <div class="footer-team-role">We've got your game.</div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span class="footer-copy">© <%= Time.current.year %> Melisports. All rights reserved.</span>
+                <div class="footer-links">
+                    <a href="#">Track Order</a>
+                    <a href="#">Support</a>
+                    <a href="#">Unsubscribe</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

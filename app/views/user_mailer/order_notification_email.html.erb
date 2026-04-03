@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Order Alert – Melisports Internal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #eef2f7;
+            font-family: 'IBM Plex Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            padding: 36px 16px;
+        }
+
+        .wrapper {
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* ── Top bar ── */
+        .topbar {
+            background: #16304b;
+            border-radius: 12px 12px 0 0;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: #ff4500;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-name span {
+            color: #ff4500;
+        }
+
+        .internal-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: #ff4500;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* ── Alert hero ── */
+        .alert-hero {
+            background: #16304b;
+            padding: 32px 28px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff4500 0%, #ff6a2f 60%, transparent 100%);
+        }
+
+        .alert-hero::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 69, 0, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .alert-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+        }
+
+        .alert-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 69, 0, 0.12);
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .alert-text h1 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 22px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .alert-text h1 span {
+            color: #ff4500;
+        }
+
+        .alert-text p {
+            font-size: 13px;
+            color: #7a9bb8;
+            line-height: 1.65;
+        }
+
+        .alert-text p strong {
+            color: #a0c0d8;
+            font-weight: 500;
+        }
+
+        /* ── Timestamp bar ── */
+        .timestamp-bar {
+            background: #0f2338;
+            padding: 11px 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid #1e3a55;
+        }
+
+        .ts-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ts-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            color: #3a5a78;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .ts-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #6a9ab8;
+        }
+
+        .ts-sep {
+            color: #1e3a55;
+            font-size: 14px;
+        }
+
+        /* ── White content card ── */
+        .card {
+            background: #ffffff;
+            border: 1px solid #dde4ed;
+            border-top: none;
+        }
+
+        .block {
+            padding: 28px;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .block:last-child {
+            border-bottom: none;
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .block-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4500;
+            background: rgba(255, 69, 0, 0.07);
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            padding: 3px 9px;
+            border-radius: 4px;
+        }
+
+        .block-line {
+            flex: 1;
+            height: 1px;
+            background: #eef2f7;
+        }
+
+        /* ── Info grid ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: #eef2f7;
+            border: 1px solid #eef2f7;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .info-cell {
+            background: #f8fafc;
+            padding: 16px 18px;
+        }
+
+        .info-key {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            color: #9ab0c8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-val {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #16304b;
+        }
+
+        /* ── Items table ── */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #eef2f7;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .items-table thead {
+            background: #16304b;
+        }
+
+        .items-table thead th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #7a9bb8;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .items-table thead th:nth-child(2),
+        .items-table thead th:nth-child(3) {
+            text-align: center;
+        }
+
+        .items-table thead th:last-child {
+            text-align: right;
+        }
+
+        .items-table tbody tr {
+            border-bottom: 1px solid #f0f4f8;
+        }
+
+        .items-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .items-table tbody td {
+            padding: 13px 16px;
+            font-size: 13px;
+            color: #4a6a88;
+        }
+
+        .items-table tbody td:first-child {
+            color: #16304b;
+            font-weight: 600;
+        }
+
+        .items-table tbody td:nth-child(2),
+        .items-table tbody td:nth-child(3) {
+            text-align: center;
+        }
+
+        .items-table tbody td:last-child {
+            text-align: right;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #16304b;
+        }
+
+        /* ── Totals ── */
+        .totals-stack {
+            margin-top: 16px;
+            border: 1px solid #eef2f7;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .t-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f4f8;
+            background: #f8fafc;
+        }
+
+        .t-row:last-child {
+            border-bottom: none;
+        }
+
+        .t-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #9ab0c8;
+        }
+
+        .t-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: #16304b;
+        }
+
+        .t-row.total {
+            background: #16304b;
+            border-top: 2px solid #ff4500;
+        }
+
+        .t-row.total .t-label {
+            color: #7a9bb8;
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .t-row.total .t-value {
+            color: #ff4500;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* ── Address ── */
+        .address-box {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
+            color: #4a6a88;
+            line-height: 2;
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            border-left: 3px solid #ff4500;
+            border-radius: 8px;
+            padding: 18px 20px;
+        }
+
+        .address-box .highlight {
+            color: #16304b;
+            font-weight: 600;
+        }
+
+        /* ── Action strip ── */
+        .action-strip {
+            background: #f0f4f8;
+            border: 1px solid #dde4ed;
+            border-top: none;
+            padding: 20px 28px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background: #ff4500;
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #16304b;
+            border: 1px solid #b0c4d8;
+        }
+
+        .action-note {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #9ab0c8;
+            margin-left: auto;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #16304b;
+            border-radius: 0 0 12px 12px;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .footer-brand {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: #3a5a78;
+        }
+
+        .footer-brand span {
+            color: #ff4500;
+        }
+
+        .footer-meta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: #3a5a78;
+            text-align: right;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- Top bar -->
+        <div class="topbar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <img src="https://melisports.com/static/media/melisport_1.1f3222d30b0296d63d3f.png" width="34" height="34" alt="Melisports" style="display:block;" />
+                </div>
+            </div>
+            <span class="internal-badge">Internal Alert</span>
+        </div>
+
+        <!-- Alert hero -->
+        <div class="alert-hero">
+            <div class="alert-row">
+                <div class="alert-icon">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6h18M4 6l2 14h14L22 6M4 6H2M22 6h2" stroke="#ff4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M10 11v5M13 11v5M16 11v5" stroke="#ff4500" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="alert-text">
+                    <h1>New Order <span>#<%= @order.order_number %></span></h1>
+                    <p>
+                        A new order has been placed on <strong>melisports.com</strong> and is awaiting fulfilment.
+                        Review the details below and update the order status accordingly.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timestamp bar -->
+        <div class="timestamp-bar">
+            <div class="ts-item">
+                <span class="ts-label">Received</span>
+                <span class="ts-value"><%= @order.created_at.strftime("%Y-%m-%d %H:%M UTC") %></span>
+            </div>
+            <span class="ts-sep">|</span>
+            <div class="ts-item">
+                <span class="ts-label">Status</span>
+                <span class="ts-value"><%= @order.status.humanize %></span>
+            </div>
+            <span class="ts-sep">|</span>
+            <div class="ts-item">
+                <span class="ts-label">Items</span>
+                <span class="ts-value"><%= @order.order_items.count %></span>
+            </div>
+        </div>
+
+        <!-- White content card -->
+        <div class="card">
+
+            <!-- Customer block -->
+            <div class="block">
+                <div class="block-header">
+                    <span class="block-tag">Customer</span>
+                    <div class="block-line"></div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-cell">
+                        <div class="info-key">Full Name</div>
+                        <div class="info-val"><%= @full_name || "—" %></div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="info-key">Email</div>
+                        <div class="info-val"><%= @email %></div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="info-key">Order ID</div>
+                        <div class="info-val">#<%= @order.order_number %></div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="info-key">Order Date</div>
+                        <div class="info-val"><%= @order.created_at.strftime("%b %-d, %Y") %></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items block -->
+            <div class="block">
+                <div class="block-header">
+                    <span class="block-tag">Items Ordered</span>
+                    <div class="block-line"></div>
+                </div>
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU / ID</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @order.order_items.each do |item| %>
+                        <tr>
+                            <td><%= item.product.name %></td>
+                            <td><%= item.product.id %></td>
+                            <td><%= item.quantity %></td>
+                            <td>₦<%= number_to_currency(item.amount, unit: "", precision: 2) %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+
+                <div class="totals-stack">
+                    <div class="t-row">
+                        <span class="t-label">Subtotal</span>
+                        <span class="t-value">₦<%= number_to_currency(@order.net_total - @order.delivery_fee, unit: "", precision: 2) %></span>
+                    </div>
+                    <div class="t-row">
+                        <span class="t-label">Delivery Fee</span>
+                        <span class="t-value">₦<%= number_to_currency(@order.delivery_fee, unit: "", precision: 2) %></span>
+                    </div>
+                    <div class="t-row total">
+                        <span class="t-label">Order Total</span>
+                        <span class="t-value">₦<%= number_to_currency(@order.net_total, unit: "", precision: 2) %></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery block -->
+            <div class="block">
+                <div class="block-header">
+                    <span class="block-tag">Delivery Address</span>
+                    <div class="block-line"></div>
+                </div>
+                <div class="address-box">
+                    <span class="highlight"><%= @order.billing_address.street %></span><br>
+                    <span class="highlight"><%= @order.billing_address.city %></span>, <%= @order.billing_address.state %> &nbsp;<%= @order.billing_address.postal_code %><br>
+                    NIGERIA
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Action strip -->
+        <div class="action-strip">
+            <a href="#" class="action-btn btn-primary">View Order →</a>
+            <a href="#" class="action-btn btn-secondary">Mark as Processing</a>
+            <span class="action-note">melisports-admin/orders/<%= @order.order_number %></span>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="footer-brand">meli<span>sports</span> &mdash; internal alert system</span>
+            <div class="footer-meta">
+                Auto-generated &bull; Do not reply<br>
+                © <%= Time.current.year %> Melisports
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

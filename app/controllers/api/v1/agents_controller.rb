@@ -12,12 +12,12 @@ class Api::V1::AgentsController < ApplicationController
 
 
 
-    render json: {data:  agents}
+    render json: { data: agents }
   end
 
   # GET /agents/1
   def show
-    code = params[:id]
+    params[:id]
     render json: { data: @agent }
   end
 
@@ -59,10 +59,8 @@ class Api::V1::AgentsController < ApplicationController
 
   def set_agent_from_code
     @agent = Agent.find_by(referral_code: params[:id])
-    return render json: {message: "No agent with code exists"}, status: :unprocessable_entity unless @agent
-
- end
-
+    render json: { message: 'No agent with code exists' }, status: :unprocessable_entity unless @agent
+  end
 
   # Only allow a list of trusted parameters through.
   def agent_params

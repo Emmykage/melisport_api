@@ -48,6 +48,7 @@ class Product < ApplicationRecord
 
   def discount_amount
     return 0 unless discount == 'active_discount'
+
     percent = price * (discount_percentage.to_f / 100)
     price - percent
   end

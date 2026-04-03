@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: 'support@melisports.com'
+  default from: 'info@melisports.com'
 
   def confirmation_email(user)
     # @user = params[:user]
@@ -17,14 +17,25 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Password Reset')
   end
 
-  def login_notification (user)
+  def login_notification(user)
     @user = user
     @email = user.email
 
-    mail(to: @user.email, subject: "Login in Notification")
-
+    mail(to: @user.email, subject: 'Login in Notification')
   end
 
+  def order_notification_email(order)
+    @order = order
+    @full_name = order.billing_address.name
+    @email = "info@melisports.com"
+    mail(to: @email, subject: 'Order Request Notification')
+  end
+   def order_confirmation_email(order)
+    @order = order
+    @full_name = order.billing_address.name
+    @email = order.billing_address.email
+    mail(to: @email, subject: 'Order Confirmation')
+  end
 
   def confirmation_url(confirmation_token)
     "#{Rails.application.config.action_mailer.default_url_options[:host]}/confirm_email?confirmation_token=#{confirmation_token}"
