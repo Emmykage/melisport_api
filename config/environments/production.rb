@@ -13,10 +13,10 @@ Rails.application.configure do
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "premium165.web-hosting.com",
+    :address              => "smtp.zoho.com",
     :port                 => 587,
-    :user_name            => "support@melisports.com",
-    :password             => "support-melisports-2024",
+    :user_name            => "info@melisports.com",
+    :password             => "Chemistry.101",
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
