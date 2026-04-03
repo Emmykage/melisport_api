@@ -27,8 +27,9 @@ class UserMailer < ApplicationMailer
   def order_notification_email(order)
     @order = order
     @full_name = order.billing_address.name
-    @email = "info@melisports.com"
-    mail(to: @email, subject: 'Order Request Notification')
+    @email = order.billing_address.email
+    org_email = "info@melisports.com"
+    mail(to: org_email, subject: 'Order Request Notification')
   end
    def order_confirmation_email(order)
     @order = order

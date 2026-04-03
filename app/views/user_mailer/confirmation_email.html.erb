@@ -1,17 +1,396 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h2>Welcome to melisports.com, <%= @user.first_name %></h2>
-    <p>
-      You have successfully signed up to melisports.com,
-      your username is: <%= @user.first_name %>.<br>
-    </p>
-    <p>
-      To login to complete you sign up, follow this link: <%= @url %>.
-    </p>
-    <p>Thanks for joining and have a great day!</p>
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Notification – Melisports</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 16px;
+        }
+
+        .wrapper {
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* ── Header bar ── */
+        .header {
+            background: #16304b;
+            border-radius: 16px 16px 0 0;
+            padding: 24px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-wrap {
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .logo-wrap img {
+            display: block;
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 20px;
+            color: #ffffff;
+            letter-spacing: -0.4px;
+        }
+
+        .brand-name span {
+            color: #ff4500;
+        }
+
+        .header-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: #16304b;
+            background: #ff4500;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* ── Alert stripe ── */
+        .alert-stripe {
+            background: #ff4500;
+            padding: 5px 36px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-stripe p {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .stripe-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            flex-shrink: 0;
+        }
+
+        /* ── Body card ── */
+        .card {
+            background: #ffffff;
+            border: 1px solid #dde4ed;
+            border-top: none;
+            border-bottom: none;
+            padding: 44px 36px;
+        }
+
+        .icon-wrap {
+            width: 64px;
+            height: 64px;
+            background: #f0f4f8;
+            border: 1px solid #dde4ed;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 30px;
+            line-height: 1.2;
+            color: #16304b;
+            letter-spacing: -0.8px;
+            margin-bottom: 14px;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: #ff4500;
+        }
+
+        .intro {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #5a7a98;
+            margin-bottom: 32px;
+        }
+
+        /* ── Info block ── */
+        .info-block {
+            background: #f8fafc;
+            border: 1px solid #dde4ed;
+            border-left: 3px solid #ff4500;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #9ab0c8;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #16304b;
+            text-align: right;
+            max-width: 65%;
+            word-break: break-all;
+        }
+
+        .status-success {
+            color: #ffffff;
+            background: #16304b;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── CTA ── */
+        .cta-wrap {
+            margin-bottom: 36px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #ff4500;
+            color: #ffffff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 10px;
+        }
+
+        .cta-sub {
+            margin-top: 14px;
+            font-size: 12px;
+            color: #9ab0c8;
+            line-height: 1.6;
+        }
+
+        .cta-sub a {
+            color: #5a7a98;
+            word-break: break-all;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            border: none;
+            border-top: 1px solid #eef2f7;
+            margin: 0 0 28px;
+        }
+
+        /* ── Security notice ── */
+        .security-note {
+            background: #f8fafc;
+            border: 1px solid #dde4ed;
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .security-note .icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .security-note p {
+            font-size: 12.5px;
+            line-height: 1.65;
+            color: #7a9ab8;
+        }
+
+        .security-note strong {
+            color: #16304b;
+            font-weight: 600;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #16304b;
+            border-radius: 0 0 16px 16px;
+            padding: 22px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-copy {
+            font-size: 11.5px;
+            color: #3a5a78;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            font-size: 11.5px;
+            color: #3a5a78;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="brand">
+                <div class="logo-wrap">
+                    <img src="https://melisports.com/static/media/melisport_1.1f3222d30b0296d63d3f.png" width="34" height="34" alt="Melisports" style="display:block;" />
+                </div>
+                <span class="brand-name">meli<span>sports</span></span>
+            </div>
+            <span class="header-badge">Security Alert</span>
+        </div>
+
+        <!-- Alert stripe -->
+        <div class="alert-stripe">
+            <div class="stripe-dot"></div>
+            <p>Security Alert</p>
+            <div class="stripe-dot"></div>
+            <p>New Login Detected</p>
+            <div class="stripe-dot"></div>
+        </div>
+
+        <!-- Main card -->
+        <div class="card">
+
+            <div class="icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6" y="12" width="16" height="12" rx="3" stroke="#ff4500" stroke-width="1.5" />
+                    <path d="M9 12V9a5 5 0 0 1 10 0v3" stroke="#16304b" stroke-width="1.5" stroke-linecap="round" />
+                    <circle cx="14" cy="17.5" r="1.5" fill="#ff4500" />
+                    <path d="M14 19v2" stroke="#ff4500" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </div>
+
+            <h1>A new login to your<br><em>account</em> was detected.</h1>
+
+            <p class="intro">
+                We noticed a successful login to your Melisports account.
+                If this was you, no action is needed. If you don't recognise
+                this activity, please secure your account immediately.
+            </p>
+
+            <!-- Info rows -->
+            <div class="info-block">
+                <div class="info-row">
+                    <span class="info-label">Account</span>
+                    <span class="info-value"><%= @email %></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Time</span>
+                    <span class="info-value"><%= Time.current.strftime("%B %-d, %Y at %H:%M UTC") %></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status</span>
+                    <span class="info-value"><span class="status-success">Successful</span></span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-wrap">
+                <a href="<%= @url %>" class="cta-btn">Complete Sign Up →</a>
+                <p class="cta-sub">
+                    Or paste this link into your browser:<br>
+                    <a href="<%= @url %>"><%= @url %></a>
+                </p>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Security note -->
+            <div class="security-note">
+                <div class="icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 1.5L2.25 4.5V9c0 4.14 2.88 8.01 6.75 9 3.87-.99 6.75-4.86 6.75-9V4.5L9 1.5z" stroke="#9ab0c8" stroke-width="1.3" stroke-linejoin="round" />
+                        <path d="M6.75 9l1.5 1.5 3-3" stroke="#9ab0c8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <p>
+                    <strong>Didn't log in?</strong> If you didn't initiate this login,
+                    your credentials may be compromised. Change your password immediately
+                    and contact our support team. We will never ask for your password by email.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="footer-copy">© <%= Time.current.year %> Melisports. All rights reserved.</span>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Unsubscribe</a>
+                <a href="#">Help</a>
+            </div>
+        </div>
+
+    </div>
+</body>
+
 </html>
