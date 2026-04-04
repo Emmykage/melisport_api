@@ -1,0 +1,55 @@
+<% name = @full_name || @email || "Customer" %>
+<% order = @order %>
+
+ORDER CONFIRMED — MELISPORTS
+==================================================
+
+Your order has been taken.
+
+Thanks, <%= name %>.
+We've received your order and our team is already getting it ready.
+
+--------------------------------------------------
+ORDER SUMMARY
+--------------------------------------------------
+Order ID: #<%= order.order_number %>
+Date: <%= order.created_at.strftime("%b %-d, %Y") %>
+Status: <%= order.status.humanize %>
+
+--------------------------------------------------
+ITEMS ORDERED
+--------------------------------------------------
+<% order.order_items.each do |item| %>
+- <%= item.product.name %>
+  Qty: <%= item.quantity %>
+  Price: ₦<%= number_to_currency(item.amount, unit: "", precision: 2) %>
+<% end %>
+
+--------------------------------------------------
+PAYMENT SUMMARY
+--------------------------------------------------
+Subtotal: ₦<%= number_to_currency(order.net_total - order.delivery_fee, unit: "", precision: 2) %>
+Delivery Fee: ₦<%= number_to_currency(order.delivery_fee, unit: "", precision: 2) %>
+TOTAL PAID: ₦<%= number_to_currency(order.net_total, unit: "", precision: 2) %>
+
+--------------------------------------------------
+DELIVERY ADDRESS
+--------------------------------------------------
+<%= order.billing_address.street %>
+<%= order.billing_address.city %>, <%= order.billing_address.state %> <%= order.billing_address.postal_code %>
+Nigeria
+
+--------------------------------------------------
+SHIPPING INFORMATION
+--------------------------------------------------
+You'll receive a shipping confirmation email with tracking details once your order has been dispatched.
+
+If you have any questions, simply reply to this email or contact our support team.
+
+--------------------------------------------------
+Thanks for playing with the best.
+
+Melisports Team
+We've got your game.
+
+© <%= Time.current.year %> Melisports. All rights reserved.

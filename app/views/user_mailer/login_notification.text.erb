@@ -1,17 +1,16 @@
 <% email = @email || "testuser@email.com" %>
-<% url = @url || "https://melisports.com/verify" %>
 <% time = Time.current.strftime("%B %-d, %Y at %H:%M UTC") rescue "April 4, 2026 at 14:30 UTC" %>
 
 MELISPORTS — SECURITY ALERT
 New Login Detected
---------------------------------------------------
+==================================================
 
 A new login to your account was detected.
 
 We noticed a successful login to your Melisports account.
 If this was you, no action is needed.
 
-If you do not recognise this activity, please secure your account immediately.
+If you don't recognise this activity, please secure your account immediately.
 
 --------------------------------------------------
 ACCOUNT DETAILS
@@ -21,22 +20,14 @@ Time: <%= time %>
 Status: Successful
 
 --------------------------------------------------
-ACTION REQUIRED
---------------------------------------------------
-Complete Sign Up:
-<%= url %>
-
-If the link above does not work, copy and paste it into your browser.
-
---------------------------------------------------
 SECURITY NOTICE
 --------------------------------------------------
 Didn't log in?
 
-If you did not initiate this login, your account may be compromised.
+If you didn't initiate this login, your credentials may be compromised.
 Change your password immediately and contact our support team.
 
-Melisports will NEVER ask for your password via email.
+We will never ask for your password by email.
 
 --------------------------------------------------
 © <%= Time.current.year %> Melisports. All rights reserved.

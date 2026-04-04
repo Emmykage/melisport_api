@@ -1,0 +1,65 @@
+<% order = @order %>
+<% name = @full_name || "—" %>
+<% email = @email || "—" %>
+
+MELISPORTS — INTERNAL ALERT
+==================================================
+
+NEW ORDER RECEIVED
+Order #<%= order.order_number %>
+
+A new order has been placed on melisports.com and is awaiting fulfilment.
+Review the details below and update the order status accordingly.
+
+--------------------------------------------------
+ORDER METADATA
+--------------------------------------------------
+Received: <%= order.created_at.strftime("%Y-%m-%d %H:%M UTC") %>
+Status: <%= order.status.humanize %>
+Items Count: <%= order.order_items.count %>
+
+--------------------------------------------------
+CUSTOMER DETAILS
+--------------------------------------------------
+Full Name: <%= name %>
+Email: <%= email %>
+Order ID: #<%= order.order_number %>
+Order Date: <%= order.created_at.strftime("%b %-d, %Y") %>
+
+--------------------------------------------------
+ITEMS ORDERED
+--------------------------------------------------
+<% order.order_items.each do |item| %>
+- <%= item.product.name %>
+  SKU / ID: <%= item.product.id %>
+  Qty: <%= item.quantity %>
+  Unit Price: ₦<%= number_to_currency(item.amount, unit: "", precision: 2) %>
+<% end %>
+
+--------------------------------------------------
+ORDER TOTALS
+--------------------------------------------------
+Subtotal: ₦<%= number_to_currency(order.net_total - order.delivery_fee, unit: "", precision: 2) %>
+Delivery Fee: ₦<%= number_to_currency(order.delivery_fee, unit: "", precision: 2) %>
+ORDER TOTAL: ₦<%= number_to_currency(order.net_total, unit: "", precision: 2) %>
+
+--------------------------------------------------
+DELIVERY ADDRESS
+--------------------------------------------------
+<%= order.billing_address.street %>
+<%= order.billing_address.city %>, <%= order.billing_address.state %> <%= order.billing_address.postal_code %>
+NIGERIA
+
+--------------------------------------------------
+ACTIONS
+--------------------------------------------------
+View Order:
+melisports-admin/orders/<%= order.order_number %>
+
+Mark as Processing via admin dashboard.
+
+--------------------------------------------------
+melisports — internal alert system
+
+Auto-generated — Do not reply
+© <%= Time.current.year %> Melisports
