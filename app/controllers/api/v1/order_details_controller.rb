@@ -3,7 +3,7 @@ class Api::V1::OrderDetailsController < ApplicationController
   before_action :authorize, except: %i[create]
 
   before_action :set_order_detail, only: %i[update destroy]
-  before_action :ensure_super_user, only: %i[delete]
+  before_action :ensure_super_user, only: %i[destroy]
 
   # GET /products
   def index
@@ -46,8 +46,13 @@ class Api::V1::OrderDetailsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    @order_detail.destroy
+    @order_detail.current_user = @current_user
+   if @order_detail.destroy
     render json: { message: 'Order has been Successfully Deleted' }, status: :ok
+   else
+        render json: { message: @order_detail.errors.full_messages.to_sentence }, status: :ok
+   end
+
   end
 
   private

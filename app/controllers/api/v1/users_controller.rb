@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
-  before_action :authorize, only: %i[showUser user_profile_update user_password_update userProfile]
+  before_action :authorize, only: %i[showUser user_profile_update user_password_update userProfile destroy]
   before_action :ensure_super_user, only: %i[destroy]
 
   # GET /users

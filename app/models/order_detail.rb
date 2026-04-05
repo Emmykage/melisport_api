@@ -1,5 +1,8 @@
 class OrderDetail < ApplicationRecord
+    attr_accessor :current_user
+
   belongs_to :user, optional: true
+
   has_one :payment_detail
   has_many :order_items, dependent: :destroy
   has_one :billing_address, dependent: :destroy
@@ -12,6 +15,7 @@ class OrderDetail < ApplicationRecord
 
   before_create :generate_number, :set_delivery_fee, :save_discount, :calculate_vat
   after_create :send_mail_notification
+  before_destroy :is_authorized_to_destroy?
 
 
   default_scope { order(created_at: :desc) }
@@ -23,6 +27,17 @@ class OrderDetail < ApplicationRecord
   def total_amount
     order_items.collect(&:price_order).sum
   end
+
+
+  before_destroy :is_authorized_to_destroy?
+
+  def is_authorized_to_destroy?
+    unless current_user&.role == "super_admin"
+      errors.add(:base, "Not authorized to delete order.")
+      throw(:abort)
+    end
+  end
+
 
   def save_discount
     self.discount = agent&.discount || 0
