@@ -18,7 +18,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }, unless: -> { skip_email_validation? }
   validates :first_name, :last_name, presence: true, on: :create
   # validates :password, length: { in: 6..20 }, unless: -> { skip_password_validation? }
-  validates :password, length: { in: 6..20 }, allow_nil: true
+  validates :password, length: { in: 6..30 }, allow_nil: true
 
 
   accepts_nested_attributes_for :profile, allow_destroy: true
