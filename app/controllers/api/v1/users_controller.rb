@@ -23,17 +23,22 @@ class Api::V1::UsersController < ApplicationController
   end
 
   # POST /users
-  def create
-    @user = User.create(user_params)
+def create
+  @user = User.new(user_params)
 
-    if @user.valid?
-      # UserMailer.with(user: @user).welcome_email.deliver_later
-      # token = encode_token({ user_id: @user.id })
-      render json: { user: @user, message: 'Confirmation email sent' }, status: :ok
-    else
-      render json: { error: 'failed to create user' }, status: :unprocessable_entity
-    end
+  if @user.save
+    # UserMailer.with(user: @user).welcome_email.deliver_later
+
+    render json: {
+      user: @user #.slice(:id, :email, :role), # safe fields only
+      message: 'Confirmation email sent'
+    }, status: :created
+  else
+    render json: {
+      error: @user.errors.full_messages.to_sentence
+    }, status: :unprocessable_entity
   end
+end
 
   def login
     @user = User.find_by(email: user_params[:email])
