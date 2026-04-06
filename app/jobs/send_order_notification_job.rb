@@ -4,7 +4,7 @@ class SendOrderNotificationJob < ApplicationJob
   def perform(order)
     # UserMailer.order_notification_email(order).deliver_later
     UserMailer.order_notification_email(order).deliver_later
-  UserMailer.order_confirmation_email(order).deliver_later
+    UserMailer.order_confirmation_email(order).deliver_later
     # Do something later
   end
 end

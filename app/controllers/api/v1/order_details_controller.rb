@@ -47,12 +47,11 @@ class Api::V1::OrderDetailsController < ApplicationController
   # DELETE /products/1
   def destroy
     @order_detail.current_user = @current_user
-   if @order_detail.destroy
-    render json: { message: 'Order has been Successfully Deleted' }, status: :ok
-   else
-        render json: { message: @order_detail.errors.full_messages.to_sentence }, status: :ok
-   end
-
+    if @order_detail.destroy
+      render json: { message: 'Order has been Successfully Deleted' }, status: :ok
+    else
+      render json: { message: @order_detail.errors.full_messages.to_sentence }, status: :unprocessable_entity
+    end
   end
 
   private

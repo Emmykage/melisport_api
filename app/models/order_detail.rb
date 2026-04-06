@@ -1,5 +1,5 @@
 class OrderDetail < ApplicationRecord
-    attr_accessor :current_user
+  attr_accessor :current_user
 
   belongs_to :user, optional: true
 
@@ -32,12 +32,11 @@ class OrderDetail < ApplicationRecord
   before_destroy :is_authorized_to_destroy?
 
   def is_authorized_to_destroy?
-    unless current_user&.role == "super_admin"
-      errors.add(:base, "Not authorized to delete order.")
-      throw(:abort)
-    end
-  end
+    return false if current_user&.role == 'super-admin'
 
+    errors.add(:base, 'Not authorized to delete order.')
+    throw(:abort)
+  end
 
   def save_discount
     self.discount = agent&.discount || 0
