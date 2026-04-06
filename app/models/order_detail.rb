@@ -9,7 +9,7 @@ class OrderDetail < ApplicationRecord
   has_many :products, through: :order_items
   belongs_to :agent, optional: true
 
-  has_one :invoice
+  has_one :invoice, dependent: :destroy
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :billing_address
 
