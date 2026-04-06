@@ -29,6 +29,8 @@ class UserMailer < ApplicationMailer
     @full_name = order.billing_address.name
     @email = order.billing_address.email
     org_email = 'info@melisports.com'
+    @confirmation_url ="#{Rails.application.config.action_mailer.default_url_options[:host]}/admin/orders/#{order.id}"
+
     mail(to: org_email, subject: 'Order Request Notification')
   end
 
@@ -36,7 +38,7 @@ class UserMailer < ApplicationMailer
     @order = order
     @full_name = order.billing_address.name
     @email = order.billing_address.email
-    mail(to: @email, subject: 'Order Confirmation')
+    mail(to: @email, subject: 'Order Request')
   end
 
   def confirmation_url(confirmation_token)

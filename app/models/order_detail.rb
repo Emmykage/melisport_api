@@ -16,6 +16,7 @@ class OrderDetail < ApplicationRecord
   before_create :generate_number, :set_delivery_fee, :save_discount, :calculate_vat
   after_create :send_mail_notification
   before_destroy :is_authorized_to_destroy?
+  after_update :send_confirmation_notification, if: :saved_change_to_status?
 
 
   default_scope { order(created_at: :desc) }
@@ -23,6 +24,14 @@ class OrderDetail < ApplicationRecord
 
   # enum :status, {pending: 0, approved: 1, declined: 2}
   enum :payment_method, { 'pay later' => 0, paystack: 1 }
+
+
+
+  def send_confirmation_notification
+    SendOrderConfirmationJob.perform_later(self)
+
+  end
+
 
   def total_amount
     order_items.collect(&:price_order).sum
