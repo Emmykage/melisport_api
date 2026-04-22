@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_27_124347) do
+ActiveRecord::Schema[7.0].define(version: 2026_04_09_002038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -167,6 +167,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_27_124347) do
     t.decimal "bonus"
     t.uuid "agent_id"
     t.decimal "discount"
+    t.boolean "pick_up"
     t.index ["agent_id"], name: "index_order_details_on_agent_id"
     t.index ["user_id"], name: "index_order_details_on_user_id"
   end
