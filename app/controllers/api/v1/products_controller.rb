@@ -108,7 +108,7 @@ class Api::V1::ProductsController < ApplicationController
 
   def new_arrivals
     @products = Rails.cache.fetch('new arrivals', expires_in: 4.hours) do
-      Product.where('created_at >= ?', 30.days.ago).order(created_at: :desc).to_a
+      Product.where('created_at >= ? AND updated_at >= ?', 30.days.ago, 30.days.ago).order(created_at: :desc).to_a
     end
     render json: { data: ActiveModelSerializers::SerializableResource.new(@products) }
   end
@@ -131,6 +131,7 @@ class Api::V1::ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
+    # binding.b
     if @product.update(product_params)
       render json: { data: ProductSerializer.new(@product), message: 'Product updated Created' }, status: :ok
     else
