@@ -108,9 +108,12 @@ class Api::V1::ProductsController < ApplicationController
 
   def new_arrivals
       cutoff = 30.days.ago
-    @products = Rails.cache.fetch('new arrivals', expires_in: 4.hours) do
-      Product.left_joins(:product_inventories).where('products.created_at >= ? OR product_inventories.updated_at >= ? OR product_inventories.created_at >= ?', cutoff, cutoff, cutoff).order(created_at: :desc) .distinct.to_a
-    end
+    # @products = Rails.cache.fetch('new arrivals', expires_in: 4.hours) do
+    #   Product.left_joins(:product_inventories).where('products.created_at >= ? OR product_inventories.updated_at >= ? OR product_inventories.created_at >= ?', cutoff, cutoff, cutoff).order(created_at: :desc) .distinct.to_a
+    # end
+
+
+    @products =  Product.left_joins(:product_inventories).where('products.created_at >= ? OR product_inventories.updated_at >= ? OR product_inventories.created_at >= ?', cutoff, cutoff, cutoff).order(created_at: :desc) .distinct.to_a
 
     render json: { data: ActiveModelSerializers::SerializableResource.new(@products) }
   end
