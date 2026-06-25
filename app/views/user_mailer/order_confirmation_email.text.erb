@@ -30,7 +30,7 @@ PAYMENT SUMMARY
 --------------------------------------------------
 Subtotal: ₦<%= number_to_currency(order.net_total - order.delivery_fee, unit: "", precision: 2) %>
 Delivery Fee: ₦<%= number_to_currency(order.delivery_fee, unit: "", precision: 2) %>
-TOTAL PAID: ₦<%= number_to_currency(order.net_total, unit: "", precision: 2) %>
+TOTAL TO BE PAID: ₦<%= number_to_currency(order.net_total, unit: "", precision: 2) %>
 
 --------------------------------------------------
 DELIVERY ADDRESS
