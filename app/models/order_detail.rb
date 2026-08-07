@@ -1,5 +1,5 @@
 class OrderDetail < ApplicationRecord
-  attr_accessor :current_user
+  attr_accessor :current_user, :paid
 
   belongs_to :user, optional: true
 
@@ -12,6 +12,8 @@ class OrderDetail < ApplicationRecord
   has_one :invoice, dependent: :destroy
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :billing_address
+
+  before_save :create_payment_date, if: -> { paid }
 
   before_create :generate_number, :set_delivery_fee, :save_discount, :calculate_vat
   after_create :send_mail_notification
@@ -36,6 +38,7 @@ class OrderDetail < ApplicationRecord
     SendOrderConfirmationJob.perform_later(self)
 
   end
+
 
 
   def total_amount
@@ -87,6 +90,10 @@ class OrderDetail < ApplicationRecord
     total_amount +
     (delivery_fee || 0) -
     (discounted_amount || 0)
+end
+def create_payment_date
+  binding.b
+  self.paid_at = Time.current
 end
 
   def send_mail_notification
