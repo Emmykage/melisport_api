@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   has_rich_text :description_body
   has_many_attached :photos
 
-  after_commit :clear_cache, om: %i[create update destroy]
+  after_commit :clear_cache, on: %i[create update destroy]
   before_save :update_quantity
 
   enum :status, { active: 0, inactive: 1 }
@@ -24,6 +24,7 @@ class Product < ApplicationRecord
   validates :ms_item_code, uniqueness: true, presence: true, if: :is_active?
   validates :price, :ms_code, presence: true, if: :is_active?
 
+  default_scope { order(updated_at: :desc) }
   # accepts_nested_attributes_for :shoe_sizes
   accepts_nested_attributes_for :product_colours
   accepts_nested_attributes_for :product_inventories, allow_destroy: true
@@ -34,16 +35,6 @@ class Product < ApplicationRecord
 
   def product_sizes
     product_inventories.pluck(:size).uniq
-
-    # new_sizes = []
-    # sizes.each do |size|
-    #   unless new_sizes.include?(size)
-    #     new_sizes.push(size)
-
-    #   end
-
-    #   end
-    #   new_sizes
   end
 
   def discount_amount
